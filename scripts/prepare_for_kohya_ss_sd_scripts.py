@@ -75,9 +75,8 @@ def opearte_one_file(
     path_target_dir: Path,
     target_image_file: Path,
     tag_root: Path,
-    chara: str,
+    trigger_word: str,
     target_tags: Set[str],
-    is_oc__with_chara: bool,
     out_dir: Path,
 ):
     tags: List[str] = get_tags(
@@ -85,20 +84,19 @@ def opearte_one_file(
         target=target_image_file,
         tag_root=tag_root,
     )
-    if len(tags) == 0:
-        raise KeyError(f"Tags for `{target_image_file.stem}` in `{chara}` not found")
+    assert len(tags) > 0, f"Tags for `{target_image_file.stem}`  not found"
 
+    # Add the trigger word
     new_tags = list(filter(lambda v: v not in target_tags, tags))
-    if is_oc__with_chara:
-        new_tags.insert(0, {"Itoc": "ItakoOC", "Zuoc": "ZunkoOC", "Kioc": "KiritanOC"}[chara])
-    else:
-        new_tags.insert(0, chara.capitalize())
+    new_tags.insert(0, trigger_word)
 
+    # Output caption file
     to_caption = out_dir.joinpath(f"{target_image_file.stem}.txt")
     with to_caption.open("w") as of:
         of.write(", ".join(new_tags).replace("_", " "))
         of.write("\n")
 
+    # Copy the image
     to = out_dir.joinpath(f"{target_image_file.name}")
     shutil.copy(target_image_file, to)
 
@@ -146,15 +144,18 @@ def operation_all(
             chara_body: str = {"Itoc": "Itako", "Zuoc": "Zunko", "Kioc": "Kiritan"}[chara]
             target_tags |= set(chara2target_tags[chara_body])
 
+        trigger_word: str = chara.capitalize()
+        if is_oc__with_chara:
+            trigger_word = {"Itoc": "ItakoOC", "Zuoc": "ZunkoOC", "Kioc": "KiritanOC"}[trigger_word]
+
         print(f"{path_target_dir}\t{chara.capitalize()}: {len(files)}")
         for target_image_file in files:
             opearte_one_file(
                 path_target_dir=path_target_dir,
                 target_image_file=target_image_file,
                 tag_root=tag_root,
-                chara=chara,
+                trigger_word=chara,
                 target_tags=target_tags,
-                is_oc__with_chara=is_oc__with_chara,
                 out_dir=out_dir,
             )
 
