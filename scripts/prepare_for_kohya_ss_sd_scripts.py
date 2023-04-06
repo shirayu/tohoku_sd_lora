@@ -71,7 +71,7 @@ def chara2class(chara: str) -> str:
     return "1girl"
 
 
-def opearte_one_file(
+def operate_one_file(
     *,
     path_target_dir: Path,
     target_image_file: Path,
@@ -155,7 +155,7 @@ def operation_all(
 
         print(f"{path_target_dir}\t{chara.capitalize()}: {len(files)}")
         for target_image_file in files:
-            opearte_one_file(
+            operate_one_file(
                 path_target_dir=path_target_dir,
                 target_image_file=target_image_file,
                 tag_root=tag_root,
@@ -163,7 +163,7 @@ def operation_all(
                 target_tags=target_tags,
                 out_dir=out_dir_chara,
             )
-            opearte_one_file(
+            operate_one_file(
                 path_target_dir=path_target_dir,
                 target_image_file=target_image_file,
                 tag_root=tag_root,
