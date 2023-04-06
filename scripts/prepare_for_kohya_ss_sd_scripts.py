@@ -70,7 +70,40 @@ def chara2class(chara: str) -> str:
     return "1girl"
 
 
-def operation(
+def opearte_one_file(
+    *,
+    path_target_dir: Path,
+    target_image_file: Path,
+    tag_root: Path,
+    chara: str,
+    target_tags: Set[str],
+    is_oc__with_chara: bool,
+    out_dir: Path,
+):
+    tags: List[str] = get_tags(
+        path_target_dir=path_target_dir,
+        target=target_image_file,
+        tag_root=tag_root,
+    )
+    if len(tags) == 0:
+        raise KeyError(f"Tags for `{target_image_file.stem}` in `{chara}` not found")
+
+    new_tags = list(filter(lambda v: v not in target_tags, tags))
+    if is_oc__with_chara:
+        new_tags.insert(0, {"Itoc": "ItakoOC", "Zuoc": "ZunkoOC", "Kioc": "KiritanOC"}[chara])
+    else:
+        new_tags.insert(0, chara.capitalize())
+
+    to_caption = out_dir.joinpath(f"{target_image_file.stem}.txt")
+    with to_caption.open("w") as of:
+        of.write(", ".join(new_tags).replace("_", " "))
+        of.write("\n")
+
+    to = out_dir.joinpath(f"{target_image_file.name}")
+    shutil.copy(target_image_file, to)
+
+
+def operation_all(
     *,
     path_in: Path,
     path_out: Path,
@@ -114,28 +147,16 @@ def operation(
             target_tags |= set(chara2target_tags[chara_body])
 
         print(f"{path_target_dir}\t{chara.capitalize()}: {len(files)}")
-        for tgt in files:
-            tags: List[str] = get_tags(
+        for target_image_file in files:
+            opearte_one_file(
                 path_target_dir=path_target_dir,
-                target=tgt,
+                target_image_file=target_image_file,
                 tag_root=tag_root,
+                chara=chara,
+                target_tags=target_tags,
+                is_oc__with_chara=is_oc__with_chara,
+                out_dir=out_dir,
             )
-            if len(tags) == 0:
-                raise KeyError(f"Tags for `{tgt.stem}` in `{chara}` not found")
-
-            new_tags = list(filter(lambda v: v not in target_tags, tags))
-            if is_oc__with_chara:
-                new_tags.insert(0, {"Itoc": "ItakoOC", "Zuoc": "ZunkoOC", "Kioc": "KiritanOC"}[chara])
-            else:
-                new_tags.insert(0, chara.capitalize())
-
-            to_caption = out_dir.joinpath(f"{tgt.stem}.txt")
-            with to_caption.open("w") as of:
-                of.write(", ".join(new_tags).replace("_", " "))
-                of.write("\n")
-
-            to = out_dir.joinpath(f"{tgt.name}")
-            shutil.copy(tgt, to)
 
 
 def get_opts() -> argparse.Namespace:
@@ -151,7 +172,7 @@ def get_opts() -> argparse.Namespace:
 
 def main() -> None:
     opts = get_opts()
-    operation(
+    operation_all(
         path_in=opts.input,
         path_out=opts.output,
         num_repeat=opts.repeat,
