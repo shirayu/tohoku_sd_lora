@@ -6,6 +6,7 @@ import shutil
 from pathlib import Path
 from typing import List, Optional, Set
 
+STYLE_TRIGGER_WORD: str = "oistyle"
 name2newname = {
     "melon": "Hokamel",
     "zunko_oc": "Zuoc",
@@ -117,6 +118,10 @@ def operation_all(
     with tag_target.open() as inf:
         chara2target_tags = json.load(inf)
 
+    out_dir_style_name: str = f"{num_repeat}_gold"
+    out_dir_style: Path = path_out.joinpath(STYLE_TRIGGER_WORD, out_dir_style_name)
+    out_dir_style.mkdir(exist_ok=True, parents=True)
+
     for path_target_dir in path_in.iterdir():
         files = [fp for fp in path_target_dir.iterdir()]
 
@@ -135,9 +140,9 @@ def operation_all(
             print(f"{path_target_dir}\t{chara}: **SKIP** because No chara2target_tags")
             continue
 
-        out_dir_name: str = f"{num_repeat}_gold"
-        out_dir: Path = path_out.joinpath(path_target_dir.name, out_dir_name)
-        out_dir.mkdir(exist_ok=True, parents=True)
+        out_dir_chara_name: str = f"{num_repeat}_gold"
+        out_dir_chara: Path = path_out.joinpath(path_target_dir.name, out_dir_chara_name)
+        out_dir_chara.mkdir(exist_ok=True, parents=True)
 
         target_tags: Set[str] = set(chara2target_tags[chara])
         if is_oc__with_chara:
@@ -156,7 +161,15 @@ def operation_all(
                 tag_root=tag_root,
                 trigger_word=chara,
                 target_tags=target_tags,
-                out_dir=out_dir,
+                out_dir=out_dir_chara,
+            )
+            opearte_one_file(
+                path_target_dir=path_target_dir,
+                target_image_file=target_image_file,
+                tag_root=tag_root,
+                trigger_word=STYLE_TRIGGER_WORD,
+                target_tags=set(),
+                out_dir=out_dir_style,
             )
 
 
