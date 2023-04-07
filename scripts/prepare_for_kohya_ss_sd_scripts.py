@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import random
 import shutil
 from pathlib import Path
 from typing import List, Optional, Set
@@ -114,6 +115,7 @@ def operation_all(
     assert path_in.is_dir()
 
     assert tag_root.is_dir()
+    random.seed(42)
 
     with tag_target.open() as inf:
         chara2target_tags = json.load(inf)
@@ -163,14 +165,16 @@ def operation_all(
                 target_tags=target_tags,
                 out_dir=out_dir_chara,
             )
-            operate_one_file(
-                path_target_dir=path_target_dir,
-                target_image_file=target_image_file,
-                tag_root=tag_root,
-                trigger_word=STYLE_TRIGGER_WORD,
-                target_tags=set(),
-                out_dir=out_dir_style,
-            )
+
+        sampled = random.sample(files, 1)[0]
+        operate_one_file(
+            path_target_dir=path_target_dir,
+            target_image_file=sampled,
+            tag_root=tag_root,
+            trigger_word=STYLE_TRIGGER_WORD,
+            target_tags=set(),
+            out_dir=out_dir_style,
+        )
 
 
 def get_opts() -> argparse.Namespace:
