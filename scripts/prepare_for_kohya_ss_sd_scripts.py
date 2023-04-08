@@ -80,6 +80,7 @@ def operate_one_file(
     trigger_word: str,
     target_tags: Set[str],
     out_dir: Path,
+    no_style_tag: bool,
 ):
     tags: List[str] = get_tags(
         path_target_dir=path_target_dir,
@@ -91,6 +92,8 @@ def operate_one_file(
     # Add the trigger word
     new_tags = list(filter(lambda v: v not in target_tags, tags))
     new_tags.insert(0, trigger_word)
+    if not no_style_tag and trigger_word != STYLE_TRIGGER_WORD:
+        new_tags.insert(1, STYLE_TRIGGER_WORD)
 
     # Output caption file
     to_caption = out_dir.joinpath(f"{target_image_file.stem}.txt")
@@ -111,6 +114,7 @@ def operation_all(
     nosd: bool,
     tag_root: Path,
     tag_target: Path,  # 学習対象のタグ定義JSONファイル
+    no_style_tag: bool,
 ) -> None:
     assert path_in.is_dir()
 
@@ -164,6 +168,7 @@ def operation_all(
                 trigger_word=chara,
                 target_tags=target_tags,
                 out_dir=out_dir_chara,
+                no_style_tag=no_style_tag,
             )
 
         sampled = random.sample(files, 1)[0]
@@ -174,6 +179,7 @@ def operation_all(
             trigger_word=STYLE_TRIGGER_WORD,
             target_tags=set(),
             out_dir=out_dir_style,
+            no_style_tag=no_style_tag,
         )
 
 
@@ -185,6 +191,7 @@ def get_opts() -> argparse.Namespace:
     oparser.add_argument("--tag-target", type=Path, required=True)
     oparser.add_argument("--repeat", type=int, default=1)
     oparser.add_argument("--nosd", action="store_true")
+    oparser.add_argument("--nostyletag", action="store_true")
     return oparser.parse_args()
 
 
@@ -197,6 +204,7 @@ def main() -> None:
         nosd=opts.nosd,
         tag_root=opts.tag,
         tag_target=opts.tag_target,
+        no_style_tag=opts.nostyletag,
     )
 
 
