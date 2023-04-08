@@ -35,6 +35,7 @@ def operation(
     interval: int,
     v2: bool,
     v_parameterization: bool,
+    keep_tokens: int,
 ) -> None:
     assert path_in.exists()
     assert path_script_dir.exists()
@@ -76,7 +77,7 @@ def operation(
 
         opt_captiopn: str = ""
         if use_caption:
-            opt_captiopn = """--shuffle_caption --caption_extension=".txt" """
+            opt_captiopn = f"""--shuffle_caption --keep_tokens {keep_tokens} --caption_extension=".txt" """
 
         CONTENT: str = f"""cd {path_script_dir.absolute()}
 
@@ -121,7 +122,6 @@ poetry run \\
     {opt_fullpath_reg} \\
     --enable_bucket \\
     --bucket_reso_steps 64 \\
-    --keep_tokens 1 \\
     --max_data_loader_n_workers=4 \\
     --persistent_data_loader_workers \\
     {opt_captiopn} \\
@@ -158,6 +158,7 @@ def get_opts() -> argparse.Namespace:
     oparser.add_argument("--interval", type=int, default=1)
     oparser.add_argument("--v2", action="store_true")
     oparser.add_argument("--v_parameterization", action="store_true")
+    oparser.add_argument("--keep_tokens", type=int, default=2)
 
     return oparser.parse_args()
 
@@ -192,6 +193,7 @@ def main() -> None:
         interval=opts.interval,
         v2=opts.v2,
         v_parameterization=opts.v_parameterization,
+        keep_tokens=opts.keep_tokens,
     )
 
 

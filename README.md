@@ -63,7 +63,8 @@ python ./scripts/filtered_copy.py --ex ./target_list/exclude.tsv -i ./data/img_t
 python ./scripts/prepare_for_kohya_ss_sd_scripts.py -i ./data/img_train_862_filtered -o ./data/img_train_862_filtered_for_train --nosd --repeat 10 --tag ./data/tag/tags_json --tag-target ./data/tag/tag_target.json
 
 # Generate train scripts
-## "--caption" is optional
+## "--caption" is optional.
+## Add "--keep_tokens 1" if you used --nostyletag
 python ./scripts/prepare_for_kohya_ss_sd_cmd.py \
     -i ./data/img_train_862_filtered_for_train \
     --resolution 862 \
