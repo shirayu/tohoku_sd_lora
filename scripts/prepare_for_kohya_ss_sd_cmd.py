@@ -64,6 +64,7 @@ def operation(
         chara: str = pathdir.name
         path_out_chara = path_out.joinpath(chara)
 
+        assert path_model.is_file()
         fullpath_model: str = str(path_model.absolute())
         fullpath_log: str = str(path_out_chara.joinpath("log").absolute())
         fullpath_train: str = str(pathdir.absolute())
