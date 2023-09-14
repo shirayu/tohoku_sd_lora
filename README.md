@@ -60,7 +60,7 @@ python ./scripts/filtered_copy.py --ex ./target_list/exclude.tsv -i ./data/img_t
 
 # Generate captions
 #   Add: --nostyletag if you want avoid add tag "oistyle"
-python ./scripts/prepare_for_kohya_ss_sd_scripts.py -i ./data/img_train_862_filtered -o ./data/img_train_862_filtered_for_train --nosd --repeat 10 --tag ./data/tag/tags_json --tag-target ./data/tag/tag_target.json
+python ./scripts/prepare_for_kohya_ss_sd_scripts.py -i ./data/img_train_862_filtered -o ./data/img_train_862_filtered_for_train --nosd --repeat 10 --tag ./data/tags_json --tag-target ./tag_target.json
 
 # Generate train scripts
 ## "--caption" is optional.
@@ -94,5 +94,5 @@ python ./scripts/prepare_for_kohya_ss_sd_cmd.py \
 
 ```bash
 find /path/to/images -mindepth 1 -type d | sort | parallel -t -n1 -P1 --lb poetry run python -m finetune.tag_images_by_wd14_tagger --batch_size=4
-python ./scripts/tag2json.py -i /path/to/images -o ./data/tag/tags_json 
+python ./scripts/tag2json.py -i /path/to/images -o ./data/tags_json
 ```
