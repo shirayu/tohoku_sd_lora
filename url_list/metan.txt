@@ -1,17 +1,13 @@
 https://zunko.jp/sozai/methane/met001.png
-https://zunko.jp/sozai/methane/met002_cr.png
 https://zunko.jp/sozai/methane/met003.png
 https://zunko.jp/sozai/methane/met004.png
 https://zunko.jp/sozai/methane/met005.png
 https://zunko.jp/sozai/methane/met006.png
-https://zunko.jp/sozai/methane/met007.png
 https://zunko.jp/sozai/methane/met008.png
 https://zunko.jp/sozai/methane/met009.png
-https://zunko.jp/sozai/methane/met010.png
 https://zunko.jp/sozai/methane/met011.png
 https://zunko.jp/sozai/methane/met012.png
 https://zunko.jp/sozai/methane/met013.png
-https://zunko.jp/sozai/zunkohoka/g_metan.png
 https://zunko.jp/sozai/zunkohoka/metan_001.png
 https://zunko.jp/sozai/zunkohoka/metan_002.png
 https://zunko.jp/sozai/zunkohoka/metan_003.png
@@ -19,4 +15,3 @@ https://zunko.jp/sozai/zunkohoka/metan_004.png
 https://zunko.jp/sozai/zunkohoka/metan_005.png
 https://zunko.jp/sozai/zunkohoka/metan_006.png
 https://zunko.jp/sozai/zunkohoka/metan_007.png
-https://zunko.jp/sozai/zunkohoka/y_metan.png
