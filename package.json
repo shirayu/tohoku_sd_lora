@@ -8,9 +8,9 @@
         "pyright": "pyright"
     },
     "version": "1.0.0",
-    "dependencies": {},
     "devDependencies": {
+        "preinstall": "npx only-allow pnpm",
         "markdownlint-cli": "^0.33.0",
-        "pyright": "^1.1.292"
+        "pyright": "^1.1.328"
     }
 }
