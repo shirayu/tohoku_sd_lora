@@ -18,4 +18,4 @@ fi
 MAX_SIZE="${MAX_SIZE:-2048}"
 
 # Only minimize (not enlarge)
-poetry run python ./scripts/resize.py -i "$1" -o "${OUTNAME}"
+poetry run python ./scripts/resize.py -i "$1" -o "${OUTNAME}" --size "${MAX_SIZE}"

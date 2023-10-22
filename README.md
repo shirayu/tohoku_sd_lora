@@ -21,20 +21,6 @@ poetry install
 ## Setup images
 
 ```bash
-# Install ImageMagick
-sudo apt-get -y install imagemagic
-
-# Edit the setting of ImageMagick TEMPORALLY (Resotre after conversion)
-sudo cp /etc/ImageMagick-6/policy.xml /etc/ImageMagick-6/policy.xml.backup
-sudo vi /etc/ImageMagick-6/policy.xml
-##  <policy domain="resource" name="memory" value="8GiB"/>
-##  <policy domain="resource" name="map" value="8GiB"/>
-##  <policy domain="resource" name="width" value="160KP"/>
-##  <policy domain="resource" name="height" value="160KP"/>
-##  <policy domain="resource" name="area" value="8GiB"/>
-##  <policy domain="resource" name="disk" value="8GiB"/>
-
-
 # setup
 poetry install
 
