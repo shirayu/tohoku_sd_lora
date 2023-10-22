@@ -18,12 +18,4 @@ fi
 MAX_SIZE="${MAX_SIZE:-2048}"
 
 # Only minimize (not enlarge)
-MAGICK_CONFIGURE_PATH=~/.config/ImageMagick.xml \
-    convert \
-    -limit disk 0 \
-    -fuzz 5% \
-    -trim \
-    -resize "${MAX_SIZE}x${MAX_SIZE}^" \
-    -gravity center \
-    "$1" \
-    "${OUTNAME}" \
+poetry run python ./scripts/resize.py -i "$1" -o "${OUTNAME}"
