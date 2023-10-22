@@ -16,7 +16,13 @@ def resize(
     remove_alpha: bool,
     max_size: int,
     min_size: Optional[int],
+    to_dir: bool,
 ) -> None:
+    if to_dir:
+        root = path_out.joinpath(path_in.parent)
+        root.mkdir(exist_ok=True, parents=True)
+        path_out = root.joinpath(path_in.name)
+
     image = Image.open(str(path_in))
 
     if remove_alpha:
@@ -73,6 +79,7 @@ def get_opts() -> argparse.Namespace:
     oparser.add_argument("--remove_alpha", action="store_true")
     oparser.add_argument("--size", type=int, required=True)
     oparser.add_argument("--min_size", type=int)
+    oparser.add_argument("--to_dir", action="store_true")
     return oparser.parse_args()
 
 
@@ -84,6 +91,7 @@ def main() -> None:
         remove_alpha=opts.remove_alpha,
         max_size=opts.size,
         min_size=opts.min_size,
+        to_dir=opts.to_dir,
     )
 
 
