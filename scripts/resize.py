@@ -2,7 +2,6 @@
 
 import argparse
 from pathlib import Path
-from typing import Optional
 
 from PIL import Image
 
@@ -15,7 +14,7 @@ def resize(
     path_out: Path,
     remove_alpha: bool,
     max_size: int,
-    min_size: Optional[int],
+    min_size: int | None,
     to_dir: bool,
 ) -> None:
     if to_dir:

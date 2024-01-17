@@ -5,7 +5,6 @@ import json
 import random
 import shutil
 from pathlib import Path
-from typing import List, Optional, Set
 
 STYLE_TRIGGER_WORD: str = "oistyle"
 name2newname = {
@@ -21,7 +20,7 @@ def get_tags(
     path_target_dir: Path,
     target: Path,
     tag_root: Path,
-) -> List[str]:
+) -> list[str]:
     root_dir: str = path_target_dir.name.replace("_oc__withchara", "_oc")
     tag_json_name: str = f"{target.stem}.json"
     if tag_json_name in {
@@ -34,7 +33,7 @@ def get_tags(
         root_dir = "zundamon_sd"
 
     with tag_root.joinpath(root_dir, tag_json_name).open() as tagf:
-        tags: List[str] = json.load(tagf)
+        tags: list[str] = json.load(tagf)
     return tags
 
 
@@ -42,7 +41,7 @@ def name2prompt(
     *,
     name: str,
     nosd: bool,
-) -> Optional[str]:
+) -> str | None:
     name = name.replace(".mod", "")
     items = name.split("_")
 
@@ -78,11 +77,11 @@ def operate_one_file(
     target_image_file: Path,
     tag_root: Path,
     trigger_word: str,
-    target_tags: Set[str],
+    target_tags: set[str],
     out_dir: Path,
     no_style_tag: bool,
 ):
-    tags: List[str] = get_tags(
+    tags: list[str] = get_tags(
         path_target_dir=path_target_dir,
         target=target_image_file,
         tag_root=tag_root,
@@ -150,7 +149,7 @@ def operation_all(
         out_dir_chara: Path = path_out.joinpath(path_target_dir.name, out_dir_chara_name)
         out_dir_chara.mkdir(exist_ok=True, parents=True)
 
-        target_tags: Set[str] = set(chara2target_tags[chara])
+        target_tags: set[str] = set(chara2target_tags[chara])
         if is_oc__with_chara:
             chara_body: str = {"Itoc": "Itako", "Zuoc": "Zunko", "Kioc": "Kiritan"}[chara]
             target_tags |= set(chara2target_tags[chara_body])

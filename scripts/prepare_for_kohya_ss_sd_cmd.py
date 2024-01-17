@@ -2,7 +2,6 @@
 
 import argparse
 from pathlib import Path
-from typing import Optional
 
 
 def chara2class(chara: str) -> str:
@@ -16,7 +15,7 @@ def operation(
     path_in: Path,
     path_out: Path,
     path_model: Path,
-    path_reg: Optional[Path],
+    path_reg: Path | None,
     path_script_dir: Path,
     use_caption: bool,
     dim: int,
@@ -30,7 +29,7 @@ def operation(
     text_encoder_lr: str,
     epoch: int,
     resolution: str,
-    optimizer_arg: Optional[str],
+    optimizer_arg: str | None,
     bs: int,
     interval: int,
     v2: bool,
