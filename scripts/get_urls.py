@@ -3,10 +3,17 @@
 import argparse
 from pathlib import Path
 
+import requests
 
-def operation(path_in: Path, path_out: Path, special: bool) -> None:
-    with path_in.open() as inf, path_out.open("w") as outf:
-        for line in inf:
+
+def operation(path_out: Path, special: bool) -> None:
+    res = requests.get("https://zunko.jp/con_illust.html")
+    if res.status_code != 200:
+        print(res.status_code)
+        raise Exception
+
+    with path_out.open("w") as outf:
+        for line in res.text.split("\n"):
             line = line.strip()
             if line.startswith("//"):
                 continue
@@ -37,7 +44,6 @@ def operation(path_in: Path, path_out: Path, special: bool) -> None:
 
 def get_opts() -> argparse.Namespace:
     oparser = argparse.ArgumentParser()
-    oparser.add_argument("--input", "-i", type=Path, default="/dev/stdin", required=False)
     oparser.add_argument("--output", "-o", type=Path, default="/dev/stdout", required=False)
     oparser.add_argument("--special", action="store_true")
     return oparser.parse_args()
@@ -45,7 +51,7 @@ def get_opts() -> argparse.Namespace:
 
 def main() -> None:
     opts = get_opts()
-    operation(opts.input, opts.output, opts.special)
+    operation(opts.output, opts.special)
 
 
 if __name__ == "__main__":

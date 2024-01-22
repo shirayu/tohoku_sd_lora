@@ -24,6 +24,9 @@ poetry install
 # setup
 poetry install
 
+# Check new URL
+poetry run python ./scripts/get_urls.py | cat - ./url_list/*txt ./url_list/_special/* | sort | uniq -c | sort -k1nr | grep -v psd | grep -v ai$ | grep -v '2 '
+
 # Download images
 poetry run python scripts/download.py -i ./url_list -o ./data/img_original
 
