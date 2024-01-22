@@ -26,9 +26,6 @@ python -m venv venv
 # setup
 poetry install
 
-# Check new URL
-poetry run python ./scripts/get_urls.py | cat - ./url_list/*txt ./url_list/_special/* | sort | uniq -c | sort -k1nr | grep -v psd | grep -v ai$ | grep -v '2 '
-
 # Download images
 poetry run python scripts/download.py -i ./url_list -o ./data/img/original
 
@@ -70,10 +67,6 @@ python ./scripts/prepare_for_kohya_ss_sd_cmd.py \
     --dim 32 --alpha 16 \
     --bs 1 \
     --epoch 10
-
-# If you want to use genberate regularization images to the following directories and add "--reg ./data/img/reg_ModelName"
-# - data/img/reg_ModelName/chibi/1_chibi
-# - data/img/reg_ModelName/1girl/1_1girl
 ```
 
 ### Prefix
@@ -86,4 +79,10 @@ python ./scripts/prepare_for_kohya_ss_sd_cmd.py \
 ```bash
 find /path/to/images -mindepth 1 -type d | sort | parallel -t -n1 -P1 --lb poetry run python -m finetune.tag_images_by_wd14_tagger --batch_size=4
 python ./scripts/tag2json.py -i /path/to/images -o ./data/tags_json
+```
+
+## Check new URL
+
+```bash
+poetry run python ./scripts/get_urls.py | cat - ./url_list/*txt ./url_list/_special/* | sort | uniq -c | sort -k1nr | grep -v psd | grep -v ai$ | grep -v '2 '
 ```
