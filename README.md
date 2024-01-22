@@ -9,16 +9,18 @@
 
 ## Setup sd-scripts
 
-- Install [poetry](https://python-poetry.org/)
-
 ```bash
-git clone https://github.com/kohya-ss/sd-scripts.git ~/repo/sd-scripts
-cp ./config/* ~/repo/sd-scripts
-cd ~/repo/sd-scripts
-poetry install
+git clone https://github.com/kohya-ss/sd-scripts.git ~/workspace/sd-scripts
+cd ~/workspace/sd-scripts
+python -m venv venv
+./venv/bin/pip install -r requirements.txt
+./venv/bin/pip install bitsandbytes scipy lion_pytorch
+./venv/bin/pip install xformers
 ```
 
 ## Setup images
+
+- Install [poetry](https://python-poetry.org/)
 
 ```bash
 # setup
@@ -58,7 +60,7 @@ python ./scripts/prepare_for_kohya_ss_sd_cmd.py \
     -i ./data/img_train_1024_filtered_for_train \
     --resolution 1024 \
     -o ./data/trained_lora_models \
-    -C ~/repo/sd-scripts \
+    -C ~/workspace/sd-scripts \
     --v2 --v_parameterization \
     --model ~/data/sd-webui-models/Stable-diffusion/wd-1-5-beta2-fp16.safetensors \
     --caption \
