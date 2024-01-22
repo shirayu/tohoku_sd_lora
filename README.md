@@ -30,34 +30,34 @@ poetry install
 poetry run python ./scripts/get_urls.py | cat - ./url_list/*txt ./url_list/_special/* | sort | uniq -c | sort -k1nr | grep -v psd | grep -v ai$ | grep -v '2 '
 
 # Download images
-poetry run python scripts/download.py -i ./url_list -o ./data/img_original
+poetry run python scripts/download.py -i ./url_list -o ./data/img/original
 
 # (Optional) If you want to also use special files
-poetry run python scripts/download.py -i ./url_list/_special -o ./data/img_original_special
-# Convert files and place them to each folder under "data/img_original"
+poetry run python scripts/download.py -i ./url_list/_special -o ./data/img/original_special
+# Convert files and place them to each folder under "data/img/original"
 
 
 # Remove margins and shrink images
-find data/img_original -type f | xargs -t -P 4 -I {} poetry run python ./scripts/resize.py -i {} -o data/img_converted --size 2048 --to_dir
+find data/img/original -type f | xargs -t -P 4 -I {} poetry run python ./scripts/resize.py -i {} -o data/img/converted --size 2048 --to_dir
 
 # Check files in "img_converted" with your eyes
 # Add modificaion if you need
 
 # Resize to 1024x1024 (max. min=768x768) and remove alphas
-find data/img_converted -type f -name '*.png' | xargs -t -P 4 -I {} poetry run python ./scripts/resize.py --remove_alpha -i {} -o data/img_train_1024 --size 1024 --min_size 768 --to_dir
+find data/img/converted -type f -name '*.png' | xargs -t -P 4 -I {} poetry run python ./scripts/resize.py --remove_alpha -i {} -o data/img/train_1024 --size 1024 --min_size 768 --to_dir
 
 # Filter out
-python ./scripts/filtered_copy.py --ex ./target_list/exclude.tsv -i ./data/img_train_1024 -o ./data/img_train_1024_filtered
+python ./scripts/filtered_copy.py --ex ./target_list/exclude.tsv -i ./data/img/train_1024 -o ./data/img/train_1024_filtered
 
 # Generate captions
 #   Add: --nostyletag if you want avoid add tag "oistyle"
-python ./scripts/prepare_for_kohya_ss_sd_scripts.py -i ./data/img_train_1024_filtered -o ./data/img_train_1024_filtered_for_train --nosd --repeat 10 --tag ./data/tags_json --tag-target ./tag_target.json
+python ./scripts/prepare_for_kohya_ss_sd_scripts.py -i ./data/img/train_1024_filtered -o ./data/img/train_1024_filtered_for_train --nosd --repeat 10 --tag ./data/tags_json --tag-target ./tag_target.json
 
 # Generate train scripts
 ## "--caption" is optional.
 ## Add "--keep_tokens 1" if you used --nostyletag
 python ./scripts/prepare_for_kohya_ss_sd_cmd.py \
-    -i ./data/img_train_1024_filtered_for_train \
+    -i ./data/img/train_1024_filtered_for_train \
     --resolution 1024 \
     -o ./data/trained_lora_models \
     -C ~/workspace/sd-scripts \
@@ -71,9 +71,9 @@ python ./scripts/prepare_for_kohya_ss_sd_cmd.py \
     --bs 1 \
     --epoch 10
 
-# If you want to use genberate regularization images to the following directories and add "--reg ./data/img_reg_ModelName"
-# - data/img_reg_ModelName/chibi/1_chibi
-# - data/img_reg_ModelName/1girl/1_1girl
+# If you want to use genberate regularization images to the following directories and add "--reg ./data/img/reg_ModelName"
+# - data/img/reg_ModelName/chibi/1_chibi
+# - data/img/reg_ModelName/1girl/1_1girl
 ```
 
 ### Prefix
