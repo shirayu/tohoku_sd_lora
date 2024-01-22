@@ -74,11 +74,12 @@ python ./scripts/prepare_for_kohya_ss_sd_cmd.py \
 - ``_oc``: Official costume
 - ``_sd``: SD character
 
-## Tags
+## Tagging
+
+Use [img2tags](https://github.com/shirayu/img2tags)
 
 ```bash
-find /path/to/images -mindepth 1 -type d | sort | parallel -t -n1 -P1 --lb poetry run python -m finetune.tag_images_by_wd14_tagger --batch_size=4
-python ./scripts/tag2json.py -i /path/to/images -o ./data/tags_json
+img2tags --ext jsonl -i <( find ./data/img/train_1024_filtered -type f ) -o ./data/img/train_1024_filtered/tags.jsonl
 ```
 
 ## Check new URL
