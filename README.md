@@ -48,7 +48,7 @@ python ./scripts/filtered_copy.py --ex ./data/exclude_images.tsv -i ./data/img/t
 
 # Generate captions
 #   Add: --nostyletag if you want avoid add tag "oistyle"
-python ./scripts/prepare_for_kohya_ss_sd_scripts.py -i ./data/img/train_1024_filtered -o ./data/img/train_1024_filtered_for_train --nosd --repeat 10 --tag ./data/tags_json --tag-target ./tag_target.json
+python ./scripts/prepare_for_kohya_ss_sd_scripts.py -i ./data/img/train_1024_filtered -o ./data/img/train_1024_filtered_for_train --nosd --repeat 10 --tag ./data/tags_json --tag-target ./data/tag_target.json
 
 # Generate train scripts
 ## "--caption" is optional.
