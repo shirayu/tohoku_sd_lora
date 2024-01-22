@@ -48,6 +48,19 @@ python ./scripts/filtered_mksymlink.py --ex ./data/exclude_images.tsv -i ./data/
 
 # meta_1
 python ./scripts/generate_meta1.py --tag ./data/img/train_1024_filtered.tags.jsonl --tag-target ./data/tag_target.json -i ./data/img/train_1024_filtered -o ./data/img/meta_1.json
+
+# meta_2
+~/workspace/sd-scripts/venv/bin/python \
+    ~/workspace/sd-scripts/finetune/prepare_buckets_latents.py \
+    ./data/img/train_1024_filtered \
+    ./data/img/meta_1.json \
+    ./data/img/meta_2.json \
+    ~/data/sd/models/_base/animagine-xl-3.0-base.safetensors \
+    --mixed_precision bf16 \
+    --min_bucket_reso 512 \
+    --max_resolution 1024,1024 \
+    --max_bucket_reso 1568 \
+    --batch_size 4
 ```
 
 ### Prefix
