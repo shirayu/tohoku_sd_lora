@@ -27,10 +27,10 @@ python -m venv venv
 poetry install
 
 # Download images
-poetry run python scripts/download.py -i ./url_list -o ./data/img/original
+poetry run python scripts/download.py -i ./data/urls -o ./data/img/original
 
 # (Optional) If you want to also use special files
-poetry run python scripts/download.py -i ./url_list/_special -o ./data/img/original_special
+poetry run python scripts/download.py -i ./data/urls/_special -o ./data/img/original_special
 # Convert files and place them to each folder under "data/img/original"
 
 
@@ -84,5 +84,5 @@ python ./scripts/tag2json.py -i /path/to/images -o ./data/tags_json
 ## Check new URL
 
 ```bash
-poetry run python ./scripts/get_urls.py | cat - ./url_list/*txt ./url_list/_special/* | sort | uniq -c | sort -k1nr | grep -v psd | grep -v ai$ | grep -v '2 '
+poetry run python ./scripts/get_urls.py | cat - ./data/urls/*txt ./data/urls/_special/* | sort | uniq -c | sort -k1nr | grep -v psd | grep -v ai$ | grep -v '2 '
 ```
