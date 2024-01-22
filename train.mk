@@ -13,11 +13,14 @@ BS=12
 # DIM>0 => LoRA
 DIM=0
 EPOCH=10
+MIXED_PRECISION=bf16
 
 ###-------------
 AUTO_TAG_TILE:=./data/auto_tags.jsonl
 DIR_IMG_SRC:=./data/img/train_1024
 DIR_IMAGES_for_style:=./data/img/train_1024_filtered_for_style
+META1_for_style:=$(DIR_IMAGES_for_style).meta_1.json
+META2_for_style:=$(DIR_IMAGES_for_style).meta_2.json
 
 mksymlink_for_style:
 	python ./scripts/filtered_mksymlink.py \
@@ -25,14 +28,26 @@ mksymlink_for_style:
 		-i $(DIR_IMG_SRC) \
 		-o $(DIR_IMAGES_for_style) 
 
-META1_for_style:=$(DIR_IMAGES_for_style).meta_1.json
 meta_1_for_style:
 	python ./scripts/generate_meta1.py \
 	    --tag $(AUTO_TAG_TILE) \
 	    --tag-target ./data/tag_target.json \
 	    -i $(DIR_IMAGES_for_style) \
-	    -o $(META1_for_style)
+	    -o $(META1_for_style) \
+	    --for_style
 
+meta_2_for_style:
+	~/workspace/sd-scripts/venv/bin/python \
+	    ~/workspace/sd-scripts/finetune/prepare_buckets_latents.py \
+	    ./data/img/train_1024_filtered \
+	    $(META1_for_style) \
+	    $(META2_for_style) \
+	    $(BASE_MODEL) \
+	    --mixed_precision $(MIXED_PRECISION) \
+	    --min_bucket_reso 512 \
+	    --max_resolution "$(BASIC_RESO),$(BASIC_RESO)" \
+	    --max_bucket_reso $(MAX_RESO) \
+	    --batch_size 4
 
 train:
 	rm -f $(OUT_DIR)/base.safetensors

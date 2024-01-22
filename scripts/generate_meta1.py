@@ -38,6 +38,7 @@ def operation(
     path_out: Path,
     path_tag: Path,
     path_tag_target: Path,  # 学習対象のタグ定義JSONファイル
+    for_style: bool,
 ) -> None:
     fanme2alltags: dict[str, set[str]] = {}
     with path_tag.open() as inf:
@@ -58,6 +59,8 @@ def operation(
         tags_for_imgf: None | set[str] = fanme2alltags.get(imgf.stem)
         if tags_for_imgf is None:
             print(f"{imgf}: **SKIP** because No chara2target_tags")
+            continue
+        if for_style and "_oc" in imgf.stem or ".mod" in imgf.stem:
             continue
 
         is_oc__with_chara: bool = False
@@ -84,11 +87,16 @@ def operation(
             }[trigger_word]
 
         # Add the trigger word
-        new_tags = list(filter(lambda v: v not in target_tags, tags_for_imgf))
+        new_tags: list[str]
+        if for_style:
+            new_tags = list(tags_for_imgf)
+        else:
+            new_tags = list(filter(lambda v: v not in target_tags, tags_for_imgf))
+
         triggers: list[str] = []
-        triggers.append(trigger_word)
-        if trigger_word != STYLE_TRIGGER_WORD:
-            triggers.append(STYLE_TRIGGER_WORD)
+        if not for_style:
+            triggers.append(trigger_word)
+        triggers.append(STYLE_TRIGGER_WORD)
 
         # https://github.com/kohya-ss/sd-scripts/pull/975
         caption = ", ".join(triggers) + ", ||| " + ", ".join(new_tags)
@@ -113,6 +121,7 @@ def get_opts() -> argparse.Namespace:
     oparser.add_argument("--output", "-o", type=Path, default="/dev/stdout", required=False)
     oparser.add_argument("--tag", type=Path, required=True)
     oparser.add_argument("--tag-target", type=Path, required=True)
+    oparser.add_argument("--for_style", action="store_true")
     return oparser.parse_args()
 
 
@@ -123,6 +132,7 @@ def main() -> None:
         path_out=opts.output,
         path_tag=opts.tag,
         path_tag_target=opts.tag_target,
+        for_style=opts.for_style,
     )
 
 

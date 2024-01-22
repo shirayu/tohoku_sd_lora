@@ -50,17 +50,7 @@ make -f ./train.mk mksymlink_for_style
 make -f ./train.mk meta_1_for_style
 
 # meta_2
-~/workspace/sd-scripts/venv/bin/python \
-    ~/workspace/sd-scripts/finetune/prepare_buckets_latents.py \
-    ./data/img/train_1024_filtered \
-    ./data/img/meta_1.json \
-    ./data/img/meta_2.json \
-    ~/data/sd/models/_base/animagine-xl-3.0-base.safetensors \
-    --mixed_precision bf16 \
-    --min_bucket_reso 512 \
-    --max_resolution 1024,1024 \
-    --max_bucket_reso 1568 \
-    --batch_size 4
+make -f ./train.mk meta_2_for_style
 
 # meta_3
 python ./scripts/generate_meta3.py -i ./data/img/meta_2.json -o ./data/img/meta_3
