@@ -61,6 +61,9 @@ python ./scripts/generate_meta1.py --tag ./data/img/train_1024_filtered.tags.jso
     --max_resolution 1024,1024 \
     --max_bucket_reso 1568 \
     --batch_size 4
+
+# meta_3
+python ./scripts/generate_meta3.py -i ./data/img/meta_2.json -o ./data/img/meta_3
 ```
 
 ### Prefix
