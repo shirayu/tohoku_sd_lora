@@ -46,27 +46,8 @@ find data/img/converted -type f -name '*.png' | xargs -t -P 4 -I {} poetry run p
 # Filter out
 python ./scripts/filtered_mksymlink.py --ex ./data/exclude_images.tsv -i ./data/img/train_1024 -o ./data/img/train_1024_filtered
 
-# Generate captions
-#   Add: --nostyletag if you want avoid add tag "oistyle"
-python ./scripts/prepare_for_kohya_ss_sd_scripts.py -i ./data/img/train_1024_filtered -o ./data/img/train_1024_filtered_for_train --nosd --repeat 10 --tag ./data/tags_json --tag-target ./data/tag_target.json
-
-# Generate train scripts
-## "--caption" is optional.
-## Add "--keep_tokens 1" if you used --nostyletag
-python ./scripts/prepare_for_kohya_ss_sd_cmd.py \
-    -i ./data/img/train_1024_filtered_for_train \
-    --resolution 1024 \
-    -o ./data/trained_lora_models \
-    -C ~/workspace/sd-scripts \
-    --v2 --v_parameterization \
-    --model ~/data/sd-webui-models/Stable-diffusion/wd-1-5-beta2-fp16.safetensors \
-    --caption \
-    --lr_scheduler='constant' \
-    --lr 1e-4 \
-    --text_encoder_lr 5e-5 \
-    --dim 32 --alpha 16 \
-    --bs 1 \
-    --epoch 10
+# meta_1
+python ./scripts/generate_meta1.py --tag ./data/img/train_1024_filtered.tags.jsonl --tag-target ./data/tag_target.json -i ./data/img/train_1024_filtered -o ./data/img/meta_1.json
 ```
 
 ### Prefix
