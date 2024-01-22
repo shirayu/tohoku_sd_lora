@@ -79,7 +79,7 @@ python ./scripts/prepare_for_kohya_ss_sd_cmd.py \
 Use [img2tags](https://github.com/shirayu/img2tags)
 
 ```bash
-img2tags --ext jsonl -i <( find ./data/img/train_1024_filtered -type f ) -o ./data/img/train_1024_filtered/tags.jsonl
+img2tags --ext jsonl -i ./data/img/train_1024_filtered -o ./data/img/train_1024_filtered.tags.jsonl
 ```
 
 ## Check new URL

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import argparse
-import shutil
 from collections import defaultdict
 from pathlib import Path
 
@@ -12,6 +11,7 @@ def operation(
     path_out: Path,
     path_ex: Path,
 ) -> None:
+    path_out.mkdir(exist_ok=True, parents=True)
     parent2name = defaultdict(set)
 
     # Get exclude file names
@@ -37,15 +37,11 @@ def operation(
             if parent == "zundamon_sd":
                 parent = "zundamon"
 
-            op = path_out.joinpath(parent)
-            op.mkdir(parents=True, exist_ok=True)
-            shutil.copy(p, op)
+            path_out.joinpath(f"{parent}___{p.name}").symlink_to(p.absolute())
 
             if "_oc" in parent:
                 another_parent: str = parent.replace("_oc", "_oc__withchara")
-                op2 = path_out.joinpath(another_parent)
-                op2.mkdir(parents=True, exist_ok=True)
-                shutil.copy(p, op2)
+                path_out.joinpath(f"{another_parent}___{p.name}").symlink_to(p.absolute())
 
 
 def get_opts() -> argparse.Namespace:
