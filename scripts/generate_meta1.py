@@ -50,7 +50,7 @@ def operation(
     with path_tag_target.open() as inf:
         chara2target_tags: dict[str, list[str]] = json.load(inf)
 
-    fname2caption: dict[str, dict[str, list[str]]] = {}
+    fname2caption: dict[str, dict[str, str]] = {}
     for imgf in path_in.iterdir():
         name: str = imgf.stem.split("___")[0]
         chara: str = name2chara(name)
@@ -85,12 +85,15 @@ def operation(
 
         # Add the trigger word
         new_tags = list(filter(lambda v: v not in target_tags, tags_for_imgf))
-        new_tags.insert(0, trigger_word)
+        triggers: list[str] = []
+        triggers.append(trigger_word)
         if trigger_word != STYLE_TRIGGER_WORD:
-            new_tags.insert(1, STYLE_TRIGGER_WORD)
+            triggers.append(STYLE_TRIGGER_WORD)
 
+        # https://github.com/kohya-ss/sd-scripts/pull/975
+        caption = ", ".join(triggers) + ", ||| " + ", ".join(new_tags)
         fname2caption[imgf.stem] = {
-            "caption": new_tags,
+            "caption": caption,
         }
 
     with path_out.open("w") as outf:

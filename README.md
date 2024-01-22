@@ -44,10 +44,10 @@ find data/img/original -type f | xargs -t -P 4 -I {} poetry run python ./scripts
 find data/img/converted -type f -name '*.png' | xargs -t -P 4 -I {} poetry run python ./scripts/resize.py --remove_alpha -i {} -o data/img/train_1024 --size 1024 --min_size 768 --to_dir
 
 # Filter out
-python ./scripts/filtered_mksymlink.py --ex ./data/exclude_images.tsv -i ./data/img/train_1024 -o ./data/img/train_1024_filtered
+make -f ./train.mk mksymlink_for_style
 
 # meta_1
-python ./scripts/generate_meta1.py --tag ./data/img/train_1024_filtered.tags.jsonl --tag-target ./data/tag_target.json -i ./data/img/train_1024_filtered -o ./data/img/meta_1.json
+make -f ./train.mk meta_1_for_style
 
 # meta_2
 ~/workspace/sd-scripts/venv/bin/python \
