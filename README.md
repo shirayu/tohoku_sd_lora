@@ -41,22 +41,22 @@ find data/img_original -type f | xargs -t -P 4 -I {} poetry run python ./scripts
 # Check files in "img_converted" with your eyes
 # Add modificaion if you need
 
-# Resize to 862x862 (max. min=768x768) and remove alphas
-find data/img_converted -type f -name '*.png' | xargs -t -P 4 -I {} poetry run python ./scripts/resize.py --remove_alpha -i {} -o data/img_train_862 --size 862 --min_size 768 --to_dir
+# Resize to 1024x1024 (max. min=768x768) and remove alphas
+find data/img_converted -type f -name '*.png' | xargs -t -P 4 -I {} poetry run python ./scripts/resize.py --remove_alpha -i {} -o data/img_train_1024 --size 1024 --min_size 768 --to_dir
 
 # Filter out
-python ./scripts/filtered_copy.py --ex ./target_list/exclude.tsv -i ./data/img_train_862 -o ./data/img_train_862_filtered
+python ./scripts/filtered_copy.py --ex ./target_list/exclude.tsv -i ./data/img_train_1024 -o ./data/img_train_1024_filtered
 
 # Generate captions
 #   Add: --nostyletag if you want avoid add tag "oistyle"
-python ./scripts/prepare_for_kohya_ss_sd_scripts.py -i ./data/img_train_862_filtered -o ./data/img_train_862_filtered_for_train --nosd --repeat 10 --tag ./data/tags_json --tag-target ./tag_target.json
+python ./scripts/prepare_for_kohya_ss_sd_scripts.py -i ./data/img_train_1024_filtered -o ./data/img_train_1024_filtered_for_train --nosd --repeat 10 --tag ./data/tags_json --tag-target ./tag_target.json
 
 # Generate train scripts
 ## "--caption" is optional.
 ## Add "--keep_tokens 1" if you used --nostyletag
 python ./scripts/prepare_for_kohya_ss_sd_cmd.py \
-    -i ./data/img_train_862_filtered_for_train \
-    --resolution 862 \
+    -i ./data/img_train_1024_filtered_for_train \
+    --resolution 1024 \
     -o ./data/trained_lora_models \
     -C ~/repo/sd-scripts \
     --v2 --v_parameterization \

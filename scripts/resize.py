@@ -18,7 +18,7 @@ def resize(
     to_dir: bool,
 ) -> None:
     if to_dir:
-        root = path_out.joinpath(path_in.parent)
+        root = path_out.joinpath(path_in.parent.name)
         root.mkdir(exist_ok=True, parents=True)
         path_out = root.joinpath(path_in.name)
 
