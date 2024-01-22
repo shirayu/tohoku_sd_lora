@@ -44,7 +44,7 @@ find data/img/original -type f | xargs -t -P 4 -I {} poetry run python ./scripts
 find data/img/converted -type f -name '*.png' | xargs -t -P 4 -I {} poetry run python ./scripts/resize.py --remove_alpha -i {} -o data/img/train_1024 --size 1024 --min_size 768 --to_dir
 
 # Filter out
-python ./scripts/filtered_copy.py --ex ./data/exclude_images.tsv -i ./data/img/train_1024 -o ./data/img/train_1024_filtered
+python ./scripts/filtered_mksymlink.py --ex ./data/exclude_images.tsv -i ./data/img/train_1024 -o ./data/img/train_1024_filtered
 
 # Generate captions
 #   Add: --nostyletag if you want avoid add tag "oistyle"
