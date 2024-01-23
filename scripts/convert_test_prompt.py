@@ -32,7 +32,7 @@ def operation(
             if " --s " not in line:
                 line += f" --s {step}"
             if " --n " not in line:
-                line += f" --n {COMMON_NEGATIVE}"
+                line += f" --n {negative_prompt}"
 
             outf.write(line)
             outf.write("\n")
