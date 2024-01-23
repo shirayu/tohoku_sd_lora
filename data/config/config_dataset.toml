@@ -9,6 +9,7 @@ caption_dropout_rate = 0.0
 # caption_prefix = null
 # caption_suffix = null
 shuffle_caption = true
+keep_tokens_separator = "|||"
 # keep_tokens = 0
 
 [[datasets]]
