@@ -60,7 +60,10 @@ train_for_style:
 	rm -f $(DIR_ROOT_STYLE)/base.safetensors
 	ln -s $(BASE_MODEL) $(DIR_ROOT_STYLE)/base.safetensors
 	cp $(META2_for_style) $(META3_for_style)
-	DIM=$(DIM_FOR_STYLE) bash ./train.sh \
+	DIM=$(DIM_FOR_STYLE) \
+	PROMPT_PREFIX="oistyle, " \
+	    bash \
+	    	./train.sh \
 		$(DIR_ROOT_STYLE) \
 		$(DIR_STYLE_MODEL) \
 	    "--float optimizer.learning_rate=$(LR) --str optimizer.lr_scheduler=$(LR_SCHEDULER) --str optimizer.optimizer_type=$(OPTIMIZER) --int training.max_train_epochs=$(EPOCH) --int training.gradient_accumulation_steps=1" \

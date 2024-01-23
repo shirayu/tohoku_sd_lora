@@ -17,6 +17,7 @@ OUTPUT_DIR="$2"
 PARAM_TRAIN="$3"
 PARAM_DS="$4"
 DIM=${DIM:-0}
+PROMPT_PREFIX=${PROMPT_PREFIX:-""}
 
 test -e "${BASE_DIR}/base.safetensors"
 test -e "${BASE_DIR}/meta_3.json"
@@ -63,6 +64,7 @@ cp data/config/test_prompt.txt "${CONFIG_OUT_DIR}/test_prompt.txt"
 python ./scripts/convert_test_prompt.py \
     -i "${CONFIG_OUT_DIR}/test_prompt.txt" \
     -o "${CONFIG_OUT_DIR}/config_sample_prompts.txt" \
+    --prefix "${PROMPT_PREFIX}" \
     || exit 10
 
 # save version
