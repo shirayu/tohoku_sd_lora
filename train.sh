@@ -29,8 +29,8 @@ fi
 
 CONFIG_OUT_DIR="${OUTPUT_DIR}/config"
 mkdir -p "${CONFIG_OUT_DIR}"
-eval poetry run python ./rewrite_config.py \
-    -i ./config/config_train.toml \
+eval poetry run python ./scripts/rewrite_config.py \
+    -i ./data/config/config_train.toml \
     --str "save.output_dir=${OUTPUT_DIR}" \
     --str "save.logging_dir=${OUTPUT_DIR}/log" \
     --str "dataset.dataset_config=${OUTPUT_DIR}/config/config_dataset.toml" \
@@ -43,24 +43,24 @@ eval poetry run python ./rewrite_config.py \
 
 cp "${BASE_DIR}/meta_3.json" "${CONFIG_OUT_DIR}/meta_3.json"
 
-python ./exclude_invalid_data_from_meta.py \
+python ./scripts/exclude_invalid_data_from_meta.py \
     -i "${CONFIG_OUT_DIR}/meta_3.json" \
     -o "${CONFIG_OUT_DIR}/meta_4.json"
 
-eval poetry run python ./rewrite_config.py \
-    -i ./config/config_dataset.toml \
+eval poetry run python ./scripts/rewrite_config.py \
+    -i ./data/config/config_dataset.toml \
     --str "datasets.subsets.image_dir=${BASE_DIR}/images" \
     --str "datasets.subsets.metadata_file=${CONFIG_OUT_DIR}/meta_4.json" \
     -o "${CONFIG_OUT_DIR}/config_dataset.toml" \
     "${PARAM_DS}" \
     || exit 9
 
-# cp config/config_dataset.toml "${CONFIG_OUT_DIR}/config_dataset.toml"
+# cp data/config/config_dataset.toml "${CONFIG_OUT_DIR}/config_dataset.toml"
 
-cp config/config_accelerate.yaml "${CONFIG_OUT_DIR}/config_accelerate.yaml"
-cp config/test_prompt.txt "${CONFIG_OUT_DIR}/test_prompt.txt"
+cp data/config/config_accelerate.yaml "${CONFIG_OUT_DIR}/config_accelerate.yaml"
+cp data/config/test_prompt.txt "${CONFIG_OUT_DIR}/test_prompt.txt"
 
-python ./convert_test_prompt.py \
+python ./scripts/convert_test_prompt.py \
     -i "${CONFIG_OUT_DIR}/test_prompt.txt" \
     -o "${CONFIG_OUT_DIR}/config_sample_prompts.txt" \
     || exit 10
@@ -85,4 +85,4 @@ eval "${SD_SCRIPTS_ROOT}/venv/bin/accelerate" \
     --config_file "${CONFIG_OUT_DIR}/config_train.toml" \
     || exit 3
 
-python ./rename_output_filename.py -i "${OUTPUT_DIR}/sample"
+python ./scripts/rename_output_filename.py -i "${OUTPUT_DIR}/sample"

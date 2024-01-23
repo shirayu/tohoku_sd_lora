@@ -22,9 +22,10 @@ TARGET_TAG_FILE:=./data/tag_target.json
 DIR_IMG_SRC:=./data/img/train_1024
 
 DIR_ROOT_STYLE:=$(OUT_DIR)/style
-DIR_IMAGES_for_style:=$(DIR_ROOT_STYLE)/img
+DIR_IMAGES_for_style:=$(DIR_ROOT_STYLE)/images
 META1_for_style:=$(DIR_ROOT_STYLE)/meta_1.json
 META2_for_style:=$(DIR_ROOT_STYLE)/meta_2.json
+META3_for_style:=$(DIR_ROOT_STYLE)/meta_3.json
 DIR_STYLE_MODEL:=$(DIR_ROOT_STYLE)/model
 
 mksymlink_for_style:
@@ -58,6 +59,7 @@ meta_2_for_style:
 train_for_style:
 	rm -f $(OUT_DIR)/base.safetensors
 	ln -s $(BASE_MODEL) $(OUT_DIR)/base.safetensors
+	cp $(META2_for_style) $(META3_for_style)
 	DIM=$(DIM_FOR_STYLE) bash ./train.sh \
 		$(DIR_ROOT_STYLE) \
 		$(DIR_STYLE_MODEL) \

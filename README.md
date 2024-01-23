@@ -52,8 +52,8 @@ make -f ./train.mk meta_1_for_style
 # meta_2
 make -f ./train.mk meta_2_for_style
 
-# meta_3
-python ./scripts/generate_meta3.py -i ./data/img/meta_2.json -o ./data/img/meta_3
+# train
+make -f ./train.mk train_for_style
 ```
 
 ### Prefix
