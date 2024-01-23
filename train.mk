@@ -57,8 +57,8 @@ meta_2_for_style:
 	    --batch_size 4
 
 train_for_style:
-	rm -f $(OUT_DIR)/base.safetensors
-	ln -s $(BASE_MODEL) $(OUT_DIR)/base.safetensors
+	rm -f $(DIR_ROOT_STYLE)/base.safetensors
+	ln -s $(BASE_MODEL) $(DIR_ROOT_STYLE)/base.safetensors
 	cp $(META2_for_style) $(META3_for_style)
 	DIM=$(DIM_FOR_STYLE) bash ./train.sh \
 		$(DIR_ROOT_STYLE) \
