@@ -1,0 +1,25 @@
+[general]
+caption_extension = '.txt'
+enable_bucket = true
+
+caption_dropout_rate = 0.0
+
+# caption_tag_dropout_rate = 0.0
+# caption_separator = ','
+# caption_prefix = null
+# caption_suffix = null
+shuffle_caption = true
+# keep_tokens = 0
+
+[[datasets]]
+
+batch_size = 0 # please designate
+
+# These will be ignored if metadata has "train_resolution"
+# resolution = 1024
+# min_bucket_reso = 512
+# max_bucket_reso = 2056
+
+  [[datasets.subsets]]
+  image_dir = '/please/designate'
+  metadata_file = '/please/designate'
