@@ -10,6 +10,7 @@ def operation(
     path_in: Path,
     path_out: Path,
     path_ex: Path,
+    for_style: bool,
 ) -> None:
     path_out.mkdir(exist_ok=True, parents=True)
     parent2name = defaultdict(set)
@@ -31,6 +32,9 @@ def operation(
             parent: str = p.parent.name
             name: str = p.name
 
+            if for_style and ("_sd" in parent or "_oc" in parent or "_fairy" in parent or "chuwa" in parent):
+                continue
+
             if name in parent2name.get(parent, {}):
                 continue
 
@@ -49,6 +53,7 @@ def get_opts() -> argparse.Namespace:
     oparser.add_argument("--input", "-i", type=Path, required=True)
     oparser.add_argument("--output", "-o", type=Path, required=True)
     oparser.add_argument("--exclude", "--ex", type=Path, required=True)
+    oparser.add_argument("--for_style", action="store_true")
 
     return oparser.parse_args()
 
@@ -59,6 +64,7 @@ def main() -> None:
         path_in=opts.input,
         path_out=opts.output,
         path_ex=opts.exclude,
+        for_style=opts.for_style,
     )
 
 
