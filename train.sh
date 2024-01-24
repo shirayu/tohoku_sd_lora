@@ -18,6 +18,12 @@ PARAM_TRAIN="$3"
 PARAM_DS="$4"
 DIM=${DIM:-0}
 PROMPT_PREFIX=${PROMPT_PREFIX:-""}
+SAMPLE_INTERVAL=${SAMPLE_INTERVAL:-0}
+if [[ ${SAMPLE_INTERVAL} -eq 0 ]]; then
+    ARG_SAMPLE=" --bool sample.sample_at_first=False --int sample.sample_every_n_steps=None --int sample.sample_every_n_epochs=None "
+else
+    ARG_SAMPLE=" --str 'sample.sample_prompts=${OUTPUT_DIR}/config/config_sample_prompts.txt' --int sample.sample_every_n_steps=${SAMPLE_INTERVAL}"
+fi
 
 test -e "${BASE_DIR}/base.safetensors"
 test -e "${BASE_DIR}/meta_3.json"
@@ -35,7 +41,7 @@ eval poetry run python ./scripts/rewrite_config.py \
     --str "save.output_dir=${OUTPUT_DIR}" \
     --str "save.logging_dir=${OUTPUT_DIR}/log" \
     --str "dataset.dataset_config=${OUTPUT_DIR}/config/config_dataset.toml" \
-    --str "sample.sample_prompts=${OUTPUT_DIR}/config/config_sample_prompts.txt" \
+    "${ARG_SAMPLE}" \
     --str "model.pretrained_model_name_or_path=${BASE_DIR}/base.safetensors" \
     "${PARAM_LORA}" \
     -o "${CONFIG_OUT_DIR}/config_train.toml" \

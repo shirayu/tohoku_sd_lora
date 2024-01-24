@@ -25,9 +25,17 @@ def set_value(d: dict, key: str, val):
 
     if isinstance(d[ks[0]], list):
         for v in d[ks[0]]:
-            set_value(v, ".".join(ks[1:]), val)
+            set_value(
+                v,
+                ".".join(ks[1:]),
+                val,
+            )
     else:
-        set_value(d[ks[0]], ".".join(ks[1:]), val)
+        set_value(
+            d[ks[0]],
+            ".".join(ks[1:]),
+            val,
+        )
 
 
 def operation(
@@ -44,19 +52,35 @@ def operation(
 
     for arg in args_float:
         kv = arg.split("=", maxsplit=1)
-        set_value(d, kv[0], float(kv[1]))
+        set_value(
+            d,
+            kv[0],
+            float(kv[1]) if kv[1] != "None" else None,
+        )
 
     for arg in args_int:
         kv = arg.split("=", maxsplit=1)
-        set_value(d, kv[0], int(kv[1]))
+        set_value(
+            d,
+            kv[0],
+            int(kv[1]) if kv[1] != "None" else None,
+        )
 
     for arg in args_str:
         kv = arg.split("=", maxsplit=1)
-        set_value(d, kv[0], str(kv[1]))
+        set_value(
+            d,
+            kv[0],
+            str(kv[1]) if kv[1] != "None" else None,
+        )
 
     for arg in args_bool:
         kv = arg.split("=", maxsplit=1)
-        set_value(d, kv[0], bool(strtobool(kv[1])))
+        set_value(
+            d,
+            kv[0],
+            bool(strtobool(kv[1])) if kv[1] != "None" else None,
+        )
 
     with path_out.open("w") as outf:
         toml.dump(d, outf)
