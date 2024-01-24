@@ -54,7 +54,7 @@ make -f ./train.mk prepare_for_chara
 make -f ./train.mk train_for_chara META3=./tmp/out/chara/meta_3/zundamon.json
 
 # tensorboard
-make -f ./train.mk train_for_chara_tensorboard META3=/tmp/out/chara/meta_3/zundamon.json
+make -f ./train.mk train_for_chara_tensorboard META3=./tmp/out/chara/meta_3/zundamon.json
 ```
 
 ### Style
