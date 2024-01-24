@@ -47,7 +47,9 @@ def operation(
             d = json.loads(line)
             fname: str = Path(d["input"]).stem
             tags: set[str] = set(d["tags"]["0"].keys())
-            fanme2alltags[fname] = tags
+            p: str = Path(d["input"]).parent.name
+            key: str = f"{p}___{fname}"
+            fanme2alltags[key] = tags
 
     with path_tag_target.open() as inf:
         chara2target_tags: dict[str, list[str]] = json.load(inf)
@@ -57,7 +59,7 @@ def operation(
         name: str = imgf.stem.split("___")[0]
         chara: str = name2chara(name)
 
-        tags_for_imgf: None | set[str] = fanme2alltags[imgf.stem]
+        tags_for_imgf: set[str] = fanme2alltags[imgf.stem.replace("_oc__withchara", "_oc")]
 
         is_oc__with_chara: bool = False
         if "_oc__withchara" in imgf.stem:

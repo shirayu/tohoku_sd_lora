@@ -38,9 +38,6 @@ def operation(
             if name in parent2name.get(parent, {}):
                 continue
 
-            if parent == "zundamon_sd":
-                parent = "zundamon"
-
             path_out.joinpath(f"{parent}___{p.name}").symlink_to(p.absolute())
 
             if "_oc" in parent:

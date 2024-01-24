@@ -48,16 +48,7 @@ find data/img/converted -type f -name '*.png' | xargs -t -P 4 -I {} poetry run p
 
 ```bash
 # Filter out
-make -f ./train.mk mksymlink_for_chara
-
-# meta_1
-make -f ./train.mk meta_1_for_chara
-
-# meta_2
-make -f ./train.mk meta_2_for_chara
-
-# meta_3 files
-make -f ./train.mk meta_3_for_chara
+make -f ./train.mk prepare_for_chara
 
 # train
 make -f ./train.mk train_for_chara META3=./tmp/out/chara/meta_3/metan.mod.json

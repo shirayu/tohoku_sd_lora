@@ -89,6 +89,7 @@ META3_DIR_for_chara:=$(DIR_ROOT_CHARA)/meta_3/
 DIR_CHARA_MODEL:=$(DIR_ROOT_CHARA)/model
 
 mksymlink_for_chara:
+	rm -rf $(DIR_IMAGES_for_chara)
 	python ./scripts/filtered_mksymlink.py \
 		--ex ./data/exclude_images.tsv \
 		-i $(DIR_IMG_SRC) \
@@ -119,6 +120,12 @@ meta_3_for_chara:
 	python ./scripts/generate_meta3.py \
 		-i $(META2_for_chara) \
 		-o $(META3_DIR_for_chara)
+
+prepare_for_chara: \
+	mksymlink_for_chara \
+	meta_1_for_chara \
+	meta_2_for_chara \
+	meta_3_for_chara
 
 META3:=
 META3_DIR:=$(DIR_CHARA_MODEL)/$(shell basename $(META3) .json)
