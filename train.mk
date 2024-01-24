@@ -69,6 +69,8 @@ train_for_style:
 	    "--float optimizer.learning_rate=$(LR) --str optimizer.lr_scheduler=$(LR_SCHEDULER) --str optimizer.optimizer_type=$(OPTIMIZER) --int training.max_train_epochs=$(EPOCH) --int training.gradient_accumulation_steps=1" \
 	    "--int datasets.batch_size=$(BS)"
 
+train_for_style_tensorboard:
+	poetry run tensorboard --logdir $(DIR_STYLE_MODEL)/log
 
 SHELL=/bin/bash
 .DELETE_ON_ERROR:
