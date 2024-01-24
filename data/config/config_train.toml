@@ -13,8 +13,8 @@ cache_latents = true
 optimizer_type = "Lion"
 optimizer_args = [ ]
 lr_scheduler = "cosine"
-lr_warmup_steps = 100
-learning_rate = 4e-6
+lr_warmup_steps = 0
+learning_rate = 4e-7
 max_grad_norm = 0.0
 
 network_train_unet_only = true
