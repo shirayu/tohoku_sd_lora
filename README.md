@@ -56,6 +56,9 @@ make -f ./train.mk meta_1_for_chara
 # meta_2
 make -f ./train.mk meta_2_for_chara
 
+# meta_3 files
+make -f ./train.mk meta_3_for_chara
+
 # train
 make -f ./train.mk train_for_chara
 ```

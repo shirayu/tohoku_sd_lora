@@ -26,7 +26,9 @@ else
 fi
 
 test -e "${BASE_DIR}/base.safetensors"
-test -e "${BASE_DIR}/meta_3.json"
+
+META3=${META3:-${BASE_DIR}/meta_3.json}
+test -e "${META3}"
 test -e "${BASE_DIR}/images"
 
 # config
@@ -48,7 +50,7 @@ eval poetry run python ./scripts/rewrite_config.py \
     "${PARAM_TRAIN}" \
     || exit 8
 
-cp "${BASE_DIR}/meta_3.json" "${CONFIG_OUT_DIR}/meta_3.json"
+cp "${META3}" "${CONFIG_OUT_DIR}/meta_3.json"
 
 python ./scripts/exclude_invalid_data_from_meta.py \
     -i "${CONFIG_OUT_DIR}/meta_3.json" \

@@ -83,7 +83,7 @@ DIR_ROOT_CHARA:=$(OUT_DIR)/chara
 DIR_IMAGES_for_chara:=$(DIR_ROOT_CHARA)/images
 META1_for_chara:=$(DIR_ROOT_CHARA)/meta_1.json
 META2_for_chara:=$(DIR_ROOT_CHARA)/meta_2.json
-META3_for_chara:=$(DIR_ROOT_CHARA)/meta_3.json
+META3_DIR_for_chara:=$(DIR_ROOT_CHARA)/meta_3/
 DIR_CHARA_MODEL:=$(DIR_ROOT_CHARA)/model
 
 mksymlink_for_chara:
@@ -113,19 +113,28 @@ meta_2_for_chara:
 	    --max_bucket_reso $(MAX_RESO) \
 	    --batch_size 4
 
+meta_3_for_chara:
+	python ./scripts/generate_meta3.py \
+		-i $(META2_for_chara) \
+		-o $(META3_DIR_for_chara)
+
+META3:=
+META3_DIR:=$(DIR_CHARA_MODEL)/$(shell basename $(META3) .json)
 train_for_chara:
-	rm -f $(DIR_ROOT_CHARA)/base.safetensors
-	ln -s $(BASE_MODEL) $(DIR_ROOT_CHARA)/base.safetensors
-	cp $(META2_for_chara) $(META3_for_chara)
+	mkdir -p $(META3_DIR)
+	rm -f $(META3_DIR)/base.safetensors
+	ln -s $(BASE_MODEL) $(META3_DIR)/base.safetensors
+	test ! -z $(META3)
+	META3=$(META3) \
 	DIM=$(DIM_FOR_CHARA) \
 	    bash \
 	    	./train.sh \
 		$(DIR_ROOT_CHARA) \
-		$(DIR_CHARA_MODEL) \
+		$(META3_DIR) \
 	    "--float optimizer.learning_rate=$(LR) --str optimizer.lr_scheduler=$(LR_SCHEDULER) --str optimizer.optimizer_type=$(OPTIMIZER) --int training.max_train_epochs=$(EPOCH) --int training.gradient_accumulation_steps=1" \
 	    "--int datasets.batch_size=$(BS)"
 
 train_for_chara_tensorboard:
-	poetry run tensorboard --logdir $(DIR_CHARA_MODEL)/log
+	poetry run tensorboard --logdir $(META3_DIR)/log
 
 
