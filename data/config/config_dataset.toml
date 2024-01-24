@@ -15,6 +15,7 @@ keep_tokens_separator = "|||"
 [[datasets]]
 
 batch_size = 0 # please designate
+num_repeats = 1
 
 # These will be ignored if metadata has "train_resolution"
 # resolution = 1024

@@ -13,6 +13,7 @@ LR=3e-5
 LR_SCHEDULER=constant
 OPTIMIZER="Lion"
 BS=12
+NUM_REPEATS=12
 # DIM>0 => LoRA
 DIM:=32
 DIM_FOR_STYLE:=$(DIM)
@@ -141,7 +142,7 @@ train_for_chara:
 		$(DIR_ROOT_CHARA) \
 		$(META3_DIR) \
 	    "--float optimizer.learning_rate=$(LR) --str optimizer.lr_scheduler=$(LR_SCHEDULER) --str optimizer.optimizer_type=$(OPTIMIZER) --int training.max_train_epochs=$(EPOCH) --int training.gradient_accumulation_steps=1 --bool training.fp8_base=$(FP8) --int save.save_every_n_epochs=999 " \
-	    "--int datasets.batch_size=$(BS)"
+	    "--int datasets.batch_size=$(BS) --int datasets.num_repeats=$(NUM_REPEATS)"
 
 train_for_chara_tensorboard:
 	poetry run tensorboard --logdir $(META3_DIR)/log
