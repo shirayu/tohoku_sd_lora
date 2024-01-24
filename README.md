@@ -60,7 +60,7 @@ make -f ./train.mk meta_2_for_chara
 make -f ./train.mk meta_3_for_chara
 
 # train
-make -f ./train.mk train_for_chara
+make -f ./train.mk train_for_chara META3=./tmp/out/chara/meta_3/metan.mod.json
 ```
 
 ### Style

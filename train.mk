@@ -123,7 +123,7 @@ META3_DIR:=$(DIR_CHARA_MODEL)/$(shell basename $(META3) .json)
 train_for_chara:
 	mkdir -p $(META3_DIR)
 	rm -f $(META3_DIR)/base.safetensors
-	ln -s $(BASE_MODEL) $(META3_DIR)/base.safetensors
+	ln -s $(BASE_MODEL) $(DIR_ROOT_CHARA)/base.safetensors
 	test ! -z $(META3)
 	META3=$(META3) \
 	DIM=$(DIM_FOR_CHARA) \

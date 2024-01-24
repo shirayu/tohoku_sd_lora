@@ -57,12 +57,7 @@ def operation(
         name: str = imgf.stem.split("___")[0]
         chara: str = name2chara(name)
 
-        tags_for_imgf: None | set[str] = fanme2alltags.get(imgf.stem)
-        if tags_for_imgf is None:
-            print(f"{imgf}: **SKIP** because No chara2target_tags")
-            continue
-        if for_style and "_oc" in imgf.stem or ".mod" in imgf.stem:
-            continue
+        tags_for_imgf: None | set[str] = fanme2alltags[imgf.stem]
 
         is_oc__with_chara: bool = False
         if "_oc__withchara" in imgf.stem:
