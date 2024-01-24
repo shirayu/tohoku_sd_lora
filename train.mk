@@ -9,15 +9,17 @@ OUT_DIR:=./tmp/out
 BASE_MODEL:=~/data/sd/models/_base/animagine-xl-3.0-base.safetensors
 BASIC_RESO=1024
 MAX_RESO=1568
-LR=4e-6
+LR=3e-5
 LR_SCHEDULER=constant
 OPTIMIZER="Lion"
 BS=12
 # DIM>0 => LoRA
-DIM:=64
+DIM:=32
 DIM_FOR_STYLE:=$(DIM)
+DIM_FOR_CHARA:=$(DIM)
 EPOCH=10
 MIXED_PRECISION=bf16
+FP8:="False"
 
 ###-------------
 AUTO_TAG_TILE:=./data/auto_tags.jsonl
@@ -122,7 +124,7 @@ META3:=
 META3_DIR:=$(DIR_CHARA_MODEL)/$(shell basename $(META3) .json)
 train_for_chara:
 	mkdir -p $(META3_DIR)
-	rm -f $(META3_DIR)/base.safetensors
+	rm -f $(DIR_ROOT_CHARA)/base.safetensors
 	ln -s $(BASE_MODEL) $(DIR_ROOT_CHARA)/base.safetensors
 	test ! -z $(META3)
 	META3=$(META3) \
@@ -131,7 +133,7 @@ train_for_chara:
 	    	./train.sh \
 		$(DIR_ROOT_CHARA) \
 		$(META3_DIR) \
-	    "--float optimizer.learning_rate=$(LR) --str optimizer.lr_scheduler=$(LR_SCHEDULER) --str optimizer.optimizer_type=$(OPTIMIZER) --int training.max_train_epochs=$(EPOCH) --int training.gradient_accumulation_steps=1" \
+	    "--float optimizer.learning_rate=$(LR) --str optimizer.lr_scheduler=$(LR_SCHEDULER) --str optimizer.optimizer_type=$(OPTIMIZER) --int training.max_train_epochs=$(EPOCH) --int training.gradient_accumulation_steps=1 --bool training.fp8_base=$(FP8) --int save.save_every_n_epochs=999 " \
 	    "--int datasets.batch_size=$(BS)"
 
 train_for_chara_tensorboard:
