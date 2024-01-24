@@ -39,6 +39,7 @@ def operation(
     path_tag: Path,
     path_tag_target: Path,  # 学習対象のタグ定義JSONファイル
     for_style: bool,
+    no_style_trigger_word: bool,
 ) -> None:
     fanme2alltags: dict[str, set[str]] = {}
     with path_tag.open() as inf:
@@ -96,7 +97,8 @@ def operation(
         triggers: list[str] = []
         if not for_style:
             triggers.append(trigger_word)
-        triggers.append(STYLE_TRIGGER_WORD)
+        if not no_style_trigger_word:
+            triggers.append(STYLE_TRIGGER_WORD)
 
         # https://github.com/kohya-ss/sd-scripts/pull/975
         caption = ", ".join(triggers) + ", ||| " + ", ".join(new_tags)
@@ -122,6 +124,7 @@ def get_opts() -> argparse.Namespace:
     oparser.add_argument("--tag", type=Path, required=True)
     oparser.add_argument("--tag-target", type=Path, required=True)
     oparser.add_argument("--for_style", action="store_true")
+    oparser.add_argument("--no_style_trigger_word", action="store_true")
     return oparser.parse_args()
 
 
@@ -133,6 +136,7 @@ def main() -> None:
         path_tag=opts.tag,
         path_tag_target=opts.tag_target,
         for_style=opts.for_style,
+        no_style_trigger_word=opts.no_style_trigger_word,
     )
 
 

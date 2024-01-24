@@ -42,7 +42,27 @@ find data/img/original -type f | xargs -t -P 4 -I {} poetry run python ./scripts
 
 # Resize to 1024x1024 (max. min=768x768) and remove alphas
 find data/img/converted -type f -name '*.png' | xargs -t -P 4 -I {} poetry run python ./scripts/resize.py --remove_alpha -i {} -o data/img/train_1024 --size 1024 --min_size 768 --to_dir
+```
 
+### Chara
+
+```bash
+# Filter out
+make -f ./train.mk mksymlink_for_chara
+
+# meta_1
+make -f ./train.mk meta_1_for_chara
+
+# meta_2
+make -f ./train.mk meta_2_for_chara
+
+# train
+make -f ./train.mk train_for_chara
+```
+
+### Style
+
+```bash
 # Filter out
 make -f ./train.mk mksymlink_for_style
 
