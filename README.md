@@ -37,7 +37,7 @@ poetry run python scripts/download.py -i ./data/urls/_special -o ./data/img/orig
 # Remove margins and shrink images
 find data/img/original -type f | xargs -t -P 4 -I {} poetry run python ./scripts/resize.py -i {} -o data/img/converted --size 2048 --to_dir
 
-# Check files in "img_converted" with your eyes
+# Check files in "converted" with your eyes
 # Add modificaion if you need
 
 # Resize to 1024x1024 (max. min=768x768) and remove alphas
@@ -89,7 +89,7 @@ make -f ./train.mk train_for_style
 Use [img2tags](https://github.com/shirayu/img2tags)
 
 ```bash
-img2tags --ext jsonl -i ./data/img/train_1024_filtered -o ./data/img/train_1024_filtered.tags.jsonl
+img2tags --ext jsonl -i <(find ./data/img/train_1024/ -type f | sort ) -o ./data/auto_tags.jsonl
 ```
 
 ## Check new URL
