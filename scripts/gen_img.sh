@@ -14,9 +14,8 @@ if [[ ${LORA} != "" ]]; then
     ARG_LORA="--network_module networks.lora --network_weights ${LORA}"
 fi
 PROMPT_PREFIX=${PROMPT_PREFIX:-}
-ROOT_SUFFIX=${ROOT_SUFFIX:-}
 
-OUTPUT_DIR_ROOT=tmp/generated_images${ROOT_SUFFIX}
+OUTPUT_DIR_ROOT=${OUTPUT_DIR_ROOT:-tmp/generated_images}
 mkdir -p "${OUTPUT_DIR_ROOT}"
 python ./scripts/convert_test_prompt.py \
     -i "data/config/test_prompt.txt" \

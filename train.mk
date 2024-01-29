@@ -21,7 +21,7 @@ DIM_FOR_CHARA:=$(DIM)
 EPOCH=10
 MIXED_PRECISION=bf16
 FULL_BF16:="True"
-FP8:="False"
+FP8:="True"
 
 ###-------------
 AUTO_TAG_TILE:=./data/auto_tags.jsonl
