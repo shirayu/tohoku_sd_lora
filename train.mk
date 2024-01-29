@@ -20,10 +20,10 @@ DIM_FOR_STYLE:=$(DIM)
 DIM_FOR_CHARA:=$(DIM)
 EPOCH=10
 MIXED_PRECISION=bf16
-FULL_BF16:="True"
-FP8:="True"
-ARG_TRAIN_LEARNING_PRAM:="--float optimizer.learning_rate=$(LR) --str optimizer.lr_scheduler=$(LR_SCHEDULER) --str optimizer.optimizer_type=$(OPTIMIZER) --int training.max_train_epochs=$(EPOCH) --int training.gradient_accumulation_steps=1 --bool training.fp8_base=$(FP8) --bool training.full_bf16=$(FULL_BF16) --int save.save_every_n_epochs=999 " \
-ARG_TRAIN_DATASET_PARAM:="--int datasets.batch_size=$(BS) --int datasets.num_repeats=$(NUM_REPEATS)"
+FULL_BF16:=True
+FP8:=True
+ARG_TRAIN_LEARNING_PRAM:=--float optimizer.learning_rate=$(LR) --str optimizer.lr_scheduler=$(LR_SCHEDULER) --str optimizer.optimizer_type=$(OPTIMIZER) --int training.max_train_epochs=$(EPOCH) --int training.gradient_accumulation_steps=1 --bool training.fp8_base=$(FP8) --bool training.full_bf16=$(FULL_BF16) --int save.save_every_n_epochs=999
+ARG_TRAIN_DATASET_PARAM:=--int datasets.batch_size=$(BS) --int datasets.num_repeats=$(NUM_REPEATS)
 
 ###-------------
 AUTO_TAG_TILE:=./data/auto_tags.jsonl
@@ -81,7 +81,7 @@ train_for_style:
 	    	./train.sh \
 		$(DIR_ROOT_STYLE) \
 		$(DIR_STYLE_MODEL) \
-	    "${ARG_TRAIN_LEARNING_PRAM}"
+	    "${ARG_TRAIN_LEARNING_PRAM}" \
 	    "${ARG_TRAIN_DATASET_PARAM}"
 
 train_for_style_tensorboard:
@@ -149,7 +149,7 @@ train_for_chara:
 	    	./train.sh \
 		$(DIR_ROOT_CHARA) \
 		$(META3_DIR) \
-	    "${ARG_TRAIN_LEARNING_PRAM}"
+	    "${ARG_TRAIN_LEARNING_PRAM}" \
 	    "${ARG_TRAIN_DATASET_PARAM}"
 
 train_for_chara_tensorboard:
