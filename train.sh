@@ -96,3 +96,11 @@ eval "${SD_SCRIPTS_ROOT}/venv/bin/accelerate" \
     || exit 3
 
 python ./scripts/rename_output_filename.py -i "${OUTPUT_DIR}/sample"
+
+PROMPT_PREFIX=$(grep '"caption"' tmp/out/chara/meta_3/itako.mod.json | head -n1 | sed 's/.*": "// ; s/|||.*//')
+
+LORA="${OUTPUT_DIR}/mymodel.safetensors" \
+    OUTPUT_DIR_ROOT=${OUTPUT_DIR}/gen \
+    PROMPT_PREFIX="${PROMPT_PREFIX}" \
+    bash -x ./scripts/gen_img.sh \
+    "${BASE_DIR}/base.safetensors"

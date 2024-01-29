@@ -146,6 +146,6 @@ train_for_chara:
 	    "--int datasets.batch_size=$(BS) --int datasets.num_repeats=$(NUM_REPEATS)"
 
 train_for_chara_tensorboard:
-	poetry run tensorboard --logdir $(META3_DIR)/log
+	poetry run tensorboard --logdir $(META3_DIR)/log --bind_all
 
 
