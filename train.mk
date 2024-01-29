@@ -5,6 +5,9 @@ all:
 SHELL=/bin/bash
 .DELETE_ON_ERROR:
 
+DIR_SD_SCRIPTS:=~/workspace/sd-scripts
+PYTHON=$(DIR_SD_SCRIPTS)/venv/bin/python
+
 OUT_DIR:=./tmp/out
 BASE_MODEL:=~/data/sd/models/_base/animagine-xl-3.0-base.safetensors
 BASIC_RESO=1024
@@ -54,8 +57,7 @@ meta_1_for_style:
 	    --for_style
 
 meta_2_for_style:
-	~/workspace/sd-scripts/venv/bin/python \
-	    ~/workspace/sd-scripts/finetune/prepare_buckets_latents.py \
+	$(PYTHON) $(DIR_SD_SCRIPTS)/finetune/prepare_buckets_latents.py \
 	    $(DIR_IMAGES_for_style) \
 	    $(META1_for_style) \
 	    $(META2_for_style) \
@@ -90,8 +92,7 @@ train_for_style_tensorboard:
 STYLE_MERGED_MODEL:=$(OUT_DIR)/base.style_merged.safetensors
 
 style_merge:
-	~/workspace/sd-scripts/venv/bin/python \
-	~/workspace/sd-scripts/networks/sdxl_merge_lora.py \
+	$(PYTHON) $(DIR_SD_SCRIPTS)/networks/sdxl_merge_lora.py \
 	--sd_model $(BASE_MODEL) \
 	--models $(DIR_STYLE_MODEL)/mymodel.safetensors \
 	--precision float \
@@ -125,8 +126,7 @@ meta_1_for_chara:
 	    --no_style_trigger_word
 
 meta_2_for_chara:
-	~/workspace/sd-scripts/venv/bin/python \
-	    ~/workspace/sd-scripts/finetune/prepare_buckets_latents.py \
+	$(PYTHON) $(DIR_SD_SCRIPTS)/finetune/prepare_buckets_latents.py \
 	    $(DIR_IMAGES_for_chara) \
 	    $(META1_for_chara) \
 	    $(META2_for_chara) \
