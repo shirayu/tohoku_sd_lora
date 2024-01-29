@@ -87,6 +87,18 @@ train_for_style:
 train_for_style_tensorboard:
 	poetry run tensorboard --logdir $(DIR_STYLE_MODEL)/log --bind_all
 
+STYLE_MERGED_MODEL:=$(OUT_DIR)/base.style_merged.safetensors
+
+style_merge:
+	~/workspace/sd-scripts/venv/bin/python \
+	~/workspace/sd-scripts/networks/sdxl_merge_lora.py \
+	--sd_model $(BASE_MODEL) \
+	--models $(DIR_STYLE_MODEL)/mymodel.safetensors \
+	--precision float \
+	--save_precision float \
+	--save_to $(STYLE_MERGED_MODEL) \
+	--ratios 1.0
+
 
 ###-------------
 
