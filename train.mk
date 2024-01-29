@@ -64,6 +64,11 @@ meta_2_for_style:
 	    --max_bucket_reso $(MAX_RESO) \
 	    --batch_size 4
 
+prepare_for_style: \
+	mksymlink_for_style \
+	meta_1_for_style \
+	meta_2_for_style
+
 train_for_style:
 	rm -f $(DIR_ROOT_STYLE)/base.safetensors
 	ln -s $(BASE_MODEL) $(DIR_ROOT_STYLE)/base.safetensors
@@ -78,7 +83,7 @@ train_for_style:
 	    "--int datasets.batch_size=$(BS)"
 
 train_for_style_tensorboard:
-	poetry run tensorboard --logdir $(DIR_STYLE_MODEL)/log
+	poetry run tensorboard --logdir $(DIR_STYLE_MODEL)/log --bind_all
 
 
 ###-------------

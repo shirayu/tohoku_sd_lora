@@ -61,13 +61,7 @@ make -f ./train.mk train_for_chara_tensorboard META3=./tmp/out/chara/meta_3/zund
 
 ```bash
 # Filter out
-make -f ./train.mk mksymlink_for_style
-
-# meta_1
-make -f ./train.mk meta_1_for_style
-
-# meta_2
-make -f ./train.mk meta_2_for_style
+make -f ./train.mk prepare_for_style
 
 # train
 make -f ./train.mk train_for_style
