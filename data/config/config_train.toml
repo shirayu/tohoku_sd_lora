@@ -3,6 +3,7 @@
 
 [model]
 pretrained_model_name_or_path = "/please/designate"
+no_metadata = true
 
 [dataset]
 dataset_config = "/please/designate"
