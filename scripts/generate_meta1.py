@@ -74,6 +74,8 @@ def operation(
                 "Metan": "Metan",
             }[chara]
             target_tags |= set(chara2target_tags[chara_body])
+        if "_sd" in chara:
+            target_tags.add("chibi")
 
         trigger_word: str = chara.capitalize()
         if is_oc__with_chara:
