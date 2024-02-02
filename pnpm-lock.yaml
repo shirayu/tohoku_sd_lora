@@ -9,8 +9,8 @@ devDependencies:
     specifier: ^0.33.0
     version: 0.33.0
   pyright:
-    specifier: ^1.1.348
-    version: 1.1.348
+    specifier: ^1.1.349
+    version: 1.1.349
 
 packages:
 
@@ -99,8 +99,8 @@ packages:
       argparse: 2.0.1
     dev: true
 
-  /jsonc-parser@3.2.0:
-    resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
+  /jsonc-parser@3.2.1:
+    resolution: {integrity: sha512-AilxAyFOAcK5wA1+LeaySVBrHsGQvUFCDWXKpZjzaL0PqW+xfBOttn8GNtWKFWqneyMZj41MWF9Kl6iPWLwgOA==}
     dev: true
 
   /linkify-it@4.0.1:
@@ -130,7 +130,7 @@ packages:
       glob: 8.0.3
       ignore: 5.2.4
       js-yaml: 4.1.0
-      jsonc-parser: 3.2.0
+      jsonc-parser: 3.2.1
       markdownlint: 0.27.0
       minimatch: 5.1.6
       run-con: 1.2.12
@@ -164,8 +164,8 @@ packages:
       wrappy: 1.0.2
     dev: true
 
-  /pyright@1.1.348:
-    resolution: {integrity: sha512-Dezu8jwZLwh9c2JCrXbmOb5BSeuQRM6NdOqN0jpuYpSWH9T8uIyhchkLHdvZ9BjDuUG5QN/4LVtLNbyLQHZ5LQ==}
+  /pyright@1.1.349:
+    resolution: {integrity: sha512-AIS2OuIPSifLGeeIlM9NihSdHSCheT7eXPdKnVxIwTvuOXwOX75oQS7xsW1PK+Tkc+S5SzvXeCwPChbjXd+Ztg==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     optionalDependencies:
