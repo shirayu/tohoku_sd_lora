@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-
 import argparse
+import json
 from distutils.util import strtobool
 from pathlib import Path
 
@@ -45,6 +45,7 @@ def operation(
     args_float: list[str],
     args_int: list[str],
     args_str: list[str],
+    args_jsonstr: list[str],
     args_bool: list[str],
 ) -> None:
     with path_in.open() as inf:
@@ -72,6 +73,14 @@ def operation(
             d,
             kv[0],
             str(kv[1]) if kv[1] != "None" else None,
+        )
+
+    for arg in args_jsonstr:
+        kv = arg.split("=", maxsplit=1)
+        set_value(
+            d,
+            kv[0],
+            json.loads(kv[1]) if kv[1] != "None" else None,
         )
 
     for arg in args_bool:
@@ -107,6 +116,11 @@ def get_opts() -> argparse.Namespace:
         default=[],
     )
     oparser.add_argument(
+        "--jsonstr",
+        action="append",
+        default=[],
+    )
+    oparser.add_argument(
         "--bool",
         action="append",
         default=[],
@@ -123,6 +137,7 @@ def main() -> None:
         args_float=opts.float,
         args_int=opts.int,
         args_str=opts.str,
+        args_jsonstr=opts.jsonstr,
         args_bool=opts.bool,
     )
 

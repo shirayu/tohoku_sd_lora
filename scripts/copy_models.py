@@ -12,7 +12,14 @@ def operation(
 ) -> None:
     for f in path_in.glob("**/mymodel.safetensors"):
         myout = path_out.joinpath(f.parent.name + ".safetensors")
+        x: int = 1
+        while True:
+            if not myout.exists():
+                break
+            myout = path_out.joinpath(f.parent.name + f".v{x}.safetensors")
+            x += 1
         shutil.copy(f, myout)
+        print(f"{f} -> {myout}")
 
 
 def get_opts() -> argparse.Namespace:

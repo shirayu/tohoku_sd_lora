@@ -33,7 +33,8 @@ test -e "${BASE_DIR}/images"
 
 # config
 if [[ ${DIM} -ne 0 ]]; then # LoRA
-    PARAM_LORA="--str lora.network_module=networks.lora --int lora.network_dim=${DIM} --float lora.network_alpha=1"
+    NAG='[ "preset=full", "algo=lora"] '
+    PARAM_LORA="--str lora.network_module=lycoris.kohya --int lora.network_dim=${DIM} --float lora.network_alpha=1 --jsonstr lora.network_args='${NAG}'"
 fi
 
 CONFIG_OUT_DIR="${OUTPUT_DIR}/config"
