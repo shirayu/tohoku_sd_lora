@@ -12,7 +12,7 @@ def operation(
 ) -> None:
     for f in path_in.glob("**/mymodel.safetensors"):
         myout = path_out.joinpath(f.parent.name + ".safetensors")
-        x: int = 1
+        x: int = 2
         while True:
             if not myout.exists():
                 break
