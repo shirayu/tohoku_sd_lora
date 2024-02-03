@@ -18,8 +18,10 @@ lr_warmup_steps = 0
 learning_rate = 4e-7
 max_grad_norm = 0.0
 
-network_train_unet_only = true
-
+# network_train_unet_only = true
+train_text_encoder = true
+learning_rate_te1 = 1e-4
+learning_rate_te2 = 1e-4
 
 [training]
 seed = 42
