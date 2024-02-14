@@ -14,9 +14,7 @@ git clone https://github.com/kohya-ss/sd-scripts.git ~/workspace/sd-scripts
 cd ~/workspace/sd-scripts
 python -m venv venv
 ./venv/bin/pip install -r requirements.txt
-./venv/bin/pip install bitsandbytes scipy lion_pytorch
-./venv/bin/pip install xformers
-./venv/bin/pip install lycoris_lora
+./venv/bin/pip install bitsandbytes scipy lion_pytorch lycoris-lora xformers
 ```
 
 ## Setup images
