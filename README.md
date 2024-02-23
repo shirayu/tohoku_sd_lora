@@ -34,7 +34,7 @@ poetry run python scripts/download.py -i ./data/urls/_special -o ./data/img/orig
 
 
 # Remove margins and shrink images
-find data/img/original -type f | xargs -t -P 4 -I {} poetry run python ./scripts/resize.py -i {} -o data/img/converted --size 2048 --to_dir
+find data/img/original -type f | grep -v __misc | xargs -t -P 4 -I {} poetry run python ./scripts/resize.py -i {} -o data/img/converted --size 2048 --to_dir
 
 # Check files in "converted" with your eyes
 # Add modificaion if you need
