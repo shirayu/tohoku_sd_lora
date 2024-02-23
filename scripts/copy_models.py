@@ -10,6 +10,7 @@ def operation(
     path_in: Path,
     path_out: Path,
 ) -> None:
+    path_out.mkdir(exist_ok=True, parents=True)
     for f in path_in.glob("**/mymodel.safetensors"):
         myout = path_out.joinpath(f.parent.name + ".safetensors")
         x: int = 2
