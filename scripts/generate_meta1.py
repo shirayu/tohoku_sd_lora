@@ -27,7 +27,7 @@ def name2chara(name: str) -> str:
 
     if "oc" in items:
         c: str = prompt.split("_")[0]
-        prompt = "wear " + NAME2NEWNAME[f"{c}_oc"]
+        prompt = NAME2NEWNAME[f"{c}_oc"]
 
     return prompt.capitalize()
 
