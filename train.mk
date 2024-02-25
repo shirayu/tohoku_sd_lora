@@ -78,7 +78,7 @@ train_for_style:
 	ln -s $(BASE_MODEL) $(DIR_ROOT_STYLE)/base.safetensors
 	cp $(META2_for_style) $(META3_for_style)
 	DIM=$(DIM_FOR_STYLE) \
-	PROMPT_PREFIX="oistyle, " \
+	PROMPT_PREFIX_FILE="oistyle, " \
 	    bash \
 		./scripts/train_lora/train_lora.sh \
 		$(DIR_ROOT_STYLE) \
@@ -109,6 +109,7 @@ META1_for_chara:=$(DIR_ROOT_CHARA)/meta_1.json
 META2_for_chara:=$(DIR_ROOT_CHARA)/meta_2.json
 META3_DIR_for_chara:=$(DIR_ROOT_CHARA)/meta_3/
 DIR_CHARA_MODEL:=$(DIR_ROOT_CHARA)/model
+BASE_MODEL_FILE:=$(DIR_ROOT_CHARA)/base.safetensors
 
 mksymlink_for_chara:
 	rm -rf $(DIR_IMAGES_for_chara)
@@ -148,23 +149,52 @@ prepare_for_chara: \
 	meta_2_for_chara \
 	meta_3_for_chara
 
-META3:=
-META3_DIR:=$(DIR_CHARA_MODEL)/$(shell basename $(META3) .json)
-train_for_chara:
-	mkdir -p $(META3_DIR)
-	rm -f $(DIR_ROOT_CHARA)/base.safetensors
-	ln -s $(BASE_MODEL) $(DIR_ROOT_CHARA)/base.safetensors
+
+###-------------
+META3:=/please/designate
+MY_CHARA_ROOT_DIR:=$(DIR_CHARA_MODEL)/$(shell basename $(META3) .json)
+PROMPT_PREFIX_FILE:=$(MY_CHARA_ROOT_DIR)/prompt_prefix.txt
+LORA_FILE:=$(MY_CHARA_ROOT_DIR)/mymodel.safetensors
+MY_CHARA_TEST_GEN_DIR:=$(MY_CHARA_ROOT_DIR)/gen_test
+MY_CHARA_TEST_GEN_PROMPT:=$(MY_CHARA_ROOT_DIR)/prompots.txt
+MY_CHARA_TEST_GEN_DONE:=$(MY_CHARA_ROOT_DIR)/done
+
+$(MY_CHARA_TEST_GEN_PROMPT): $(PROMPT_PREFIX_FILE)
+	mkdir -p $(dir $@)
+	python ./scripts/train_lora/convert_test_prompt.py \
+	    -i ./data/config/test_prompt.txt \
+	    -o $@ \
+	    --prefix "$(shell cat $(PROMPT_PREFIX_FILE))"
+
+gen_test_imgs: $(MY_CHARA_TEST_GEN_DONE)
+$(MY_CHARA_TEST_GEN_DONE): $(BASE_MODEL_FILE) $(MY_CHARA_TEST_GEN_PROMPT) $(LORA_FILE) $(MY_CHARA_ROOT_DIR)
+	bash -x ./scripts/gen_img.sh \
+	    $(BASE_MODEL_FILE) \
+	    $(MY_CHARA_TEST_GEN_PROMPT) \
+	    $(MY_CHARA_TEST_GEN_DIR) \
+	    $(LORA_FILE) \
+	&& touch $@
+
+
+train_for_chara: $(LORA_FILE) $(PROMPT_PREFIX_FILE) gen_test_imgs
+$(PROMPT_PREFIX_FILE): $(META3)
+	grep '"caption"' $(META3) | head -n1 | sed 's/.*": "// ; s/|||.*//' > $@
+$(LORA_FILE): $(META3)
+	mkdir -p $(MY_CHARA_ROOT_DIR)
+	rm -f $(BASE_MODEL_FILE)
+	ln -s $(BASE_MODEL) $(BASE_MODEL_FILE)
 	test ! -z $(META3)
 	META3=$(META3) \
 	DIM=$(DIM_FOR_CHARA) \
 	    bash \
 		./scripts/train_lora/train_lora.sh \
 		$(DIR_ROOT_CHARA) \
-		$(META3_DIR) \
+		$(MY_CHARA_ROOT_DIR) \
 	    "${ARG_TRAIN_LEARNING_PRAM}" \
 	    "${ARG_TRAIN_DATASET_PARAM}"
+	
 
 train_for_chara_tensorboard:
-	poetry run tensorboard --logdir $(META3_DIR)/log --bind_all
+	poetry run tensorboard --logdir $(MY_CHARA_ROOT_DIR)/log --bind_all
 
 

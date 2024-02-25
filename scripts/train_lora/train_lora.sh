@@ -34,7 +34,7 @@ test -e "${BASE_DIR}/base.safetensors"
 LORA="${OUTPUT_DIR}/mymodel.safetensors"
 if [ -e "${LORA}" ]; then
     print_stderr_msg "Already exist: " "${LORA}"
-    exit 1
+    exit
 fi
 
 META3=${META3:-${BASE_DIR}/meta_3.json}
@@ -107,11 +107,3 @@ eval "${SD_SCRIPTS_ROOT}/venv/bin/accelerate" \
     || exit 3
 
 python "${REPO_ROOT}/scripts/train_lora/rename_output_filename.py" -i "${OUTPUT_DIR}/sample"
-
-PROMPT_PREFIX=$(grep '"caption"' "${CONFIG_OUT_DIR}/meta_4.json" | head -n1 | sed 's/.*": "// ; s/|||.*//')
-
-LORA="${OUTPUT_DIR}/mymodel.safetensors" \
-    OUTPUT_DIR_ROOT=${OUTPUT_DIR}/gen \
-    PROMPT_PREFIX="${PROMPT_PREFIX}" \
-    bash -x "${REPO_ROOT}/scripts/gen_img.sh" \
-    "${BASE_DIR}/base.safetensors"

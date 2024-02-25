@@ -1,8 +1,8 @@
-# girl
+# 1girl
 1girl, smile, blush, standing on street, city, shopping, looking at show window, summer (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 1216 --h 832 --d 2990656060 --l 7.0 --s 30 --ss euler_a
-1girl, detailed eyes, aqua eyes, long eyelash, bangs, blush, pink hair, dark blue school uniform, long hair, looking at viewer, smile, solo, sitting in park, (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 832 --h 1216 --d 9999 --l 7.0 --s 30 --ss euler_a
+1girl, detailed eyes, aqua eyes, long eyelash, bangs, dark blue school uniform, long hair, looking at viewer, smile, solo, sitting in park, (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 832 --h 1216 --d 9999 --l 7.0 --s 30 --ss euler_a
 2girls, dark blue school swimsuit, classroom, (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 832 --h 1216 --d 3398454939 --l 7.0 --s 30 --ss euler_a
 
-# boy
-1boy, beard, gentle man, climbing snow mountain, sweat , (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 832 --h 1216 --d 3099478566 --l 7.0 --s 30 --ss euler_a
-2boys, 20yo, black hair, strength training at the gym, talking, (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 832 --h 1216 --d 907401054 --l 7.0 --s 30 --ss euler_a
+# 2girls
+2girls, climbing snow mountain, sweat , (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 832 --h 1216 --d 3099478566 --l 7.0 --s 30 --ss euler_a
+2girls, 20yo, strength training at the gym, talking, (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 832 --h 1216 --d 907401054 --l 7.0 --s 30 --ss euler_a
