@@ -2,6 +2,8 @@
 
 set -x
 
+REPO_ROOT=${SCRIPT_DIR:-"$(cd "$(dirname "$0")/.." && pwd)"}
+
 export TRANSFORMERS_OFFLINE=${TRANSFORMERS_OFFLINE:-1}
 export HF_DATASETS_OFFLINE=${HF_DATASETS_OFFLINE:-1}
 
@@ -39,7 +41,7 @@ fi
 
 CONFIG_OUT_DIR="${OUTPUT_DIR}/config"
 mkdir -p "${CONFIG_OUT_DIR}"
-eval poetry run python ./scripts/rewrite_config.py \
+eval poetry run python "${REPO_ROOT}/scripts/rewrite_config.py" \
     -i ./data/config/config_train.toml \
     --str "save.output_dir=${OUTPUT_DIR}" \
     --str "save.logging_dir=${OUTPUT_DIR}/log" \
@@ -53,11 +55,11 @@ eval poetry run python ./scripts/rewrite_config.py \
 
 cp "${META3}" "${CONFIG_OUT_DIR}/meta_3.json"
 
-python ./scripts/exclude_invalid_data_from_meta.py \
+python "${REPO_ROOT}/scripts/exclude_invalid_data_from_meta.py" \
     -i "${CONFIG_OUT_DIR}/meta_3.json" \
     -o "${CONFIG_OUT_DIR}/meta_4.json"
 
-eval poetry run python ./scripts/rewrite_config.py \
+eval poetry run python "${REPO_ROOT}/scripts/rewrite_config.py" \
     -i ./data/config/config_dataset.toml \
     --str "datasets.subsets.image_dir=${BASE_DIR}/images" \
     --str "datasets.subsets.metadata_file=${CONFIG_OUT_DIR}/meta_4.json" \
@@ -70,7 +72,7 @@ eval poetry run python ./scripts/rewrite_config.py \
 cp data/config/config_accelerate.yaml "${CONFIG_OUT_DIR}/config_accelerate.yaml"
 cp data/config/test_prompt.txt "${CONFIG_OUT_DIR}/test_prompt.txt"
 
-python ./scripts/convert_test_prompt.py \
+python "${REPO_ROOT}/scripts/convert_test_prompt.py" \
     -i "${CONFIG_OUT_DIR}/test_prompt.txt" \
     -o "${CONFIG_OUT_DIR}/config_sample_prompts.txt" \
     --prefix "${PROMPT_PREFIX}" \
@@ -96,12 +98,12 @@ eval "${SD_SCRIPTS_ROOT}/venv/bin/accelerate" \
     --config_file "${CONFIG_OUT_DIR}/config_train.toml" \
     || exit 3
 
-python ./scripts/rename_output_filename.py -i "${OUTPUT_DIR}/sample"
+python "${REPO_ROOT}/scripts/rename_output_filename.py" -i "${OUTPUT_DIR}/sample"
 
 PROMPT_PREFIX=$(grep '"caption"' "${CONFIG_OUT_DIR}/meta_4.json" | head -n1 | sed 's/.*": "// ; s/|||.*//')
 
 LORA="${OUTPUT_DIR}/mymodel.safetensors" \
     OUTPUT_DIR_ROOT=${OUTPUT_DIR}/gen \
     PROMPT_PREFIX="${PROMPT_PREFIX}" \
-    bash -x ./scripts/gen_img.sh \
+    bash -x "${REPO_ROOT}/scripts/gen_img.sh" \
     "${BASE_DIR}/base.safetensors"

@@ -158,7 +158,7 @@ train_for_chara:
 	META3=$(META3) \
 	DIM=$(DIM_FOR_CHARA) \
 	    bash \
-	    	./train.sh \
+		./scripts/train_lora.sh \
 		$(DIR_ROOT_CHARA) \
 		$(META3_DIR) \
 	    "${ARG_TRAIN_LEARNING_PRAM}" \
