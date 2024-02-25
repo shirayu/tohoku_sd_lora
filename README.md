@@ -26,21 +26,21 @@ python -m venv venv
 poetry install
 
 # Download images
-poetry run python scripts/download.py -i ./data/urls -o ./data/img/original
+poetry run python ./prepare/scripts/download.py -i ./data/urls -o ./data/img/original
 
 # (Optional) If you want to also use special files
-poetry run python scripts/download.py -i ./data/urls/_special -o ./data/img/original_special
+poetry run python ./prepare/scripts/download.py -i ./data/urls/_special -o ./data/img/original_special
 # Convert files and place them to each folder under "data/img/original"
 
 
 # Remove margins and shrink images
-find data/img/original -type f | grep -v __misc | xargs -t -P 4 -I {} poetry run python ./scripts/resize.py -i {} -o data/img/converted --size 2048 --to_dir
+find data/img/original -type f | grep -v __misc | xargs -t -P 4 -I {} poetry run python ./scripts/prepare/resize.py -i {} -o data/img/converted --size 2048 --to_dir
 
 # Check files in "converted" with your eyes
 # Add modificaion if you need
 
 # Resize to 1024x1024 (max. min=768x768) and remove alphas
-find data/img/converted -type f -name '*.png' | xargs -t -P 4 -I {} poetry run python ./scripts/resize.py --remove_alpha -i {} -o data/img/train_1024 --size 1024 --min_size 768 --to_dir
+find data/img/converted -type f -name '*.png' | xargs -t -P 4 -I {} poetry run python ./scripts/prepare/resize.py --remove_alpha -i {} -o data/img/train_1024 --size 1024 --min_size 768 --to_dir
 ```
 
 ### Chara
@@ -82,5 +82,5 @@ img2tags --ext jsonl -i <(find ./data/img/train_1024/ -type f | sort ) -o ./data
 ## Check new URL
 
 ```bash
-poetry run python ./scripts/get_urls.py | cat - ./data/urls/*txt ./data/urls/_special/* | sort | uniq -c | sort -k1nr | grep -v psd | grep -v ai$ | grep -v '2 '
+poetry run python ./scripts/prepare/get_urls.py | cat - ./data/urls/*txt ./data/urls/_special/* | sort | uniq -c | sort -k1nr | grep -v psd | grep -v ai$ | grep -v '2 '
 ```
