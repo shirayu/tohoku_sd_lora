@@ -12,7 +12,9 @@ def operation(
 ) -> None:
     path_out.mkdir(exist_ok=True, parents=True)
     for f in path_in.glob("**/mymodel.safetensors"):
-        myout = path_out.joinpath(f.parent.name + ".safetensors")
+        new_name: str = f.parent.name + ".safetensors"
+        new_name = new_name.replace(".mod", "")
+        myout = path_out.joinpath(new_name)
         x: int = 2
         while True:
             if not myout.exists():
