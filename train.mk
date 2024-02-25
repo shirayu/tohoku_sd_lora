@@ -42,14 +42,14 @@ META3_for_style:=$(DIR_ROOT_STYLE)/meta_3.json
 DIR_STYLE_MODEL:=$(DIR_ROOT_STYLE)/model
 
 mksymlink_for_style:
-	python ./scripts/filtered_mksymlink.py \
+	python ./scripts/train_lora/filtered_mksymlink.py \
 		--ex ./data/exclude_images.tsv \
 		-i $(DIR_IMG_SRC) \
 		-o $(DIR_IMAGES_for_style) \
 	    	--for_style
 
 meta_1_for_style:
-	python ./scripts/generate_meta1.py \
+	python ./scripts/train_lora/generate_meta1.py \
 	    --tag $(AUTO_TAG_TILE) \
 	    --tag-target $(TARGET_TAG_FILE) \
 	    -i $(DIR_IMAGES_for_style) \
@@ -80,7 +80,7 @@ train_for_style:
 	DIM=$(DIM_FOR_STYLE) \
 	PROMPT_PREFIX="oistyle, " \
 	    bash \
-	    	./train.sh \
+		./scripts/train_lora/train_lora.sh \
 		$(DIR_ROOT_STYLE) \
 		$(DIR_STYLE_MODEL) \
 	    "${ARG_TRAIN_LEARNING_PRAM}" \
@@ -112,13 +112,13 @@ DIR_CHARA_MODEL:=$(DIR_ROOT_CHARA)/model
 
 mksymlink_for_chara:
 	rm -rf $(DIR_IMAGES_for_chara)
-	python ./scripts/filtered_mksymlink.py \
+	python ./scripts/train_lora/filtered_mksymlink.py \
 		--ex ./data/exclude_images.tsv \
 		-i $(DIR_IMG_SRC) \
 		-o $(DIR_IMAGES_for_chara) \
 
 meta_1_for_chara:
-	python ./scripts/generate_meta1.py \
+	python ./scripts/train_lora/generate_meta1.py \
 	    --tag $(AUTO_TAG_TILE) \
 	    --tag-target $(TARGET_TAG_FILE) \
 	    -i $(DIR_IMAGES_for_chara) \
@@ -138,7 +138,7 @@ meta_2_for_chara:
 	    --batch_size 4
 
 meta_3_for_chara:
-	python ./scripts/generate_meta3.py \
+	python ./scripts/train_lora/generate_meta3.py \
 		-i $(META2_for_chara) \
 		-o $(META3_DIR_for_chara)
 
@@ -158,7 +158,7 @@ train_for_chara:
 	META3=$(META3) \
 	DIM=$(DIM_FOR_CHARA) \
 	    bash \
-		./scripts/train_lora.sh \
+		./scripts/train_lora/train_lora.sh \
 		$(DIR_ROOT_CHARA) \
 		$(META3_DIR) \
 	    "${ARG_TRAIN_LEARNING_PRAM}" \
