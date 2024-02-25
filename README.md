@@ -56,6 +56,15 @@ make -f ./train.mk train_for_chara META3=./tmp/out/chara/meta_3/zundamon.json
 make -f ./train.mk train_for_chara_tensorboard META3=./tmp/out/chara/meta_3/zundamon.json
 ```
 
+```bash
+# Generation
+bash -x ./scripts/gen_img.sh \
+    BASE_MODEL.safetensors \
+    OUTPUT_DIR \
+    PROMPT_FILE.txt \
+    LORA_FILE.safetensors
+```
+
 ### Style
 
 ```bash
