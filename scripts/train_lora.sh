@@ -3,11 +3,13 @@
 set -x
 
 REPO_ROOT=${SCRIPT_DIR:-"$(cd "$(dirname "$0")/.." && pwd)"}
-
+function print_stderr_msg() {
+    printf "\e[31m%s\e[32m%s\e[m\n" "$1" "$2" 1>&2
+}
 export TRANSFORMERS_OFFLINE=${TRANSFORMERS_OFFLINE:-1}
 export HF_DATASETS_OFFLINE=${HF_DATASETS_OFFLINE:-1}
 
-SD_SCRIPTS_ROOT=~/workspace/sd-scripts
+SD_SCRIPTS_ROOT=${SD_SCRIPTS_ROOT:-~/workspace/sd-scripts}
 
 if [[ $# -lt 2 ]]; then
     echo "[Usage] $0 basedir outputdir [param_train] [param_ds]" >/dev/stderr
@@ -28,6 +30,12 @@ else
 fi
 
 test -e "${BASE_DIR}/base.safetensors"
+
+LORA="${OUTPUT_DIR}/mymodel.safetensors"
+if [ -e "${LORA}" ]; then
+    print_stderr_msg "Already exist: " "${LORA}"
+    exit 1
+fi
 
 META3=${META3:-${BASE_DIR}/meta_3.json}
 test -e "${META3}"
