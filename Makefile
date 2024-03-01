@@ -10,7 +10,7 @@ pytest:
 	
 ruff:
 	ruff format --respect-gitignore --check
-	ruff --respect-gitignore
+	ruff check --respect-gitignore
 
 yamllint:
 	find . \( -name node_modules -o -name .venv \) -prune -o -type f -name '*.yml' -print \
