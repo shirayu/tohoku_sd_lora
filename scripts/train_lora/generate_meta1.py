@@ -22,9 +22,17 @@ def operation(
             d = json.loads(line)
             fname: str = Path(d["input"]).stem
             tags: set[str] = set(d["tags"]["0"].keys())
+
+            # banned tags
+            tags2: set[str] = set()
+            for t in tags:
+                if t.startswith("alternate_"):
+                    continue
+                tags2.add(t)
+
             p: str = Path(d["input"]).parent.name
             key: str = f"{p}___{fname}"
-            fanme2alltags[key] = tags
+            fanme2alltags[key] = tags2
 
     with path_tag_target.open() as inf:
         chara2target_tags: dict[str, list[str]] = json.load(inf)
