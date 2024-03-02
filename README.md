@@ -34,13 +34,13 @@ poetry run python ./scripts/prepare/download.py -i ./data/urls/_special -o ./dat
 
 
 # Remove margins and shrink images
-find data/img/original -type f | grep -v __misc | xargs -t -P 4 -I {} poetry run python ./prepare/scripts/resize.py -i {} -o data/img/converted --size 2048 --to_dir
+find data/img/original -type f | grep -v __misc | xargs -t -P 4 -I {} poetry run python ./scripts/prepare/resize.py -i {} -o data/img/converted --size 2048 --to_dir
 
 # Check files in "converted" with your eyes
 # Add modificaion if you need
 
 # Resize to 1024x1024 (max. min=768x768) and remove alphas
-find data/img/converted -type f -name '*.png' | xargs -t -P 4 -I {} poetry run python ./prepare/scripts/resize.py --remove_alpha -i {} -o data/img/train_1024 --size 1024 --min_size 768 --to_dir
+find data/img/converted -type f -name '*.png' | xargs -t -P 4 -I {} poetry run python ./scripts/prepare/resize.py --remove_alpha -i {} -o data/img/train_1024 --size 1024 --min_size 768 --to_dir
 ```
 
 ### Chara
