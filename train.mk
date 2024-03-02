@@ -153,18 +153,18 @@ prepare_for_chara: \
 ###-------------
 META3:=/please/designate
 MY_CHARA_ROOT_DIR:=$(DIR_CHARA_MODEL)/$(shell basename $(META3) .json)
-PROMPT_PREFIX_FILE:=$(MY_CHARA_ROOT_DIR)/prompt_prefix.txt
+PROMPT_CONFIG_FILE:=$(MY_CHARA_ROOT_DIR)/config/prompt_config.json
 LORA_FILE:=$(MY_CHARA_ROOT_DIR)/mymodel.safetensors
 MY_CHARA_TEST_GEN_DIR:=$(MY_CHARA_ROOT_DIR)/gen_test
 MY_CHARA_TEST_GEN_PROMPT:=$(MY_CHARA_TEST_GEN_DIR)/prompots.txt
 MY_CHARA_TEST_GEN_DONE:=$(MY_CHARA_TEST_GEN_DIR)/done
 
-$(MY_CHARA_TEST_GEN_PROMPT): $(PROMPT_PREFIX_FILE)
+$(MY_CHARA_TEST_GEN_PROMPT): $(PROMPT_CONFIG_FILE)
 	mkdir -p $(dir $@)
 	python ./scripts/train_lora/convert_test_prompt.py \
 	    -i ./data/config/test_prompt.txt \
 	    -o $@ \
-	    --prefix "$(shell cat $(PROMPT_PREFIX_FILE))"
+	    --config $< 
 
 gen_test_imgs: $(MY_CHARA_TEST_GEN_DONE)
 $(MY_CHARA_TEST_GEN_DONE): $(BASE_MODEL_FILE) $(MY_CHARA_TEST_GEN_PROMPT) $(LORA_FILE) $(MY_CHARA_ROOT_DIR)
@@ -176,9 +176,9 @@ $(MY_CHARA_TEST_GEN_DONE): $(BASE_MODEL_FILE) $(MY_CHARA_TEST_GEN_PROMPT) $(LORA
 	&& touch $@
 
 
-train_for_chara: $(LORA_FILE) $(PROMPT_PREFIX_FILE) gen_test_imgs
-$(PROMPT_PREFIX_FILE): $(META3)
-	grep '"caption"' $(META3) | head -n1 | sed 's/.*": "// ; s/|||.*//' > $@
+train_for_chara: $(LORA_FILE) $(PROMPT_CONFIG_FILE) gen_test_imgs
+$(PROMPT_CONFIG_FILE): $(META3)
+	python ./scripts/train_lora/meta3_to_prompt_config.py -i $< -o $@
 $(LORA_FILE): $(META3)
 	mkdir -p $(MY_CHARA_ROOT_DIR)
 	rm -f $(BASE_MODEL_FILE)
