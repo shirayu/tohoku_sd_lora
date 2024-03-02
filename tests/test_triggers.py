@@ -11,8 +11,19 @@ def test_options():
     print(f"ALL_TRIGGERS: {len(ALL_TRIGGERS)}")
     print(f"\t{ALL_TRIGGERS}")
 
-    for f in Path("./data/urls/").iterdir():
-        if f.is_dir():
+    # Check each URL file name is one of  trigger words
+    for tgt in [
+        "./data/urls/",
+        "./data/img/original",
+        "./data/img/converted",
+        "./data/img/train_1024",
+    ]:
+        t: Path = Path(tgt)
+        if not t.exists():
             continue
+        for f in t.iterdir():
+            if f.name.startswith("_"):
+                continue
 
-        assert f.stem in ALL_TRIGGERS
+            name: str = f.stem.replace("_sd", "")
+            assert name in ALL_TRIGGERS

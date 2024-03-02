@@ -131,7 +131,32 @@
         "twintails",
         "drill_hair",
         "twin_drills",
-        "purple_hair"
+        "purple_hair",
+        "parted_bangs",
+        "bangs"
+    ],
+    "Meoc": [
+        "dress",
+        "frills",
+        "lolita_fashion",
+        "long_sleeves",
+        "pantyhose",
+        "white_dress",
+        "white_footwear",
+        "white_pantyhose",
+        "bow",
+        "frilled_dress",
+        "puffy_sleeves",
+        "ribbon",
+        "shoes",
+        "hairband",
+        "juliet_sleeves",
+        "wide_sleeves",
+        "frilled_sleeves",
+        "hair_ornament",
+        "white_bow",
+        "cross-laced_clothes",
+        "white_ribbon"
     ],
     "Shinobi": [
         "long_hair",
