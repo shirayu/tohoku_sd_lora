@@ -59,10 +59,10 @@ def operation(
         name: str = imgf.stem.split("___")[0]
         chara: str = name2chara(name)
 
-        tags_for_imgf: set[str] = fanme2alltags[imgf.stem.replace("_oc__withchara", "_oc")]
+        tags_for_imgf: set[str] = fanme2alltags[imgf.stem.replace("__withchara", "")]
 
         is_oc__with_chara: bool = False
-        if "_oc__withchara" in imgf.stem:
+        if "__withchara" in imgf.stem:
             is_oc__with_chara = True
 
         target_tags: set[str] = set(chara2target_tags[chara.replace("_sd", "")])
@@ -71,7 +71,7 @@ def operation(
                 "Itoc": "Itako",
                 "Zuoc": "Zunko",
                 "Kioc": "Kiritan",
-                "Metan": "Metan",
+                "Meoc": "Metan",
             }[chara]
             target_tags |= set(chara2target_tags[chara_body])
         if "_sd" in chara:
@@ -83,7 +83,7 @@ def operation(
                 "Itoc": "ItakoOC",
                 "Zuoc": "ZunkoOC",
                 "Kioc": "KiritanOC",
-                "Metan": "Metan",
+                "Meoc": "MetanOC",
             }[trigger_word]
 
         # Add the trigger word
