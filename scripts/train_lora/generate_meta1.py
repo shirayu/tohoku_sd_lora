@@ -11,7 +11,8 @@ def operation(
     path_in: Path,
     path_out: Path,
     path_tag: Path,
-    path_tag_target: Path,  # 学習対象のタグ定義JSONファイル
+    path_tag_group: Path,
+    path_trigger: Path,  # 学習対象のタグ定義JSONファイル
     for_style: bool,
     no_style_trigger_word: bool,
     path_output_trigger: Path | None,
@@ -34,8 +35,22 @@ def operation(
             key: str = f"{p}___{fname}"
             fanme2alltags[key] = tags2
 
-    with path_tag_target.open() as inf:
-        chara2target_tags: dict[str, list[str]] = json.load(inf)
+    group2tags: dict[str, set[str]] = {}
+    for f in path_tag_group.glob("**/*.txt"):
+        with f.open() as inf:
+            group2tags[f.stem] = set()
+            for line in inf:
+                line = line.strip()
+                if len(line) == 0 or line.startswith("#"):
+                    continue
+                group2tags[f.stem].add(line)
+
+    chara2target_tags: dict[str, set[str]] = {}
+    with path_trigger.open() as inf:
+        for k, gs in json.load(inf).items():
+            chara2target_tags[k] = set()
+            for group in gs:
+                chara2target_tags[k] |= group2tags[group]
 
     fname2caption: dict[str, dict[str, str]] = {}
     dirname2trigger: dict[str, str] = {}
@@ -48,7 +63,7 @@ def operation(
         if "__withchara" in imgf.stem:
             is_oc__with_chara = True
 
-        target_tags: set[str] = set(chara2target_tags[chara.replace("_sd", "").replace("__withchara", "")])
+        target_tags: set[str] = chara2target_tags[chara.replace("_sd", "").replace("__withchara", "")]
         if is_oc__with_chara:
             chara_body: str = {
                 "Itoc": "Itako",
@@ -56,7 +71,7 @@ def operation(
                 "Kioc": "Kiritan",
                 "Meoc": "Metan",
             }[chara.replace("__withchara", "")]
-            target_tags |= set(chara2target_tags[chara_body])
+            target_tags |= chara2target_tags[chara_body]
         if "_sd" in chara:
             target_tags.add("chibi")
 
@@ -120,7 +135,8 @@ def get_opts() -> argparse.Namespace:
     oparser.add_argument("--output", "-o", type=Path, default="/dev/stdout", required=False)
     oparser.add_argument("--output_triggers", type=Path, required=False)
     oparser.add_argument("--tag", type=Path, required=True)
-    oparser.add_argument("--tag-target", type=Path, required=True)
+    oparser.add_argument("--tag-trigger", type=Path, required=True)
+    oparser.add_argument("--tag-group", type=Path, required=True)
     oparser.add_argument("--for_style", action="store_true")
     oparser.add_argument("--no_style_trigger_word", action="store_true")
     return oparser.parse_args()
@@ -133,7 +149,8 @@ def main() -> None:
         path_out=opts.output,
         path_output_trigger=opts.output_triggers,
         path_tag=opts.tag,
-        path_tag_target=opts.tag_target,
+        path_tag_group=opts.tag_group,
+        path_trigger=opts.tag_trigger,
         for_style=opts.for_style,
         no_style_trigger_word=opts.no_style_trigger_word,
     )

@@ -1,0 +1,10 @@
+# hair ornament
+bell
+headgear
+hairband
+green_hairband
+hair_ornament
+heart_hair_ornament
+star_hair_ornament
+x_hair_ornament
+hair_ribbon

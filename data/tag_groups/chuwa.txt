@@ -1,0 +1,4 @@
+blue_theme
+monochrome
+pokemon_(creature)
+no_humans

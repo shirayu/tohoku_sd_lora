@@ -1,0 +1,84 @@
+# hair
+absurdly_long_hair
+black_hair
+blonde_hair
+blue_hair
+brown_hair
+dark_green_hair
+drill_hair
+eyes_visible_through_hair
+gradient_hair
+green_hair
+grey_hair
+long_hair
+low-tied_long_hair
+multicolored_hair
+orange_hair
+pink_hair
+playing_with_own_hair
+purple_hair
+red_hair
+shiny_hair
+short_hair
+streaked_hair
+two-tone_hair
+very_long_hair
+white_hair
+
+# hairstyle
+ponytail
+high_ponytail
+ahoge
+twintails
+twin_drills
+parted_bangs
+bangs
+
+# wings
+wings
+bird_wings
+black_wings
+feathered_wings
+
+# skin
+pale_skin
+dark_skin
+dark-skinned_female
+tan
+
+
+# eyes
+bags_under_eyes
+black_eyes
+blue_eyes
+brown_eyes
+closed_eyes
+empty_eyes
+green_eyes
+grey_eyes
+hair_between_eyes
+orange_eyes
+pink_eyes
+purple_eyes
+red_eyes
+sparkling_eyes
+yellow_eyes
+
+# ears
+animal_ears
+fox_ears
+rabbit_ears
+fake_animal_ears
+cat_ears
+animal_ear_fluff
+
+# breasts
+breasts
+large_breasts
+medium_breasts
+
+# robot
+joints
+robot_joints
+android
+antennae

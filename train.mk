@@ -30,7 +30,8 @@ ARG_TRAIN_DATASET_PARAM:=--int datasets.batch_size=$(BS) --int datasets.num_repe
 
 ###-------------
 AUTO_TAG_TILE:=./data/auto_tags.jsonl
-TARGET_TAG_FILE:=./data/tag_target.json
+TRIGGER_FILE:=./data/trigger.json
+TAG_GROUPS_DIR:=./data/tag_groups
 DIR_IMG_SRC:=./data/img/train_1024
 
 ###-------------
@@ -51,7 +52,8 @@ mksymlink_for_style:
 meta_1_for_style:
 	python ./scripts/train_lora/generate_meta1.py \
 	    --tag $(AUTO_TAG_TILE) \
-	    --tag-target $(TARGET_TAG_FILE) \
+	    --tag-group $(TAG_GROUPS_DIR) \
+	    --tag-trigger $(TRIGGER_FILE) \
 	    -i $(DIR_IMAGES_for_style) \
 	    -o $(META1_for_style) \
 	    --for_style
@@ -122,7 +124,8 @@ mksymlink_for_chara:
 meta_1_for_chara:
 	python ./scripts/train_lora/generate_meta1.py \
 	    --tag $(AUTO_TAG_TILE) \
-	    --tag-target $(TARGET_TAG_FILE) \
+	    --tag-group $(TAG_GROUPS_DIR) \
+	    --tag-trigger $(TRIGGER_FILE) \
 	    -i $(DIR_IMAGES_for_chara) \
 	    -o $(META1_for_chara) \
 	    --output_triggers $(DIRNAME2TRIGGER) \

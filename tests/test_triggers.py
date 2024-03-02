@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 def test_options():
-    with Path("./data/tag_target.json").open() as inf:
+    with Path("./data/trigger.json").open() as inf:
         d = json.load(inf)
     ALL_TRIGGERS = sorted(list(d.keys()))
     print(f"ALL_TRIGGERS: {len(ALL_TRIGGERS)}")
