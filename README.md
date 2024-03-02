@@ -91,5 +91,5 @@ img2tags --ext jsonl -i <(find ./data/img/train_1024/ -type f | sort ) -o ./data
 ## Check new URL
 
 ```bash
-poetry run python ./scripts/prepare/get_urls.py | cat - ./data/urls/*txt ./data/urls/_special/* | sort | uniq -c | sort -k1nr | grep -v psd | grep -v ai$ | grep -v '2 '
+poetry run python ./scripts/prepare/get_urls.py --check ./data/img/original
 ```

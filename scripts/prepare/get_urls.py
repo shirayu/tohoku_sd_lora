@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 import argparse
 import sys
 from pathlib import Path
@@ -11,7 +10,7 @@ def operation(
     path_out: Path,
     special: bool,
     path_check: None | Path,
-) -> None:
+) -> bool:
     res = requests.get("https://zunko.jp/con_illust.html")
     if res.status_code != 200:
         print(res.status_code)
@@ -45,17 +44,21 @@ def operation(
             items = line.replace("'", "").replace(");", "").replace(")", "").strip().split(",")[3:5]
             x: str = "/".join(items)
             url: str = f"{url_prefix}{x}{ext}"
-            outf.write(f"{url}\n")
+            if not path_check:
+                outf.write(f"{url}\n")
             file_names[Path(url).name] = url
 
-    if path_check is not None:
-        now = set()
-        for f in path_check.glob("**/*"):
-            now.add(f.name)
-        diff = set(file_names.keys()) - now
-        for d in sorted(list(diff)):
-            url: str = file_names[d]
-            sys.stderr.write(f"NEW\t{d}\t{url}\n")
+        if path_check is not None:
+            now = set()
+            for f in path_check.glob("**/*"):
+                now.add(f.name)
+            diff = set(file_names.keys()) - now
+            for d in sorted(list(diff)):
+                url: str = file_names[d]
+                outf.write(f"NEW\t{d}\t{url}\n")
+            if len(diff) > 0:
+                return False
+    return True
 
 
 def get_opts() -> argparse.Namespace:
@@ -68,11 +71,13 @@ def get_opts() -> argparse.Namespace:
 
 def main() -> None:
     opts = get_opts()
-    operation(
+    ok = operation(
         opts.output,
         opts.special,
         opts.check,
     )
+    if not ok:
+        sys.exit(1)
 
 
 if __name__ == "__main__":
