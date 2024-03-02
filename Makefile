@@ -6,7 +6,7 @@ all: lint_node lint_python
 TARGET_DIRS:=./scripts
 
 pytest:
-	pytest
+	pytest -s
 	
 ruff:
 	ruff format --respect-gitignore --check

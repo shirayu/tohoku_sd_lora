@@ -35,7 +35,7 @@ def operation(
         d = json.load(inf)
         pr: str = list(d.values())[0]["caption"]
         key: str = pr.split(", |||")[0]
-        assert key in ALL_KEYS
+        assert key in ALL_KEYS, f"Unexpected key: {key}"
 
         trigger: str = key
         if trigger in {"Itoc", "Kioc", "Zuoc"}:
