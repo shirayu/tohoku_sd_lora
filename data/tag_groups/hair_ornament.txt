@@ -1,10 +1,21 @@
 # hair ornament
+hair_bow
 bell
 headgear
 hairband
+headband
 green_hairband
 hair_ornament
 heart_hair_ornament
 star_hair_ornament
 x_hair_ornament
 hair_ribbon
+hair_flower
+hair_bell
+hair_bobbles
+
+hair_stick
+
+red_headwear
+blue_headwear
+white_headwear

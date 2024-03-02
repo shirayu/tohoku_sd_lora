@@ -2,3 +2,4 @@ blush_stickers
 full_body
 no_humans
 pokemon_(creature)
+tail

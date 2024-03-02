@@ -33,6 +33,11 @@ twintails
 twin_drills
 parted_bangs
 bangs
+sidelocks
+blunt_bangs
+hair_bun
+single_hair_bun
+hair_scrunchie
 
 # wings
 wings

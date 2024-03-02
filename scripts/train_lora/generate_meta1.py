@@ -27,7 +27,10 @@ def operation(
             # banned tags
             tags2: set[str] = set()
             for t in tags:
-                if t.startswith("alternate_"):
+                if t.startswith("alternate_") or t in {
+                    "personification",
+                    "virtual_youtuber",
+                }:
                     continue
                 tags2.add(t)
 
