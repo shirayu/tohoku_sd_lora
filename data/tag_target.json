@@ -1,9 +1,9 @@
 {
     "Anko": [
-        "alternate_costume",
-        "bird_wings",
         "black_hair",
-        "black_wings",
+        "short_hair",
+        "long_hair",
+        "very_long_hair",
         "bridal_gauntlets",
         "cleavage",
         "detached_sleeves",
@@ -21,13 +21,16 @@
         "red_eyes",
         "sarashi",
         "sash",
-        "short_hair",
         "socks",
         "thighhighs",
         "tokin_hat",
-        "wings"
+        "wings",
+        "bird_wings",
+        "black_wings",
+        "feathered_wings"
     ],
     "Awamo": [
+        "dark_skin",
         "blue_hair",
         "purple_eyes",
         "hair_ornament",
@@ -221,6 +224,7 @@
         "long_hair"
     ],
     "Zunko": [
+        "dark_green_hair",
         "green_hair",
         "long_hair",
         "very_long_hair",
