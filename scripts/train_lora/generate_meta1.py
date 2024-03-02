@@ -76,7 +76,7 @@ def operation(
 
         # https://github.com/kohya-ss/sd-scripts/pull/975
         trigger: str = ", ".join(triggers)
-        caption = trigger + ", ||| " + ", ".join(new_tags)
+        caption = trigger + ", ||| " + ", ".join(sorted(new_tags))
         fname2caption[imgf.stem] = {
             "caption": caption,
         }
