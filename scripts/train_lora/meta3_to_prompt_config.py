@@ -4,41 +4,17 @@ import argparse
 import json
 from pathlib import Path
 
-ALL_KEYS: set[str] = {
-    "Anko",
-    "Awamo",
-    "Chanko",
-    "Chuwa",
-    "Hokamel",
-    "Itako",
-    "Itoc",
-    "Kioc",
-    "Kiritan",
-    "Metan",
-    "Shinobi",
-    "Sora",
-    "Tsurugi",
-    "Usagi",
-    "Zfr",
-    "Zundamon",
-    "Zunko",
-    "Zuoc",
-}
-
 
 def operation(
     *,
     path_in: Path,
     path_out: Path,
+    key: str,
 ) -> None:
     with path_in.open() as inf, path_out.open("w") as outf:
-        d = json.load(inf)
-        pr: str = list(d.values())[0]["caption"]
-        key: str = pr.split(", |||")[0]
-        assert key in ALL_KEYS, f"Unexpected key: {key}"
-
-        trigger: str = key
-        if trigger in {"Itoc", "Kioc", "Zuoc"}:
+        key2trigger = json.load(inf)
+        trigger: str = key2trigger[key]
+        if trigger.endswith("oc"):
             trigger = f"1girl wear {key}"
 
         info: dict[str, str] = {
@@ -52,6 +28,7 @@ def get_opts() -> argparse.Namespace:
     oparser = argparse.ArgumentParser()
     oparser.add_argument("--input", "-i", type=Path, default="/dev/stdin", required=False)
     oparser.add_argument("--output", "-o", type=Path, default="/dev/stdout", required=False)
+    oparser.add_argument("--key", required=True)
     return oparser.parse_args()
 
 
@@ -60,6 +37,7 @@ def main() -> None:
     operation(
         path_in=opts.input,
         path_out=opts.output,
+        key=opts.key,
     )
 
 

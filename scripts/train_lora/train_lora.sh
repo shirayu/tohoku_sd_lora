@@ -21,7 +21,6 @@ OUTPUT_DIR="$2"
 PARAM_TRAIN="$3"
 PARAM_DS="$4"
 DIM=${DIM:-0}
-PROMPT_PREFIX=${PROMPT_PREFIX:-""}
 SAMPLE_INTERVAL=${SAMPLE_INTERVAL:-0}
 if [[ ${SAMPLE_INTERVAL} -eq 0 ]]; then
     ARG_SAMPLE=" --bool sample.sample_at_first=False --int sample.sample_every_n_steps=None --int sample.sample_every_n_epochs=None "
@@ -79,12 +78,6 @@ eval poetry run python "${REPO_ROOT}/scripts/train_lora/rewrite_config.py" \
 
 cp data/config/config_accelerate.yaml "${CONFIG_OUT_DIR}/config_accelerate.yaml"
 cp data/config/test_prompt.txt "${CONFIG_OUT_DIR}/test_prompt.txt"
-
-python "${REPO_ROOT}/scripts/train_lora/convert_test_prompt.py" \
-    -i "${CONFIG_OUT_DIR}/test_prompt.txt" \
-    -o "${CONFIG_OUT_DIR}/config_sample_prompts.txt" \
-    --prefix "${PROMPT_PREFIX}" \
-    || exit 10
 
 # save version
 

@@ -154,7 +154,8 @@ prepare_for_chara: \
 
 ###-------------
 META3:=/please/designate
-MY_CHARA_ROOT_DIR:=$(DIR_CHARA_MODEL)/$(shell basename $(META3) .json)
+META3NAME:=$(shell basename $(META3) .json)
+MY_CHARA_ROOT_DIR:=$(DIR_CHARA_MODEL)/$(META3NAME)
 PROMPT_CONFIG_FILE:=$(MY_CHARA_ROOT_DIR)/config/prompt_config.json
 LORA_FILE:=$(MY_CHARA_ROOT_DIR)/mymodel.safetensors
 MY_CHARA_TEST_GEN_DIR:=$(MY_CHARA_ROOT_DIR)/gen_test
@@ -179,8 +180,9 @@ $(MY_CHARA_TEST_GEN_DONE): $(BASE_MODEL_FILE) $(MY_CHARA_TEST_GEN_PROMPT) $(LORA
 
 
 train_for_chara: $(LORA_FILE) $(PROMPT_CONFIG_FILE) gen_test_imgs
-$(PROMPT_CONFIG_FILE): $(META3)
-	python ./scripts/train_lora/meta3_to_prompt_config.py -i $< -o $@
+$(PROMPT_CONFIG_FILE): $(META3) $(DIRNAME2TRIGGER)
+	python ./scripts/train_lora/meta3_to_prompt_config.py -i $(DIRNAME2TRIGGER) --key $(META3NAME) -o $@
+
 $(LORA_FILE): $(META3)
 	mkdir -p $(MY_CHARA_ROOT_DIR)
 	rm -f $(BASE_MODEL_FILE)
