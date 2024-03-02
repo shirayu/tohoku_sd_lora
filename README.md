@@ -75,9 +75,9 @@ make -f ./train.mk prepare_for_style
 make -f ./train.mk train_for_style
 ```
 
-### Prefix
+### Suffix
 
-- ``_oc``: Official costume
+- ``oc``: Official costume
 - ``_sd``: SD character
 
 ## Tagging

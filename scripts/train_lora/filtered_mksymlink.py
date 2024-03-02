@@ -32,7 +32,7 @@ def operation(
             parent: str = p.parent.name
             name: str = p.name
 
-            if for_style and ("_sd" in parent or "_oc" in parent or "_fairy" in parent or "chuwa" in parent):
+            if for_style and (parent.endswith("_sd") or parent.endswith("oc") or "Zfr" in parent or "Chuwa" in parent):
                 continue
 
             if name in parent2name.get(parent, {}):
@@ -40,8 +40,8 @@ def operation(
 
             path_out.joinpath(f"{parent}___{p.name}").symlink_to(p.absolute())
 
-            if "_oc" in parent:
-                another_parent: str = parent.replace("_oc", "_oc__withchara")
+            if parent.endswith("oc"):
+                another_parent: str = parent[:-2] + "oc__withchara"
                 path_out.joinpath(f"{another_parent}___{p.name}").symlink_to(p.absolute())
 
 
