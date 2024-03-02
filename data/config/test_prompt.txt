@@ -1,5 +1,5 @@
 <trigger>, smile, blush, standing on street, city, shopping, looking at show window, summer (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 1216 --h 832 --d 2990656060 --l 7.0 --s 30 --ss euler_a
-<trigger>, detailed eyes, aqua eyes, long eyelash, bangs, dark blue school uniform, long hair, looking at viewer, smile, solo, sitting in park, (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 832 --h 1216 --d 9999 --l 7.0 --s 30 --ss euler_a
+<trigger>, solo, detailed eyes, long eyelash, bangs, dark blue school uniform, long hair, looking at viewer, embarrassed, sitting in park, (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 832 --h 1216 --d 9999 --l 7.0 --s 30 --ss euler_a
 <trigger>, dark blue school swimsuit, classroom, (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 832 --h 1216 --d 3398454939 --l 7.0 --s 30 --ss euler_a
 
 <trigger>, climbing snow mountain, sweat , (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 832 --h 1216 --d 3099478566 --l 7.0 --s 30 --ss euler_a
