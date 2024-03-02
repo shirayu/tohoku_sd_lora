@@ -106,6 +106,7 @@ style_merge:
 DIR_ROOT_CHARA:=$(OUT_DIR)/chara
 DIR_IMAGES_for_chara:=$(DIR_ROOT_CHARA)/images
 META1_for_chara:=$(DIR_ROOT_CHARA)/meta_1.json
+DIRNAME2TRIGGER:=$(DIR_ROOT_CHARA)/triggers.json
 META2_for_chara:=$(DIR_ROOT_CHARA)/meta_2.json
 META3_DIR_for_chara:=$(DIR_ROOT_CHARA)/meta_3/
 DIR_CHARA_MODEL:=$(DIR_ROOT_CHARA)/model
@@ -124,6 +125,7 @@ meta_1_for_chara:
 	    --tag-target $(TARGET_TAG_FILE) \
 	    -i $(DIR_IMAGES_for_chara) \
 	    -o $(META1_for_chara) \
+	    --output_triggers $(DIRNAME2TRIGGER) \
 	    --no_style_trigger_word
 
 meta_2_for_chara:
