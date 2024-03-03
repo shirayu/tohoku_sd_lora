@@ -73,6 +73,9 @@ make -f ./train.mk prepare_for_style
 
 # train
 make -f ./train.mk train_for_style NUM_REPEATS=4
+
+# merge (need much RAM)
+make -f ./train.mk style_merge
 ```
 
 ### Suffix
