@@ -148,6 +148,10 @@ mksymlink_for_chara:
 		-i $(DIR_IMG_SRC) \
 		-o $(DIR_IMAGES_for_chara) \
 
+CHARA_WITH_STYLE:=0
+ifeq ($(CHARA_WITH_STYLE),0)
+	GENERATE_META1_ARG:=--no_style_trigger_word
+endif
 meta_1_for_chara:
 	python ./scripts/train_lora/generate_meta1.py \
 	    --tag $(AUTO_TAG_TILE) \
@@ -156,7 +160,7 @@ meta_1_for_chara:
 	    -i $(DIR_IMAGES_for_chara) \
 	    -o $(META1_for_chara) \
 	    --output_triggers $(DIRNAME2TRIGGER) \
-	    --no_style_trigger_word
+	    $(GENERATE_META1_ARG)
 
 meta_2_for_chara:
 	$(PYTHON) $(DIR_SD_SCRIPTS)/finetune/prepare_buckets_latents.py \
