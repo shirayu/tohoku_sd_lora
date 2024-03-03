@@ -135,7 +135,7 @@ $(STYLE_MERGED_MODEL):
 DIR_ROOT_CHARA:=$(OUT_DIR)/chara
 DIR_IMAGES_for_chara:=$(DIR_ROOT_CHARA)/images
 META1_for_chara:=$(DIR_ROOT_CHARA)/meta_1.json
-DIRNAME2TRIGGER:=$(DIR_ROOT_CHARA)/triggers.json
+DIRNAME2TRIGGER:=$(DIR_ROOT_CHARA)/dirname2trigger.json
 META2_for_chara:=$(DIR_ROOT_CHARA)/meta_2.json
 META3_DIR_for_chara:=$(DIR_ROOT_CHARA)/meta_3/
 DIR_CHARA_MODEL:=$(DIR_ROOT_CHARA)/model

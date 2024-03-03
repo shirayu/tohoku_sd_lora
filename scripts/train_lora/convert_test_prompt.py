@@ -24,7 +24,7 @@ def operation(
 ) -> None:
     with path_config.open() as inf:
         config = json.load(inf)
-        trigger: str = config["trigger"]
+        trigger: str = config["trigger_info"]["generate"]
 
     with path_in.open() as inf, path_out.open("w") as outf:
         for line in inf:

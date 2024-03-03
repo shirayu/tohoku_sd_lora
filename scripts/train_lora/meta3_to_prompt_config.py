@@ -12,17 +12,18 @@ def operation(
     key: str,
 ) -> None:
     with path_in.open() as inf, path_out.open("w") as outf:
-        key2trigger = json.load(inf)
-        trigger: str
+        key2triggerinfo = json.load(inf)
+        trigger_info: dict[str, str] = {}
         if key == "oistyle":
-            trigger = key
+            trigger_info = {
+                "train": key,
+                "generate": key,
+            }
         else:
-            trigger = key2trigger[key]
-            if trigger.endswith("oc"):
-                trigger = f"1girl wear {key}"
+            trigger_info = key2triggerinfo[key]
 
-        info: dict[str, str] = {
-            "trigger": trigger,
+        info: dict = {
+            "trigger_info": trigger_info,
         }
         outf.write(json.dumps(info, indent=4))
         outf.write("\n")

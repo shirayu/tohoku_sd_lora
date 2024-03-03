@@ -56,7 +56,7 @@ def operation(
                 chara2target_tags[k] |= group2tags[group]
 
     fname2caption: dict[str, dict[str, str]] = {}
-    dirname2trigger: dict[str, str] = {}
+    dirname2trigger: dict[str, dict[str, str]] = {}
     for imgf in path_in.iterdir():
         chara: str = imgf.stem.split("___")[0].replace(".mod", "")
 
@@ -86,6 +86,8 @@ def operation(
                 "Kioc": "KiritanOC",
                 "Meoc": "MetanOC",
             }[trigger_word.replace("__withchara", "")]
+        elif trigger_word.endswith("oc"):
+            trigger_word = f"1girl wear {trigger_word}"
 
         # Add the trigger word
         new_tags: list[str]
@@ -97,16 +99,20 @@ def operation(
         triggers: list[str] = []
         if not for_style:
             triggers.append(trigger_word)
+        trigger_for_generate: str = ", ".join(triggers)
         if not no_style_trigger_word:
             triggers.append(STYLE_TRIGGER_WORD)
 
         # https://github.com/kohya-ss/sd-scripts/pull/975
-        trigger: str = ", ".join(triggers)
-        caption = trigger + ", ||| " + ", ".join(sorted(new_tags))
+        trigger_for_train: str = ", ".join(triggers)
+        caption = trigger_for_train + ", ||| " + ", ".join(sorted(new_tags))
         fname2caption[imgf.stem] = {
             "caption": caption,
         }
-        dirname2trigger[imgf.stem.split("___")[0]] = trigger
+        dirname2trigger[imgf.stem.split("___")[0]] = {
+            "train": trigger_for_train,
+            "generate": trigger_for_generate,
+        }
 
     with path_out.open("w") as outf:
         outf.write(
