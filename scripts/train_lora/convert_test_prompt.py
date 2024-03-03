@@ -9,6 +9,8 @@ extra digit, fewer digits, cropped, worst quality, low quality,
 normal quality, jpeg artifacts, signature, watermark, username, blurry"""
 COMMON_NEGATIVE = ", ".join([v.strip() for v in COMMON_NEGATIVE.replace("\n", "").split(", ")])
 
+COMMON_POSITIVE: str = """intricate details, high resolution, masterpiece, best quality"""
+
 
 def operation(
     *,
@@ -26,7 +28,7 @@ def operation(
 
     with path_in.open() as inf, path_out.open("w") as outf:
         for line in inf:
-            line = line.strip().replace("<trigger>", trigger)
+            line = line.strip().replace("<trigger>", trigger).replace("<potisive_quality>", COMMON_POSITIVE)
 
             if line.startswith("#") or len(line) == 0:
                 continue

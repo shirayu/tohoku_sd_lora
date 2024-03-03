@@ -1,6 +1,20 @@
-<trigger>, smile, blush, standing on street, city, shopping, looking at show window, summer (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 1216 --h 832 --d 2990656060 --l 7.0 --s 30 --ss euler_a
-<trigger>, solo, detailed eyes, long eyelash, bangs, dark blue school uniform, long hair, looking at viewer, embarrassed, sitting in park, (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 832 --h 1216 --d 9999 --l 7.0 --s 30 --ss euler_a
-<trigger>, dark blue school swimsuit, classroom, (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 832 --h 1216 --d 3398454939 --l 7.0 --s 30 --ss euler_a
+# For Animagine-xl-3.0
+#   {first_general_tag}, {tags_character}, {tags_copyright}, {tags_artist} ||| {rating} {rest_general_tags} {year_tag} {tags_meta} {quality_tag}
+#
+#   {first_general_tag}=> `[1girl|2girls|3girls|4girls|5girls|6+girls|multiple girls|1boy|2boys|3boys|4boys|5boys|6+boys|multiple boys|male focus]`
+#   {rating}=> `rating: [questionable|explicit|sensitive|general] [|nsfw]`
+#   ||| => not shuffle before this
+#   {year_tag}=> `[oldest|early|mid|late|newest|unknown]`
+#   {quality_tag}=> `[masterpiece|best quality|high quality|medium quality|normal quality|low quality|worst quality]`
 
-<trigger>, climbing snow mountain, sweat , (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 832 --h 1216 --d 3099478566 --l 7.0 --s 30 --ss euler_a
-<trigger>, 20yo, strength training at the gym, talking, (best quality, high resolution, Perfect features, masterpiece, intricate details:1.2) --w 832 --h 1216 --d 907401054 --l 7.0 --s 30 --ss euler_a
+1girl, <trigger>, rating: general, smile, full body, standing on park, <potisive_quality> --w 832 --h 1216 --d 123456 --l 7.0 --s 50 --ss euler_a
+
+rating: general, <trigger>, smile, blush, standing on street, city, shopping, looking at show window, summer <potisive_quality> --w 1216 --h 832 --d 2990656060 --l 7.0 --s 30 --ss euler_a
+
+rating: sensitive, <trigger>, solo, detailed eyes, dark blue school uniform, looking at viewer, embarrassed, sitting on sofa, <potisive_quality> --w 832 --h 1216 --d 9999 --l 7.0 --s 30 --ss euler_a
+
+1girl, <trigger>, dark blue school swimsuit, classroom, <potisive_quality> --w 1216 --h 832 --d 3398454939 --l 7.0 --s 30 --ss euler_a
+
+rating: general, <trigger>, climbing snow mountain, sweat, <potisive_quality> --w 832 --h 1216 --d 3099478566 --l 7.0 --s 30 --ss euler_a
+
+<trigger>, 20yo, strength training at the gym, talking, <potisive_quality> --w 832 --h 1216 --d 907401054 --l 7.0 --s 30 --ss euler_a

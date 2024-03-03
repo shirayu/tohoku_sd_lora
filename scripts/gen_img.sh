@@ -36,4 +36,5 @@ eval "${SD_SCRIPTS_ROOT}/venv/bin/python" \
     --bf16 \
     --batch_size 1 \
     --from_file "${PROMPT_FILE}" \
+    --sequential_file_name \
     "${ARG_LORA}"
