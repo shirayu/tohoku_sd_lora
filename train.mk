@@ -41,6 +41,10 @@ META1_for_style:=$(DIR_ROOT_STYLE)/meta_1.json
 META2_for_style:=$(DIR_ROOT_STYLE)/meta_2.json
 META3_for_style:=$(DIR_ROOT_STYLE)/meta_3.json
 DIR_STYLE_MODEL:=$(DIR_ROOT_STYLE)/model
+MY_STYLE_LORA_FILE:=$(DIR_STYLE_MODEL)/mymodel.safetensors
+MY_STYLE_PROMPT_CONFIG_FILE:=$(DIR_STYLE_MODEL)/config/prompt_config.json
+MY_STYLE_TEST_GEN_DIR:=$(DIR_STYLE_MODEL)/gen_test
+MY_STYLE_TEST_GEN_PROMPT:=$(MY_STYLE_TEST_GEN_DIR)/prompots.txt
 
 mksymlink_for_style:
 	python ./scripts/train_lora/filtered_mksymlink.py \
@@ -75,21 +79,42 @@ prepare_for_style: \
 	meta_1_for_style \
 	meta_2_for_style
 
-train_for_style:
+MY_STYLE_TEST_GEN_DONE:=$(DIR_ROOT_STYLE)/done
+$(MY_STYLE_LORA_FILE):
 	rm -f $(DIR_ROOT_STYLE)/base.safetensors
 	ln -s $(BASE_MODEL) $(DIR_ROOT_STYLE)/base.safetensors
 	cp $(META2_for_style) $(META3_for_style)
 	DIM=$(DIM_FOR_STYLE) \
-	PROMPT_PREFIX_FILE="oistyle, " \
-	    bash \
+	   bash \
 		./scripts/train_lora/train_lora.sh \
 		$(DIR_ROOT_STYLE) \
 		$(DIR_STYLE_MODEL) \
 	    "${ARG_TRAIN_LEARNING_PRAM}" \
 	    "${ARG_TRAIN_DATASET_PARAM}"
+train_for_style: $(MY_STYLE_LORA_FILE) $(MY_STYLE_TEST_GEN_DONE)
 
 train_for_style_tensorboard:
 	poetry run tensorboard --logdir $(DIR_STYLE_MODEL)/log --bind_all
+
+$(MY_STYLE_PROMPT_CONFIG_FILE):
+	mkdir -p $(dir $@)
+	python ./scripts/train_lora/meta3_to_prompt_config.py -i $(DIRNAME2TRIGGER) --key oistyle -o $@
+
+$(MY_STYLE_TEST_GEN_PROMPT): $(MY_STYLE_PROMPT_CONFIG_FILE)
+	mkdir -p $(dir $@)
+	python ./scripts/train_lora/convert_test_prompt.py \
+	    -i ./data/config/test_prompt.txt \
+	    -o $@ \
+	    --config $< 
+
+gen_test_imgs_for_style: $(MY_STYLE_TEST_GEN_DONE)
+$(MY_STYLE_TEST_GEN_DONE): $(BASE_MODEL_FILE) $(MY_STYLE_TEST_GEN_PROMPT) $(MY_STYLE_LORA_FILE) $(MY_STYLE_ROOT_DIR)
+	bash -x ./scripts/gen_img.sh \
+	    $(BASE_MODEL_FILE) \
+	    $(MY_STYLE_TEST_GEN_PROMPT) \
+	    $(MY_STYLE_TEST_GEN_DIR) \
+	    $(MY_STYLE_LORA_FILE) \
+	&& touch $@
 
 STYLE_MERGED_MODEL:=$(OUT_DIR)/base.style_merged.safetensors
 
@@ -160,7 +185,7 @@ META3:=/please/designate
 META3NAME:=$(shell basename $(META3) .json)
 MY_CHARA_ROOT_DIR:=$(DIR_CHARA_MODEL)/$(META3NAME)
 PROMPT_CONFIG_FILE:=$(MY_CHARA_ROOT_DIR)/config/prompt_config.json
-LORA_FILE:=$(MY_CHARA_ROOT_DIR)/mymodel.safetensors
+MY_CHARA_LORA_FILE:=$(MY_CHARA_ROOT_DIR)/mymodel.safetensors
 MY_CHARA_TEST_GEN_DIR:=$(MY_CHARA_ROOT_DIR)/gen_test
 MY_CHARA_TEST_GEN_PROMPT:=$(MY_CHARA_TEST_GEN_DIR)/prompots.txt
 MY_CHARA_TEST_GEN_DONE:=$(MY_CHARA_TEST_GEN_DIR)/done
@@ -172,21 +197,21 @@ $(MY_CHARA_TEST_GEN_PROMPT): $(PROMPT_CONFIG_FILE)
 	    -o $@ \
 	    --config $< 
 
-gen_test_imgs: $(MY_CHARA_TEST_GEN_DONE)
-$(MY_CHARA_TEST_GEN_DONE): $(BASE_MODEL_FILE) $(MY_CHARA_TEST_GEN_PROMPT) $(LORA_FILE) $(MY_CHARA_ROOT_DIR)
+gen_test_imgs_for_chara: $(MY_CHARA_TEST_GEN_DONE)
+$(MY_CHARA_TEST_GEN_DONE): $(BASE_MODEL_FILE) $(MY_CHARA_TEST_GEN_PROMPT) $(MY_CHARA_LORA_FILE) $(MY_CHARA_ROOT_DIR)
 	bash -x ./scripts/gen_img.sh \
 	    $(BASE_MODEL_FILE) \
 	    $(MY_CHARA_TEST_GEN_PROMPT) \
 	    $(MY_CHARA_TEST_GEN_DIR) \
-	    $(LORA_FILE) \
+	    $(MY_CHARA_LORA_FILE) \
 	&& touch $@
 
 
-train_for_chara: $(LORA_FILE) $(PROMPT_CONFIG_FILE) gen_test_imgs
+train_for_chara: $(MY_CHARA_LORA_FILE) $(PROMPT_CONFIG_FILE) gen_test_imgs_for_chara
 $(PROMPT_CONFIG_FILE): $(META3) $(DIRNAME2TRIGGER)
 	python ./scripts/train_lora/meta3_to_prompt_config.py -i $(DIRNAME2TRIGGER) --key $(META3NAME) -o $@
 
-$(LORA_FILE): $(META3)
+$(MY_CHARA_LORA_FILE): $(META3)
 	mkdir -p $(MY_CHARA_ROOT_DIR)
 	rm -f $(BASE_MODEL_FILE)
 	ln -s $(BASE_MODEL) $(BASE_MODEL_FILE)

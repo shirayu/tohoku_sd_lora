@@ -13,9 +13,13 @@ def operation(
 ) -> None:
     with path_in.open() as inf, path_out.open("w") as outf:
         key2trigger = json.load(inf)
-        trigger: str = key2trigger[key]
-        if trigger.endswith("oc"):
-            trigger = f"1girl wear {key}"
+        trigger: str
+        if key == "oistyle":
+            trigger = key
+        else:
+            trigger = key2trigger[key]
+            if trigger.endswith("oc"):
+                trigger = f"1girl wear {key}"
 
         info: dict[str, str] = {
             "trigger": trigger,

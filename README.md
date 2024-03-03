@@ -72,7 +72,7 @@ bash -x ./scripts/gen_img.sh \
 make -f ./train.mk prepare_for_style
 
 # train
-make -f ./train.mk train_for_style
+make -f ./train.mk train_for_style NUM_REPEATS=4
 ```
 
 ### Suffix
