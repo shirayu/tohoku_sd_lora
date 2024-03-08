@@ -6,6 +6,12 @@ from pathlib import Path
 STYLE_TRIGGER_WORD: str = "oistyle"
 
 
+def trim_tag(v: str) -> str:
+    if len(v) <= 3:
+        return v
+    return v.replace("_", " ")
+
+
 def operation(
     *,
     path_in: Path,
@@ -106,7 +112,8 @@ def operation(
 
         # https://github.com/kohya-ss/sd-scripts/pull/975
         trigger_for_train: str = ", ".join(triggers)
-        caption = trigger_for_train + ", ||| " + ", ".join(sorted(new_tags))
+        trimmed_new_tags: list[str] = sorted([trim_tag(v) for v in new_tags])
+        caption = trigger_for_train + ", ||| " + ", ".join(trimmed_new_tags)
         fname2caption[imgf.stem] = {
             "caption": caption,
         }
