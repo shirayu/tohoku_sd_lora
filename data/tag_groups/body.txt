@@ -1,5 +1,11 @@
 # hair
 absurdly_long_hair
+antenna_hair
+aqua_hair
+curtained_hair
+floating_hair
+medium_hair
+wavy_hair
 black_hair
 blonde_hair
 blue_hair
@@ -27,6 +33,9 @@ white_hair
 
 # hairstyle
 ponytail
+braided_ponytail
+low_twintails
+low_ponytail
 high_ponytail
 ahoge
 twintails
@@ -87,3 +96,7 @@ joints
 robot_joints
 android
 antennae
+
+fox_tail
+multiple_tails
+cat_tail

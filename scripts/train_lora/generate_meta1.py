@@ -30,6 +30,7 @@ def operation(
                 if t.startswith("alternate_") or t in {
                     "personification",
                     "virtual_youtuber",
+                    "transparent_background",
                 }:
                     continue
                 tags2.add(t)

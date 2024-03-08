@@ -13,9 +13,12 @@ hair_ribbon
 hair_flower
 hair_bell
 hair_bobbles
+black_hairband
+lolita_hairband
 
 hair_stick
 
 red_headwear
 blue_headwear
 white_headwear
+hair_beads
