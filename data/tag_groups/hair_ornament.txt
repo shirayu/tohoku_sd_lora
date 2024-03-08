@@ -3,6 +3,7 @@ hair_bow
 bell
 headgear
 hairband
+white_headband
 headband
 green_hairband
 hair_ornament
@@ -22,3 +23,8 @@ red_headwear
 blue_headwear
 white_headwear
 hair_beads
+fur-trimmed_headwear
+hand_on_headwear
+pink_headwear
+purple_headwear
+unworn_headwear
