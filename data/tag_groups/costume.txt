@@ -398,3 +398,15 @@ open_hoodie
 orange_hoodie
 green_scrunchie
 scrunchie
+grey_shirt
+argyle_clothes
+blood_on_clothes
+hanten_(clothes)
+layered_clothes
+multicolored_clothes
+open_clothes
+shiny_clothes
+striped_clothes
+torn_clothes
+winter_clothes
+haori

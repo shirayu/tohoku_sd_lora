@@ -28,3 +28,5 @@ hand_on_headwear
 pink_headwear
 purple_headwear
 unworn_headwear
+headset
+santa_hat
