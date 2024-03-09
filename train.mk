@@ -137,6 +137,7 @@ ifeq ($(CHARA_WITHOUT_STYLE),0)
 	GENERATE_META1_ARG:=--no_style_trigger_word
 	DIR_ROOT_CHARA:=$(OUT_DIR)/chara_with_style
 else
+	BASE_MODEL:=$(STYLE_MERGED_MODEL)
 	DIR_ROOT_CHARA:=$(OUT_DIR)/chara_without_style
 endif
 DIR_IMAGES_for_chara:=$(DIR_ROOT_CHARA)/images

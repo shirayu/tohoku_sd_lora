@@ -78,13 +78,12 @@ make -f ./train.mk train_for_style NUM_REPEATS=4
 make -f ./train.mk style_merge
 
 # train preparation with it
-make -f ./train.mk prepare_for_chara BASE=./tmp/out/base.style_merged.safetensors CHARA_WITHOUT_STYLE=1
+make -f ./train.mk prepare_for_chara CHARA_WITHOUT_STYLE=1
 
 # example of training
 make -f ./train.mk train_for_chara \
     CHARA_WITHOUT_STYLE=1 \
-    META3=tmp/out/chara_without_style//meta_3/Metan.json \
-    BASE_MODEL_FILE_FOR_GEN_TEST=~/data/sd/models/_base/animagine-xl-3.0-base.safetensors
+    META3=tmp/out/chara_without_style/meta_3/Metan.json \
 ```
 
 ### Suffix
