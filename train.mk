@@ -132,7 +132,13 @@ $(STYLE_MERGED_MODEL):
 
 ###-------------
 
-DIR_ROOT_CHARA:=$(OUT_DIR)/chara
+CHARA_WITHOUT_STYLE:=0
+ifeq ($(CHARA_WITHOUT_STYLE),0)
+	GENERATE_META1_ARG:=--no_style_trigger_word
+	DIR_ROOT_CHARA:=$(OUT_DIR)/chara_with_style
+else
+	DIR_ROOT_CHARA:=$(OUT_DIR)/chara_without_style
+endif
 DIR_IMAGES_for_chara:=$(DIR_ROOT_CHARA)/images
 META1_for_chara:=$(DIR_ROOT_CHARA)/meta_1.json
 DIRNAME2TRIGGER:=$(DIR_ROOT_CHARA)/dirname2trigger.json
@@ -148,10 +154,6 @@ mksymlink_for_chara:
 		-i $(DIR_IMG_SRC) \
 		-o $(DIR_IMAGES_for_chara) \
 
-CHARA_WITH_STYLE:=0
-ifeq ($(CHARA_WITH_STYLE),0)
-	GENERATE_META1_ARG:=--no_style_trigger_word
-endif
 meta_1_for_chara:
 	python ./scripts/train_lora/generate_meta1.py \
 	    --tag $(AUTO_TAG_TILE) \
