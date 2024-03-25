@@ -9,8 +9,8 @@ devDependencies:
     specifier: ^0.39.0
     version: 0.39.0
   pyright:
-    specifier: ^1.1.353
-    version: 1.1.353
+    specifier: ^1.1.355
+    version: 1.1.355
 
 packages:
 
@@ -278,8 +278,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /pyright@1.1.353:
-    resolution: {integrity: sha512-3RHDXn9SzNlIwPRZksD8IsvoTziObbzxxR2vh8QIGZMwG+qygU7npQBdQIT//mOou8GIhHmvulKkAtHg7mFlxw==}
+  /pyright@1.1.355:
+    resolution: {integrity: sha512-GfFstkggxCXQaVWqDezpgPu8LAmwcc/GlnlVGRIF2ylQgB+Gpfz+DnZmci2hMFaROsNHcCTjhZvDkDIgn6UUQg==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     optionalDependencies:
