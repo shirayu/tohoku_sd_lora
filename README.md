@@ -50,10 +50,10 @@ find data/img/converted -type f -name '*.png' | sort | xargs -t -P 4 -I {} poetr
 make -f ./train.mk prepare_for_chara
 
 # train
-make -f ./train.mk train_for_chara META3=./tmp/out/chara_with_style/meta_3/zundamon.json
+make -f ./train.mk train_for_chara META3=./tmp/out/chara_with_style/meta_3/Zundamon.json
 
 # tensorboard
-make -f ./train.mk train_for_chara_tensorboard META3=./tmp/out/chara_with_style//meta_3/zundamon.json
+make -f ./train.mk train_for_chara_tensorboard META3=./tmp/out/chara_with_style/meta_3/Zundamon.json
 ```
 
 ```bash
