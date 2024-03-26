@@ -28,7 +28,7 @@ def operation(
 
     with path_in.open() as inf, path_out.open("w") as outf:
         for line in inf:
-            line = line.strip().replace("<trigger>", trigger).replace("<potisive_quality>", COMMON_POSITIVE)
+            line = line.strip().replace("<trigger>", trigger).replace("<positive_quality>", COMMON_POSITIVE)
 
             if line.startswith("#") or len(line) == 0:
                 continue

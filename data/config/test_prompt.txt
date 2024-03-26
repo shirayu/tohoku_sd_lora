@@ -7,14 +7,14 @@
 #   {year_tag}=> `[oldest|early|mid|late|newest|unknown]`
 #   {quality_tag}=> `[masterpiece|best quality|high quality|medium quality|normal quality|low quality|worst quality]`
 
-1girl, <trigger>, rating: general, smile, full body, standing on park, <potisive_quality> --w 832 --h 1216 --d 123456 --l 7.0 --s 50 --ss euler_a
+1girl, <trigger>, rating: general, smile, full body, standing on park, <positive_quality> --w 832 --h 1216 --d 123456 --l 7.0 --s 50 --ss euler_a
 
-rating: general, <trigger>, smile, blush, standing on street, city, shopping, looking at show window, summer <potisive_quality> --w 1216 --h 832 --d 2990656060 --l 7.0 --s 30 --ss euler_a
+1girl, <trigger>, rating: general, smile, blush, standing on street, city, shopping, looking at show window, summer <positive_quality> --w 1216 --h 832 --d 2990656060 --l 7.0 --s 30 --ss euler_a
 
-rating: sensitive, <trigger>, solo, detailed eyes, dark blue school uniform, looking at viewer, embarrassed, sitting on sofa, <potisive_quality> --w 832 --h 1216 --d 9999 --l 7.0 --s 30 --ss euler_a
+1girl, <trigger>, rating: sensitive, solo, detailed eyes, dark blue school uniform, looking at viewer, embarrassed, sitting on sofa, <positive_quality> --w 832 --h 1216 --d 9999 --l 7.0 --s 30 --ss euler_a
 
-1girl, <trigger>, dark blue school swimsuit, classroom, <potisive_quality> --w 1216 --h 832 --d 3398454939 --l 7.0 --s 30 --ss euler_a
+1girl, <trigger>, rating: sensitive, dark blue school swimsuit, classroom, <positive_quality> --w 1216 --h 832 --d 3398454939 --l 7.0 --s 30 --ss euler_a
 
-rating: general, <trigger>, climbing snow mountain, sweat, <potisive_quality> --w 832 --h 1216 --d 3099478566 --l 7.0 --s 30 --ss euler_a
+1girl, <trigger>, rating: general, climbing snow mountain, sweat, <positive_quality> --w 832 --h 1216 --d 3099478566 --l 7.0 --s 30 --ss euler_a
 
-<trigger>, 20yo, strength training at the gym, talking, <potisive_quality> --w 832 --h 1216 --d 907401054 --l 7.0 --s 30 --ss euler_a
+<trigger>, 20yo, strength training at the gym, talking, <positive_quality> --w 832 --h 1216 --d 907401054 --l 7.0 --s 30 --ss euler_a
