@@ -72,7 +72,7 @@ def operation(
     for_style: bool,
     no_style_trigger_word: bool,
     path_output_trigger: Path | None,
-    force_1girl: bool = True,
+    force_girl: bool = True,
 ) -> None:
     fanme2alltags: dict[str, AllTag] = {}
 
@@ -84,8 +84,10 @@ def operation(
             p: str = Path(d["input"]).parent.name
             key: str = f"{p}___{fname}"
             fanme2alltags[key] = AllTag.parse_tags(d)
-            if force_1girl:
-                fanme2alltags[key].first_general_tags = ["1girl"]
+            if force_girl:
+                fanme2alltags[key].first_general_tags = [
+                    v.replace("boy", "girl") for v in fanme2alltags[key].first_general_tags
+                ]
 
     group2tags: dict[str, set[str]] = {}
     for f in path_tag_group.glob("**/*.txt"):
@@ -152,10 +154,12 @@ def operation(
             triggers.append(STYLE_TRIGGER_WORD)
 
         caption: str = ""
-        caption += ", ".join(myalltag.first_general_tags)
+        if len(myalltag.first_general_tags) > 0:
+            caption += ", ".join(myalltag.first_general_tags)
+            caption += ", "
 
         trigger_for_train: str = ", ".join(triggers)
-        caption += f", {trigger_for_train}"
+        caption += f"{trigger_for_train}"
 
         if myalltag.rating:
             caption += f", rating: {myalltag.rating}"
