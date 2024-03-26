@@ -67,6 +67,7 @@ def operation(
     path_in: Path,
     path_out: Path,
     path_tag: Path,
+    path_manual_tag: Path | None,
     path_tag_group: Path,
     path_trigger: Path,  # 学習対象のタグ定義JSONファイル
     for_style: bool,
@@ -75,6 +76,24 @@ def operation(
     force_girl: bool = True,
 ) -> None:
     fanme2alltags: dict[str, AllTag] = {}
+
+    key2manual_tag: dict[str, list[str]] = {}
+    if path_manual_tag is not None:
+        with path_manual_tag.open() as inf:
+            for line in inf:
+                items: list[str] = line.strip().split("\t")
+                assert len(items) == 2
+                fname0: Path = Path(items[0])
+                p: str = fname0.parent.name
+                key: str = f"{p}___{fname0.stem}"
+                tmp: list[str] = []
+                for v in items[1].split(","):
+                    v = v.strip()
+                    if len(v) > 0:
+                        tmp.append(v)
+                if len(tmp) > 0:
+                    continue
+                key2manual_tag[key] = tmp
 
     with path_tag.open() as inf:
         for line in inf:
@@ -88,6 +107,8 @@ def operation(
                 fanme2alltags[key].first_general_tags = [
                     v.replace("boy", "girl") for v in fanme2alltags[key].first_general_tags
                 ]
+            if (v := key2manual_tag.get(key)) is not None:
+                fanme2alltags[key].rest_general_tags += v
 
     group2tags: dict[str, set[str]] = {}
     for f in path_tag_group.glob("**/*.txt"):
@@ -207,6 +228,7 @@ def get_opts() -> argparse.Namespace:
     oparser.add_argument("--output", "-o", type=Path, default="/dev/stdout", required=False)
     oparser.add_argument("--output_triggers", type=Path, required=False)
     oparser.add_argument("--tag", type=Path, required=True)
+    oparser.add_argument("--manual_tag", type=Path, required=False)
     oparser.add_argument("--tag-trigger", type=Path, required=True)
     oparser.add_argument("--tag-group", type=Path, required=True)
     oparser.add_argument("--for_style", action="store_true")
@@ -221,6 +243,7 @@ def main() -> None:
         path_out=opts.output,
         path_output_trigger=opts.output_triggers,
         path_tag=opts.tag,
+        path_manual_tag=opts.manual_tag,
         path_tag_group=opts.tag_group,
         path_trigger=opts.tag_trigger,
         for_style=opts.for_style,
