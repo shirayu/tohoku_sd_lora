@@ -96,7 +96,7 @@ make -f ./train.mk train_for_chara \
 Use [img2tags](https://github.com/shirayu/img2tags)
 
 ```bash
-img2tags --ext jsonl -i <(find ./data/img/train_1024/ -type f | sort ) -o ./data/auto_tags.jsonl
+img2tags --ext jsonl -i <(find ./data/img/train_1024/ -type f | sort ) -o /dev/stdout| python ./scripts/prepare/trim_tagger_result.py -o ./data/auto_tags.jsonl
 ```
 
 ## Check new URL
