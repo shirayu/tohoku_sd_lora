@@ -81,7 +81,7 @@ def operation(
     if path_manual_tag is not None:
         with path_manual_tag.open() as inf:
             for line in inf:
-                items: list[str] = line.strip().split("\t")
+                items: list[str] = line[:-1].split("\t")
                 assert len(items) == 2
                 fname0: Path = Path(items[0])
                 p: str = fname0.parent.name
