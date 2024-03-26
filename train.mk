@@ -34,6 +34,7 @@ AUTO_TAG_TILE:=./data/auto_tags.jsonl
 TRIGGER_FILE:=./data/trigger.json
 TAG_GROUPS_DIR:=./data/tag_groups
 DIR_IMG_SRC:=./data/img/train_1024
+TEST_PROMPT_TEMPLATE:=./data/config/test_prompt_template.txt
 
 ###-------------
 DIR_ROOT_STYLE:=$(OUT_DIR)/style
@@ -104,7 +105,7 @@ $(MY_STYLE_PROMPT_CONFIG_FILE):
 $(MY_STYLE_TEST_GEN_PROMPT): $(MY_STYLE_PROMPT_CONFIG_FILE)
 	mkdir -p $(dir $@)
 	python ./scripts/train_lora/convert_test_prompt.py \
-	    -i ./data/config/test_prompt.txt \
+	    -i $(TEST_PROMPT_TEMPLATE) \
 	    -o $@ \
 	    --config $< 
 
@@ -202,7 +203,7 @@ MY_CHARA_TEST_GEN_DONE:=$(MY_CHARA_TEST_GEN_DIR)/done
 $(MY_CHARA_TEST_GEN_PROMPT): $(PROMPT_CONFIG_FILE)
 	mkdir -p $(dir $@)
 	python ./scripts/train_lora/convert_test_prompt.py \
-	    -i ./data/config/test_prompt.txt \
+	    -i $(TEST_PROMPT_TEMPLATE) \
 	    -o $@ \
 	    --config $< 
 

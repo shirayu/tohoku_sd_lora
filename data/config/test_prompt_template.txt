@@ -1,3 +1,7 @@
+# Placeholder
+#   <trigger>
+#   <positive_quality
+#
 # For Animagine-xl-3.0
 #   {first_general_tag}, {tags_character}, {tags_copyright}, {tags_artist} ||| {rating} {rest_general_tags} {year_tag} {tags_meta} {quality_tag}
 #
