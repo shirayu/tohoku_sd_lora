@@ -108,7 +108,7 @@ def operation(
                     v.replace("boy", "girl") for v in fanme2alltags[key].first_general_tags
                 ]
             if (v := key2manual_tag.get(key)) is not None:
-                fanme2alltags[key].rest_general_tags += sorted(list(set(v)-set(fanme2alltags[key].rest_general_tags)))
+                fanme2alltags[key].rest_general_tags += sorted(list(set(v) - set(fanme2alltags[key].rest_general_tags)))
 
     group2tags: dict[str, set[str]] = {}
     for f in path_tag_group.glob("**/*.txt"):
