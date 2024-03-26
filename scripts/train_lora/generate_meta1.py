@@ -2,6 +2,9 @@
 import argparse
 import json
 from pathlib import Path
+from typing import Final
+
+from pydantic import BaseModel
 
 STYLE_TRIGGER_WORD: str = "oistyle"
 
@@ -10,6 +13,53 @@ def trim_tag(v: str) -> str:
     if len(v) <= 3:
         return v
     return v.replace("_", " ")
+
+
+FIRST_GENERAL_TAGS: Final[set[str]] = set(
+    "1girl|2girls|3girls|4girls|5girls|6+girls|multiple girls"
+    "|1boy|2boys|3boys|4boys|5boys|6+boys|multiple boys|male focus".split("|")
+)
+
+BANNED_TAGS: Final[set[str]] = {
+    "personification",
+    "virtual_youtuber",
+    "transparent_background",
+}
+
+
+class AllTag(BaseModel):
+    first_general_tags: list[str]
+    rating: str | None = None
+    rest_general_tags: list[str]
+
+    @staticmethod
+    def parse_tags(d: dict) -> "AllTag":
+        rating: str | None = None
+        myrating_val: float = -1
+        for k, v in d["tags"]["9"].items():
+            if v > myrating_val:
+                myrating_val = v
+                rating = k
+
+        auto_tags: set[str] = set(d["tags"]["0"].keys())
+
+        # banned tags
+        my_rest_general_tags: list[str] = []
+        my_first_general_tags: set[str] = set()
+        for t in auto_tags:
+            if t.startswith("alternate_") or t in BANNED_TAGS:
+                continue
+            if t in FIRST_GENERAL_TAGS:
+                my_first_general_tags.add(t)
+                continue
+
+            my_rest_general_tags.append(t)
+
+        return AllTag(
+            first_general_tags=sorted(list(my_first_general_tags)),
+            rating=rating,
+            rest_general_tags=my_rest_general_tags,
+        )
 
 
 def operation(
@@ -22,30 +72,20 @@ def operation(
     for_style: bool,
     no_style_trigger_word: bool,
     path_output_trigger: Path | None,
+    force_1girl: bool = True,
 ) -> None:
-    fanme2alltags: dict[str, set[str]] = {}
+    fanme2alltags: dict[str, AllTag] = {}
+
     with path_tag.open() as inf:
         for line in inf:
             d = json.loads(line)
             fname: str = Path(d["input"]).stem
-            tags: set[str] = set(d["tags"]["0"].keys())
-
-            # banned tags
-            tags2: set[str] = set()
-            tags2.add("1girl")
-            for t in tags:
-                if t.startswith("alternate_") or t in {
-                    "personification",
-                    "virtual_youtuber",
-                    "transparent_background",
-                    "1boy",
-                }:
-                    continue
-                tags2.add(t)
 
             p: str = Path(d["input"]).parent.name
             key: str = f"{p}___{fname}"
-            fanme2alltags[key] = tags2
+            fanme2alltags[key] = AllTag.parse_tags(d)
+            if force_1girl:
+                fanme2alltags[key].first_general_tags = ["1girl"]
 
     group2tags: dict[str, set[str]] = {}
     for f in path_tag_group.glob("**/*.txt"):
@@ -68,8 +108,6 @@ def operation(
     dirname2trigger: dict[str, dict[str, str]] = {}
     for imgf in path_in.iterdir():
         chara: str = imgf.stem.split("___")[0].replace(".mod", "")
-
-        tags_for_imgf: set[str] = fanme2alltags[imgf.stem.replace("__withchara", "")]
 
         is_oc__with_chara: bool = False
         if "__withchara" in imgf.stem:
@@ -99,11 +137,12 @@ def operation(
             trigger_word = f"1girl wear {trigger_word}"
 
         # Add the trigger word
-        new_tags: list[str]
+        myalltag: AllTag = fanme2alltags[imgf.stem.replace("__withchara", "")]
+        new_tags_rest_general_tags: list[str]
         if for_style:
-            new_tags = list(tags_for_imgf)
+            new_tags_rest_general_tags = list(myalltag.rest_general_tags)
         else:
-            new_tags = list(filter(lambda v: v not in target_tags, tags_for_imgf))
+            new_tags_rest_general_tags = list(filter(lambda v: v not in target_tags, myalltag.rest_general_tags))
 
         triggers: list[str] = []
         if not for_style:
@@ -112,10 +151,20 @@ def operation(
         if not no_style_trigger_word:
             triggers.append(STYLE_TRIGGER_WORD)
 
-        # https://github.com/kohya-ss/sd-scripts/pull/975
+        caption: str = ""
+        caption += ", ".join(myalltag.first_general_tags)
+
         trigger_for_train: str = ", ".join(triggers)
-        trimmed_new_tags: list[str] = sorted([trim_tag(v) for v in new_tags])
-        caption = trigger_for_train + ", ||| " + ", ".join(trimmed_new_tags)
+        caption += f", {trigger_for_train}"
+
+        if myalltag.rating:
+            caption += f", rating: {myalltag.rating}"
+
+        # https://github.com/kohya-ss/sd-scripts/pull/975
+        caption += ", |||"
+
+        trimmed_new_tags: list[str] = sorted([trim_tag(v) for v in new_tags_rest_general_tags])
+        caption += ", ".join(trimmed_new_tags)
         fname2caption[imgf.stem] = {
             "caption": caption,
         }

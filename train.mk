@@ -58,7 +58,7 @@ mksymlink_for_style:
 	    	--for_style
 
 meta_1_for_style:
-	python ./scripts/train_lora/generate_meta1.py \
+	poetry run python ./scripts/train_lora/generate_meta1.py \
 	    --tag $(AUTO_TAG_TILE) \
 	    --tag-group $(TAG_GROUPS_DIR) \
 	    --tag-trigger $(TRIGGER_FILE) \
@@ -161,7 +161,7 @@ mksymlink_for_chara:
 		-o $(DIR_IMAGES_for_chara) \
 
 meta_1_for_chara:
-	python ./scripts/train_lora/generate_meta1.py \
+	poetry run python ./scripts/train_lora/generate_meta1.py \
 	    --tag $(AUTO_TAG_TILE) \
 	    --tag-group $(TAG_GROUPS_DIR) \
 	    --tag-trigger $(TRIGGER_FILE) \
