@@ -35,6 +35,8 @@ TRIGGER_FILE:=./data/trigger.json
 TAG_GROUPS_DIR:=./data/tag_groups
 DIR_IMG_SRC:=./data/img/train_1024
 TEST_PROMPT_TEMPLATE:=./data/config/test_prompt_template.txt
+TEST_PROMPT_POSITIVE:=./data/config/test_prompt_common_positive.txt
+TEST_PROMPT_NEGATIVE:=./data/config/test_prompt_common_negative.txt
 
 ###-------------
 DIR_ROOT_STYLE:=$(OUT_DIR)/style
@@ -106,6 +108,8 @@ $(MY_STYLE_TEST_GEN_PROMPT): $(MY_STYLE_PROMPT_CONFIG_FILE)
 	mkdir -p $(dir $@)
 	python ./scripts/train_lora/convert_test_prompt.py \
 	    -i $(TEST_PROMPT_TEMPLATE) \
+	    --positive $(TEST_PROMPT_POSITIVE) \
+	    --negative $(TEST_PROMPT_NEGATIVE) \
 	    -o $@ \
 	    --config $< 
 
@@ -204,6 +208,8 @@ $(MY_CHARA_TEST_GEN_PROMPT): $(PROMPT_CONFIG_FILE)
 	mkdir -p $(dir $@)
 	python ./scripts/train_lora/convert_test_prompt.py \
 	    -i $(TEST_PROMPT_TEMPLATE) \
+	    --positive $(TEST_PROMPT_POSITIVE) \
+	    --negative $(TEST_PROMPT_NEGATIVE) \
 	    -o $@ \
 	    --config $< 
 
