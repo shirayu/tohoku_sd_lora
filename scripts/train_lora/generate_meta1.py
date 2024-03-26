@@ -32,7 +32,7 @@ def operation(
 
             # banned tags
             tags2: set[str] = set()
-            tags2.add('1girl')
+            tags2.add("1girl")
             for t in tags:
                 if t.startswith("alternate_") or t in {
                     "personification",
