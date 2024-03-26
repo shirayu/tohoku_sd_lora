@@ -77,7 +77,7 @@ eval poetry run python "${REPO_ROOT}/scripts/train_lora/rewrite_config.py" \
 # cp data/config/config_dataset.toml "${CONFIG_OUT_DIR}/config_dataset.toml"
 
 cp data/config/config_accelerate.yaml "${CONFIG_OUT_DIR}/config_accelerate.yaml"
-cp data/config/test_prompt.txt "${CONFIG_OUT_DIR}/test_prompt.txt"
+cp data/config/test_prompt* "${CONFIG_OUT_DIR}/"
 
 # save version
 
