@@ -26,16 +26,9 @@ def resize(
 
     if remove_alpha:
         if image.mode in ("RGBA", "LA") or (image.mode == "P" and "transparency" in image.info):
-            data = image.getdata()
-
-            new_data = []
-            for item in data:
-                if item[3] == 0:
-                    new_data.append((255, 255, 255, 255))  # white
-                else:
-                    new_data.append(item)
-            image.putdata(new_data)
-            image = image.convert("RGB")
+            new_image = Image.new("RGBA", image.size, "#FFF")
+            new_image.paste(image, (0, 0), image)
+            image = new_image.convert("RGB")
 
     image = image.crop(image.getbbox())
 
@@ -52,21 +45,24 @@ def resize(
                 int(image.width * max_size / image.height),
                 max_size,
             )
-        image = image.resize(new_size)
+            image = image.resize(
+                new_size,
+                resample=Image.Resampling.LANCZOS,
+            )
 
-    if min_size is not None:
-        assert min_size <= max_size
-        new_x: int = max(image.width, min_size)
-        new_y: int = max(image.height, min_size)
-        new_image = Image.new(
-            "RGB",
-            (new_x, new_y),
-            (255, 255, 255),
-        )
-        x_offset = (new_x - image.width) // 2
-        y_offset = (new_y - image.height) // 2
-        new_image.paste(image, (x_offset, y_offset))
-        image = new_image
+        if min_size is not None:
+            assert min_size <= max_size
+            new_x: int = max(image.width, min_size)
+            new_y: int = max(image.height, min_size)
+            new_image = Image.new(
+                "RGB",
+                (new_x, new_y),
+                (255, 255, 255),
+            )
+            x_offset = (new_x - image.width) // 2
+            y_offset = (new_y - image.height) // 2
+            new_image.paste(image, (x_offset, y_offset))
+            image = new_image
 
     image.save(str(path_out))
 
