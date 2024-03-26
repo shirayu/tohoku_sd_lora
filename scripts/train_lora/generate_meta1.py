@@ -91,7 +91,7 @@ def operation(
                     v = v.strip()
                     if len(v) > 0:
                         tmp.append(v)
-                if len(tmp) > 0:
+                if len(tmp) == 0:
                     continue
                 key2manual_tag[key] = tmp
 
