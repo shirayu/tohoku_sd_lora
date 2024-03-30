@@ -125,8 +125,8 @@ $(MY_STYLE_TEST_GEN_DONE): $(BASE_MODEL_FILE_FOR_GEN_TEST) $(MY_STYLE_TEST_GEN_P
 	&& touch $@
 
 STYLE_MERGE_PRECISION:=fp16
-STYLE_MERGE_RATIO:=0.5
-STYLE_MERGED_MODEL:=$(OUT_DIR)/base.style_merged.w$(STYLE_MERGE_RATIO).safetensors
+STYLE_MERGE_RATIO:=0.25
+STYLE_MERGED_MODEL:=$(OUT_DIR)/basemodel/base.style_merged.w$(STYLE_MERGE_RATIO).safetensors
 style_merge: $(STYLE_MERGED_MODEL)
 $(STYLE_MERGED_MODEL):
 	$(PYTHON) $(DIR_SD_SCRIPTS)/networks/sdxl_merge_lora.py \
@@ -143,10 +143,10 @@ $(STYLE_MERGED_MODEL):
 CHARA_WITHOUT_STYLE:=0
 ifeq ($(CHARA_WITHOUT_STYLE),0)
 	GENERATE_META1_ARG:=--no_style_trigger_word
-	DIR_ROOT_CHARA:=$(OUT_DIR)/chara_with_style
+	DIR_ROOT_CHARA:=$(OUT_DIR)/chara/w0.0
 else
 	BASE_MODEL:=$(STYLE_MERGED_MODEL)
-	DIR_ROOT_CHARA:=$(OUT_DIR)/chara_without_style
+	DIR_ROOT_CHARA:=$(OUT_DIR)/chara/w$(STYLE_MERGE_RATIO)
 endif
 DIR_IMAGES_for_chara:=$(DIR_ROOT_CHARA)/images
 META1_for_chara:=$(DIR_ROOT_CHARA)/meta_1.json
