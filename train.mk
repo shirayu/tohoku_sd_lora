@@ -124,17 +124,18 @@ $(MY_STYLE_TEST_GEN_DONE): $(BASE_MODEL_FILE_FOR_GEN_TEST) $(MY_STYLE_TEST_GEN_P
 	    $(MY_STYLE_LORA_FILE) \
 	&& touch $@
 
-STYLE_MERGED_MODEL:=$(OUT_DIR)/base.style_merged.safetensors
+STYLE_MERGE_PRECISION:=fp16
+STYLE_MERGE_RATIO:=0.5
+STYLE_MERGED_MODEL:=$(OUT_DIR)/base.style_merged.w$(STYLE_MERGE_RATIO).safetensors
 style_merge: $(STYLE_MERGED_MODEL)
-MERGE_PRECISION:=fp16
 $(STYLE_MERGED_MODEL):
 	$(PYTHON) $(DIR_SD_SCRIPTS)/networks/sdxl_merge_lora.py \
 	--sd_model $(BASE_MODEL) \
 	--models $(DIR_STYLE_MODEL)/mymodel.safetensors \
-	--precision $(MERGE_PRECISION) \
-	--save_precision $(MERGE_PRECISION) \
+	--precision $(STYLE_MERGE_PRECISION) \
+	--save_precision $(STYLE_MERGE_PRECISION) \
 	--save_to $(STYLE_MERGED_MODEL) \
-	--ratios 1.0
+	--ratios $(STYLE_MERGE_RATIO)
 
 
 ###-------------
