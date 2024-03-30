@@ -77,23 +77,30 @@ def operation(
 ) -> None:
     fanme2alltags: dict[str, AllTag] = {}
 
-    key2manual_tag: dict[str, list[str]] = {}
+    key2manual_tags: dict[str, set[str]] = {}
+    key2ng_tags: dict[str, set[str]] = {}
     if path_manual_tag is not None:
         with path_manual_tag.open() as inf:
             for line in inf:
                 items: list[str] = line[:-1].split("\t")
-                assert len(items) == 2
+                assert len(items) == 3
                 fname0: Path = Path(items[0])
                 p: str = fname0.parent.name
                 key: str = f"{p}___{fname0.stem}"
-                tmp: list[str] = []
+
+                tmp1: set[str] = set()
                 for v in items[1].split(","):
                     v = v.strip()
                     if len(v) > 0:
-                        tmp.append(v)
-                if len(tmp) == 0:
-                    continue
-                key2manual_tag[key] = tmp
+                        tmp1.add(v)
+                key2manual_tags[key] = tmp1
+
+                tmp2: set[str] = set()
+                for v in items[2].split(","):
+                    v = v.strip()
+                    if len(v) > 0:
+                        tmp2.add(v)
+                key2ng_tags[key] = tmp2
 
     with path_tag.open() as inf:
         for line in inf:
@@ -107,8 +114,11 @@ def operation(
                 fanme2alltags[key].first_general_tags = [
                     v.replace("boy", "girl") for v in fanme2alltags[key].first_general_tags
                 ]
-            if (v := key2manual_tag.get(key)) is not None:
-                fanme2alltags[key].rest_general_tags += sorted(list(set(v) - set(fanme2alltags[key].rest_general_tags)))
+
+            now_tags: set[str] = set(fanme2alltags[key].rest_general_tags)
+            manual_tags: set[str] = key2manual_tags.get(key, set())
+            ng_tags: set[str] = key2ng_tags.get(key, set())
+            fanme2alltags[key].rest_general_tags = sorted(list(now_tags | manual_tags - ng_tags))
 
     group2tags: dict[str, set[str]] = {}
     for f in path_tag_group.glob("**/*.txt"):
