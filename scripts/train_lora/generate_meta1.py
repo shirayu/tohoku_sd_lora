@@ -118,7 +118,7 @@ def operation(
             now_tags: set[str] = set(fanme2alltags[key].rest_general_tags)
             manual_tags: set[str] = key2manual_tags.get(key, set())
             ng_tags: set[str] = key2ng_tags.get(key, set())
-            fanme2alltags[key].rest_general_tags = sorted(list(now_tags | manual_tags - ng_tags))
+            fanme2alltags[key].rest_general_tags = sorted(list((now_tags | manual_tags) - ng_tags))
 
     group2tags: dict[str, set[str]] = {}
     for f in path_tag_group.glob("**/*.txt"):
