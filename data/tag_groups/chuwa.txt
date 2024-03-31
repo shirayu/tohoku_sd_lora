@@ -1,4 +1,11 @@
+animal
+animal_ears
+bird
+blue_eyes
 blue_theme
+full_body
+ghost
 monochrome
-pokemon_(creature)
 no_humans
+pokemon_(creature)
+solid_oval_eyes

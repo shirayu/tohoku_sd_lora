@@ -110,15 +110,19 @@ def operation(
             p: str = Path(d["input"]).parent.name
             key: str = f"{p}___{fname}"
             fanme2alltags[key] = AllTag.parse_tags(d)
+
+            now_rest_tags: set[str] = set(fanme2alltags[key].rest_general_tags)
+            manual_tags: set[str] = key2manual_tags.get(key, set())
+            ng_tags: set[str] = key2ng_tags.get(key, set())
+            fanme2alltags[key].rest_general_tags = sorted(list((now_rest_tags | manual_tags) - ng_tags))
+
+            now_first_tags: set[str] = set(fanme2alltags[key].first_general_tags)
+            fanme2alltags[key].first_general_tags = sorted(list(now_first_tags - ng_tags))
+
             if force_girl:
                 fanme2alltags[key].first_general_tags = [
                     v.replace("boy", "girl") for v in fanme2alltags[key].first_general_tags
                 ]
-
-            now_tags: set[str] = set(fanme2alltags[key].rest_general_tags)
-            manual_tags: set[str] = key2manual_tags.get(key, set())
-            ng_tags: set[str] = key2ng_tags.get(key, set())
-            fanme2alltags[key].rest_general_tags = sorted(list((now_tags | manual_tags) - ng_tags))
 
     group2tags: dict[str, set[str]] = {}
     for f in path_tag_group.glob("**/*.txt"):

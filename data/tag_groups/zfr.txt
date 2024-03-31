@@ -1,2 +1,8 @@
-tail
+black_eyes
+chibi
+full_body
 no_humans
+pokemon_(creature)
+solid_circle_eyes
+standing
+tail
