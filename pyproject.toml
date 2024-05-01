@@ -12,7 +12,7 @@ requests = "^2.28.1"
 pillow = "^10.1.0"
 toml = "^0.10.2"
 tensorboard = "^2.15.1"
-pydantic = "^2.6.4"
+pydantic = "^2.7.1"
 
 
 [tool.poetry.group.dev.dependencies]
