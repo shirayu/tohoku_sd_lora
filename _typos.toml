@@ -6,4 +6,4 @@
 [default.extend-words]
 
 [files]
-extend-exclude = ['tmp']
+extend-exclude = ["package-lock.json", "tmp", "OLD", "*.jsonl", "*.json", "*.csv", "*.tsv"]
