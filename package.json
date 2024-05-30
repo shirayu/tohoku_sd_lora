@@ -10,8 +10,8 @@
     },
     "version": "1.0.0",
     "devDependencies": {
-        "markdownlint-cli": "^0.40.0",
-        "pyright": "^1.1.361"
+        "markdownlint-cli": "^0.41.0",
+        "pyright": "^1.1.365"
     },
     "engines": {
         "npm": "Use pnpm instead of npm!"
