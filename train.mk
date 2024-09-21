@@ -59,7 +59,7 @@ mksymlink_for_style:
 	    	--for_style
 
 meta_1_for_style:
-	poetry run python ./scripts/train_lora/generate_meta1.py \
+	uv run python ./scripts/train_lora/generate_meta1.py \
 	    --tag $(AUTO_TAG_TILE) \
 	    --manual_tag $(MANUAL_TAG_TILE) \
 	    --tag-group $(TAG_GROUPS_DIR) \
@@ -100,7 +100,7 @@ $(MY_STYLE_LORA_FILE):
 train_for_style: $(MY_STYLE_LORA_FILE) $(MY_STYLE_TEST_GEN_DONE)
 
 train_for_style_tensorboard:
-	poetry run tensorboard --logdir $(DIR_STYLE_MODEL)/log --bind_all
+	uv run tensorboard --logdir $(DIR_STYLE_MODEL)/log --bind_all
 
 $(MY_STYLE_PROMPT_CONFIG_FILE):
 	mkdir -p $(dir $@)
@@ -164,7 +164,7 @@ mksymlink_for_chara:
 		-o $(DIR_IMAGES_for_chara) \
 
 meta_1_for_chara:
-	poetry run python ./scripts/train_lora/generate_meta1.py \
+	uv run python ./scripts/train_lora/generate_meta1.py \
 	    --tag $(AUTO_TAG_TILE) \
 	    --manual_tag $(MANUAL_TAG_TILE) \
 	    --tag-group $(TAG_GROUPS_DIR) \
@@ -247,6 +247,6 @@ $(MY_CHARA_LORA_FILE): $(META3)
 	
 
 train_for_chara_tensorboard:
-	poetry run tensorboard --logdir $(MY_CHARA_ROOT_DIR)/log --bind_all
+	uv run tensorboard --logdir $(MY_CHARA_ROOT_DIR)/log --bind_all
 
 
