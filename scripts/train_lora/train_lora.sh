@@ -48,7 +48,7 @@ fi
 
 CONFIG_OUT_DIR="${OUTPUT_DIR}/config"
 mkdir -p "${CONFIG_OUT_DIR}"
-eval poetry run python "${REPO_ROOT}/scripts/train_lora/rewrite_config.py" \
+eval .venv/bin/python "${REPO_ROOT}/scripts/train_lora/rewrite_config.py" \
     -i ./data/config/config_train.toml \
     --str "save.output_dir=${OUTPUT_DIR}" \
     --str "save.logging_dir=${OUTPUT_DIR}/log" \
@@ -66,7 +66,7 @@ python "${REPO_ROOT}/scripts/train_lora/exclude_invalid_data_from_meta.py" \
     -i "${CONFIG_OUT_DIR}/meta_3.json" \
     -o "${CONFIG_OUT_DIR}/meta_4.json"
 
-eval poetry run python "${REPO_ROOT}/scripts/train_lora/rewrite_config.py" \
+eval .venv/bin/python "${REPO_ROOT}/scripts/train_lora/rewrite_config.py" \
     -i ./data/config/config_dataset.toml \
     --str "datasets.subsets.image_dir=${BASE_DIR}/images" \
     --str "datasets.subsets.metadata_file=${CONFIG_OUT_DIR}/meta_4.json" \

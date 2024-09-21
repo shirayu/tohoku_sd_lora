@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 import argparse
 import json
-from distutils.util import strtobool
 from pathlib import Path
 
 import toml
+from distutils.util import strtobool
 
 
 def set_value(d: dict, key: str, val):
