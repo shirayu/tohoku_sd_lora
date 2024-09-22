@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 SD_SCRIPTS_ROOT=~/workspace/sd-scripts
-REPO_ROOT=${SCRIPT_DIR:-"$(cd "$(dirname "$0")/.." && pwd)"}
 function print_stderr_msg() {
     printf "\e[31m%s\e[32m%s\e[m\n" "$1" "$2" 1>&2
 }

@@ -17,6 +17,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Task
+        uses: arduino/setup-task@v2
+        with:
+          version: 3.x
+
       - name: Install the latest version of uv
         uses: astral-sh/setup-uv@v3
         with:
@@ -45,4 +50,4 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - run: uv run make -j $(nproc)
+      - run: uv run task -p
