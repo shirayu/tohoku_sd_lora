@@ -11,7 +11,7 @@
     "version": "1.0.0",
     "devDependencies": {
         "markdownlint-cli": "^0.42.0",
-        "pyright": "^1.1.387"
+        "pyright": "^1.1.389"
     },
     "engines": {
         "npm": "Use pnpm instead of npm!"
