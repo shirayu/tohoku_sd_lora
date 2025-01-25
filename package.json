@@ -10,7 +10,7 @@
   },
   "version": "1.0.0",
   "devDependencies": {
-    "markdownlint-cli": "^0.43.0",
+    "markdownlint-cli": "^0.44.0",
     "pyright": "^1.1.392"
   },
   "engines": {
