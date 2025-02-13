@@ -3,7 +3,7 @@ name = "tohoku-sd-lora"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 dependencies = [
   "pillow>=10.4.0",
   "pydantic>=2.9.2",
@@ -13,22 +13,13 @@ dependencies = [
 ]
 
 [tool.uv]
-dev-dependencies = [
-    "pytest>=8.3.3",
-    "ruff>=0.6.6",
-    "yamllint>=1.35.1",
-]
+dev-dependencies = ["pytest>=8.3.3", "ruff>=0.9.6", "yamllint>=1.35.1"]
 
 [tool.pyright]
-pythonVersion = "3.12"
-typeCheckingMode = "basic"
-exclude = ["**/third", ".venv", "**/node_modules", "**/__pycache__"]
-reportPrivateImportUsage = "information"
-reportUnusedVariable = "warning"
+reportDeprecated = "error"
 
 [tool.ruff]
 line-length = 120
-target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP"]
