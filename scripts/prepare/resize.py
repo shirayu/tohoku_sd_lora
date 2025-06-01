@@ -23,8 +23,8 @@ def resize(
         root.mkdir(exist_ok=True, parents=True)
         path_out = root.joinpath(path_in.name)
 
-    if not overwrite and  path_out.exists():
-        print(f'Exist: {path_out}')
+    if not overwrite and path_out.exists():
+        print(f"Exist: {path_out}")
         return
 
     image = Image.open(str(path_in))
