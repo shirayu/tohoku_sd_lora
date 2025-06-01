@@ -16,11 +16,16 @@ def resize(
     max_size: int,
     min_size: int | None,
     to_dir: bool,
+    overwrite: bool,
 ) -> None:
     if to_dir:
         root = path_out.joinpath(path_in.parent.name)
         root.mkdir(exist_ok=True, parents=True)
         path_out = root.joinpath(path_in.name)
+
+    if not overwrite and  path_out.exists():
+        print(f'Exist: {path_out}')
+        return
 
     image = Image.open(str(path_in))
 
@@ -75,6 +80,7 @@ def get_opts() -> argparse.Namespace:
     oparser.add_argument("--size", type=int, required=True)
     oparser.add_argument("--min_size", type=int)
     oparser.add_argument("--to_dir", action="store_true")
+    oparser.add_argument("--overwrite", action="store_true")
     return oparser.parse_args()
 
 
@@ -87,6 +93,7 @@ def main() -> None:
         max_size=opts.size,
         min_size=opts.min_size,
         to_dir=opts.to_dir,
+        overwrite=opts.overwrite,
     )
 
 
