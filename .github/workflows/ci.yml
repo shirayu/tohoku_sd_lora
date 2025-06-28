@@ -31,11 +31,17 @@ jobs:
         with:
           enable-cache: true
 
+      - name: "Set up Python"
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "pyproject.toml"
+
       - uses: actions/cache@v4
         name: Setup uv cache
         with:
           path: .venv
-          key: ${{ runner.os }}-uv-store-${{ hashFiles('**/uv.lock') }}
+          key: ${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-uv-store-${{ hashFiles('**/uv.lock') }}
           restore-keys: |
             ${{ runner.os }}-uv-store-
 
