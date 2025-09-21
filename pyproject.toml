@@ -12,8 +12,8 @@ dependencies = [
   "toml>=0.10.2",
 ]
 
-[tool.uv]
-dev-dependencies = ["pytest>=8.3.3", "ruff>=0.9.6", "yamllint>=1.35.1"]
+[dependency-groups]
+dev = ["pytest>=8.3.3", "ruff>=0.9.6", "yamllint>=1.35.1"]
 
 [tool.pyright]
 reportDeprecated = "error"
