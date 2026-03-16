@@ -2,6 +2,8 @@ name: Close inactive issues
 on:
   schedule:
     - cron: "45 1 * * *"
+permissions:
+  issues: write
 
 jobs:
   close-issues:
