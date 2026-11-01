@@ -7,7 +7,7 @@ name: "CodeQL"
   pull_request:
     branches: [master]
   schedule:
-    - cron: '34 22 * * 2'
+    - cron: "34 22 * * 2"
 
 jobs:
   analyze:
@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ['python']
+        language: ["python"]
 
     steps:
       - name: Checkout repository
